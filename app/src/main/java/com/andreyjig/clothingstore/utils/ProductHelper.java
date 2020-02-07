@@ -32,6 +32,22 @@ public class ProductHelper {
         return strings;
     }
 
+    public static String getColorCode(ArrayList<Color> colors, int id){
+        for (Color color: colors){
+            if (color.getId() == id){
+                return color.getHashCode();
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Integer> getColorsId(ArrayList<Color> colors){
+        ArrayList<Integer> integers = new ArrayList<>();
+        for (Color color: colors){
+            integers.add(color.getId());
+        }
+        return integers;
+    }
     public static ArrayList<Size> getSizes (Product product, int colorId){
 
         ArrayList<Size> sizes = new ArrayList<>();

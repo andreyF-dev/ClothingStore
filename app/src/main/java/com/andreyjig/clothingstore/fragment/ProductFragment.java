@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.andreyjig.clothingstore.model.product.Image;
 import com.andreyjig.clothingstore.model.product.Properties;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
+import com.andreyjig.clothingstore.utils.ColorDrawer;
 import com.andreyjig.clothingstore.utils.NetworkService;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.model.Product;
@@ -40,7 +42,10 @@ import retrofit2.Response;
 public class ProductFragment extends Fragment {
 
     private static String ARG_ID = "arg_id_product";
+    private static String ARG_COLOR = "arg_color";
+    private static String ARG_SIZE = "arg_size";
 
+    private Snackbar snackbar;
     private View.OnClickListener snackBarOnClickListener;
 
     private Integer id;
@@ -59,15 +64,18 @@ public class ProductFragment extends Fragment {
     private TextView textViewManufacturer;
     private TextView textViewDescription;
     private TextView textViewMaterial;
+    private FrameLayout frameLayout;
 
     public ProductFragment() {
 
     }
 
-    public static ProductFragment newInstance(int id){
+    public static ProductFragment newInstance(int id, int colorId, int sizeId){
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_ID, id);
+        args.putInt(ARG_COLOR, colorId);
+        args.putInt(ARG_SIZE, sizeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,6 +85,8 @@ public class ProductFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null){
             id = getArguments().getInt(ARG_ID);
+            currentColorId = getArguments().getInt(ARG_COLOR);
+            currentSizeId = getArguments().getInt(ARG_SIZE);
         }
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -104,11 +114,14 @@ public class ProductFragment extends Fragment {
         textViewManufacturer= view.findViewById(R.id.fragment_product_text_manufacturer);
         textViewDescription= view.findViewById(R.id.fragment_product_text_description);
         textViewMaterial= view.findViewById(R.id.fragment_product_text_material);
+        frameLayout = view.findViewById(R.id.fragment_product_color_layout);
 
         spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentColorId = colors.get(position).getId();
+                String color = ProductHelper.getColorCode(colors, currentColorId);
+                frameLayout.addView(new ColorDrawer(getContext(), color));
                 setSizeAdapter();
             }
 
@@ -169,22 +182,35 @@ public class ProductFragment extends Fragment {
     }
 
     private void errorLoading() {
-        Snackbar.make(imageView, getString(R.string.error_download), Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.download_now, snackBarOnClickListener)
-                .show();
+
+        snackbar = Snackbar.make(imageView, getString(R.string.error_download), Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.download_now, snackBarOnClickListener);
+        snackbar.show();
+
     }
 
     private void setProduct() {
+
         textViewDescription.setText(product.getDescription());
         textViewManufacturer.setText(product.getManufacturer().getName());
         textViewMaterial.setText(product.getMaterial().getName());
-
         getActivity().setTitle(product.getName());
+        setColor();
+
+    }
+
+    private void setColor() {
+
         colors = ProductHelper.getAllColor(product);
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_spinner_item, ProductHelper.getColorString(colors));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerColor.setAdapter(adapter);
+        ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
+        if (colorsId.contains(currentColorId)){
+            spinnerColor.setSelection(colorsId.indexOf(currentColorId));
+        }
+        else spinnerColor.setSelection(1);
     }
 
     private void setSizeAdapter(){
@@ -220,5 +246,11 @@ public class ProductFragment extends Fragment {
                 .into(imageView);
     }
 
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (snackbar != null && snackbar.isShown()){
+            snackbar.dismiss();
+        }
+    }
 }

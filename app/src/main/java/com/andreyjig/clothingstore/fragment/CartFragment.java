@@ -105,10 +105,12 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
     @Override
     public void getCardDetails(int position) {
         int id = cart.getItems().get(position).getProductId();
-        callback.startDetail(id);
+        int color = cart.getItems().get(position).getProductVariant().getColorId();
+        int size = cart.getItems().get(position).getProductVariant().getSizeId();
+        callback.startDetail(id, color, size);
     }
 
     public interface CartFragmentCallback {
-        void startDetail(int id);
+        void startDetail(int id, int color, int size);
     }
 }

@@ -29,13 +29,14 @@ public class MainActivity extends AppCompatActivity implements CartFragment.Cart
         ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.main_activity_container, CartFragment.newInstance());
         ft.commit();
+        titleSetup();
     }
 
     @Override
-    public void startDetail(int id) {
+    public void startDetail(int id, int color, int size) {
         ft = getSupportFragmentManager().beginTransaction();
         ft.addToBackStack(null);
-        ft.replace(R.id.main_activity_container, ProductFragment.newInstance(id));
+        ft.replace(R.id.main_activity_container, ProductFragment.newInstance(id, color, size));
         ft.commit();
     }
 

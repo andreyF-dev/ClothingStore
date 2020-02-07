@@ -12,6 +12,8 @@
     <string name="material">Материал</string>
     <string name="error_download">Ошибка загрузки</string>
     <string name="download_now">Загрузить снова</string>
+    <string name="count">Количество - %d</string>
+    <string name="price">Цена - %d</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

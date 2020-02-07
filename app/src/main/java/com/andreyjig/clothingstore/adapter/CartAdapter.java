@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.ItemCard;
+import com.andreyjig.clothingstore.utils.ColorDrawer;
 import com.squareup.picasso.Picasso;
 
 public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -57,8 +59,11 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_CARD:
                 ItemCard card = cart.getItems().get(position);
                 ((CardHolder)holder).textViewName.setText(card.getProductVariant().getName());
-                ((CardHolder)holder).textViewCount.setText(card.getCount().toString());
-                ((CardHolder)holder).textViewPrice.setText(card.getProductVariant().getPrice().toString());
+                String countText = String.format(context.getString(R.string.count), card.getCount());
+                ((CardHolder)holder).textViewCount.setText(countText);
+                String priceText = String.format(context.getString(R.string.price),
+                        card.getProductVariant().getPrice());
+                ((CardHolder)holder).textViewPrice.setText(priceText);
                 ((CardHolder)holder).textViewManufacturer.setText(card.getProduct().getManufacturer().getName());
                 try {
                     String imageUrl = card.getProductVariant().getPhotos().get(0).getSmall();
@@ -68,6 +73,9 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } catch (Exception e){
                     e.printStackTrace();
                 }
+
+                String color = card.getProductVariant().getColor().getHashCode();
+                ((CardHolder)holder).frameLayout.addView(new ColorDrawer(context, color));
                 break;
             case TYPE_TOTAL_PRICE:
                 String text = String.format(context.getString(R.string.total_price), cart.getTotalPrice());
@@ -104,6 +112,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView textViewCount;
         TextView textViewPrice;
         TextView textViewManufacturer;
+        FrameLayout frameLayout;
 
         public CardHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +121,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             textViewCount = itemView.findViewById(R.id.item_card_text_count);
             textViewPrice = itemView.findViewById(R.id.item_card_text_price);
             textViewManufacturer = itemView.findViewById(R.id.item_card_text_manufacturer);
+            frameLayout = itemView.findViewById(R.id.item_card_layout_for_color);
+
             itemView.setOnClickListener(this);
         }
 
