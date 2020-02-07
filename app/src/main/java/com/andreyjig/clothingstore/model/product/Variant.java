@@ -1,6 +1,8 @@
 
 package com.andreyjig.clothingstore.model.product;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +26,8 @@ public class Variant extends Properties{
     private Color color;
     @SerializedName("photos")
     @Expose
-    private List<Image> photos = null;
+    private ArrayList<Image> photos = null;
+
 
     public Integer getId() {
         return id;
@@ -82,11 +85,11 @@ public class Variant extends Properties{
         this.color = color;
     }
 
-    public List<Image> getPhotos() {
+    public ArrayList<Image> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Image> photos) {
+    public void setPhotos(ArrayList<Image> photos) {
         this.photos = photos;
     }
 

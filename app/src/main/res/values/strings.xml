@@ -3,13 +3,15 @@
 
     <string name="cart">Корзина</string>
     <string name="add_in_cart">Добавить в корзину</string>
-
+    <string name="total_price">Общая сумма: %d</string>
+    <string name="place_order">Оформить заказ</string>
     <string name="color">Цвет</string>
     <string name="size">Размер</string>
     <string name="manufacturer">Производитель</string>
     <string name="description">Описание</string>
     <string name="material">Материал</string>
-
+    <string name="error_download">Ошибка загрузки</string>
+    <string name="download_now">Загрузить снова</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

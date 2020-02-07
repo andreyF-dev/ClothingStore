@@ -1,6 +1,7 @@
 
 package com.andreyjig.clothingstore.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.andreyjig.clothingstore.model.product.Manufacturer;
@@ -37,7 +38,7 @@ public class Product {
     private Material material;
     @SerializedName("variants")
     @Expose
-    private List<Variant> variants = null;
+    private ArrayList<Variant> variants = null;
 
     public Integer getId() {
         return id;
@@ -103,12 +104,26 @@ public class Product {
         this.material = material;
     }
 
-    public List<Variant> getVariants() {
+    public ArrayList<Variant> getVariants() {
         return variants;
     }
 
-    public void setVariants(List<Variant> variants) {
+    public void setVariants(ArrayList<Variant> variants) {
         this.variants = variants;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", manufacturerId=" + manufacturerId +
+                ", manufacturer=" + manufacturer +
+                ", materialId=" + materialId +
+                ", material=" + material +
+                ", variants=" + variants +
+                '}';
+    }
 }

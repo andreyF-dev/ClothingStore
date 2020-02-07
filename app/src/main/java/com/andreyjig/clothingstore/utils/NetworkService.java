@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore;
+package com.andreyjig.clothingstore.utils;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

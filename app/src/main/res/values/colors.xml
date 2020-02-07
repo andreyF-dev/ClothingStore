@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="textTotalPrice">#ffffff</color>
+    <color name="cardTotalPrice">#ff2b2b</color>
+    <color name="textPlaceOrder">#ffffff</color>
+    <color name="cardPlaceOrder">#006633</color>
 </resources>
