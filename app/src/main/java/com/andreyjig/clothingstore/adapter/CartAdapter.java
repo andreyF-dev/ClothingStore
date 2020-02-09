@@ -85,10 +85,11 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (cart == null || cart.getItems().size() == 0){
+        if (cart == null){
             return 0;
+        } else {
+            return (cart.getItems().size() + 2);
         }
-        return (cart.getItems().size() + 2);
     }
 
     @Override

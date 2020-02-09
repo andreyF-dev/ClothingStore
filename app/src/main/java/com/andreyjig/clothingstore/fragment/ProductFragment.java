@@ -34,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,7 +121,7 @@ public class ProductFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentColorId = colors.get(position).getId();
-                String color = ProductHelper.getColorCode(colors, currentColorId);
+                String color = colors.get(position).getHashCode();
                 frameLayout.addView(new ColorDrawer(getContext(), color));
                 setSizeAdapter();
             }
@@ -144,15 +145,12 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        snackBarOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getProduct();
-            }
-        };
+        snackBarOnClickListener = v -> getProduct();
 
         if (product == null){
             getProduct();
+        } else {
+            setProduct();
         }
         return view;
     }
@@ -203,20 +201,21 @@ public class ProductFragment extends Fragment {
 
         colors = ProductHelper.getAllColor(product);
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
-                android.R.layout.simple_spinner_item, ProductHelper.getColorString(colors));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                android.R.layout.simple_spinner_item, colors);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerColor.setAdapter(adapter);
         ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
         if (colorsId.contains(currentColorId)){
             spinnerColor.setSelection(colorsId.indexOf(currentColorId));
+        } else {
+            spinnerColor.setSelection(1);
         }
-        else spinnerColor.setSelection(1);
     }
 
     private void setSizeAdapter(){
         sizes = ProductHelper.getSizes(product, currentColorId);
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
-                android.R.layout.simple_spinner_item, ProductHelper.getSizesString(sizes));
+                android.R.layout.simple_spinner_item, sizes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSize.setAdapter(adapter);
         ArrayList<Integer> numbers = ProductHelper.getSizesId(sizes);

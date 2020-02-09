@@ -26,9 +26,12 @@ public class MainActivity extends AppCompatActivity implements CartFragment.Cart
             }
         });
 
-        ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.main_activity_container, CartFragment.newInstance());
-        ft.commit();
+        if (savedInstanceState == null) {
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.main_activity_container, CartFragment.newInstance());
+            ft.commit();
+        }
+
         titleSetup();
     }
 

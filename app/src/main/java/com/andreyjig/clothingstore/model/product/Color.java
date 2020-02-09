@@ -18,4 +18,8 @@ public class Color extends Properties{
         this.hashCode = hashCode;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -20,13 +20,13 @@ public class ProductHelper {
         for (Variant variant: variants){
             colors.put(variant.getColorId(), variant.getColor());
         }
-        Collection<Color> colorArrayList = colors.values();
-        return new ArrayList<>(colorArrayList);
+        ArrayList<Color> result = new ArrayList<>(colors.values());
+        return result;
     }
 
-    public static ArrayList<String> getColorString(ArrayList<Color> colors){
+    public static ArrayList<String> getColorString(HashMap<Integer, Color> colors){
         ArrayList<String> strings = new ArrayList<>();
-        for (Color color: colors){
+        for (Color color: colors.values()){
             strings.add(color.getName());
         }
         return strings;
