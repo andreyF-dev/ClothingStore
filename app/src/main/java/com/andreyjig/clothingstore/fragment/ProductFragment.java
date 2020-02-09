@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +17,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Image;
-import com.andreyjig.clothingstore.model.product.Properties;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
@@ -32,10 +29,7 @@ import com.andreyjig.clothingstore.model.shell.ProductShell;
 import com.andreyjig.clothingstore.utils.ProductHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -175,6 +169,7 @@ public class ProductFragment extends Fragment {
                     @Override
                     public void onFailure(Call<ProductShell> call, Throwable t) {
                         t.printStackTrace();
+                        errorLoading();
                     }
                 });
     }
@@ -234,8 +229,10 @@ public class ProductFragment extends Fragment {
             textViewName.setText(product.getName());
         }
         images = variant.getPhotos();
-        imageId = 0;
-        setImage(imageId);
+        if (images != null && images.size() > 0) {
+            imageId = 0;
+            setImage(imageId);
+        }
     }
 
     private void setImage(int i) {

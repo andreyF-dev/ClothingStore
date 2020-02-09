@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.fragment.CartFragment;
 import com.andreyjig.clothingstore.fragment.ProductFragment;
 

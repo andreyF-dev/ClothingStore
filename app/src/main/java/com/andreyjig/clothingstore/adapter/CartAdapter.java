@@ -39,18 +39,16 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view;
-        switch (viewType){
+        switch (viewType) {
             case TYPE_CARD:
                 view = LayoutInflater.from(context).inflate(R.layout.item_purchase_card, parent, false);
                 return new CardHolder(view);
             case TYPE_TOTAL_PRICE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_price, parent, false);
                 return new PriceHolder(view);
-            case TYPE_PLACE_ORDER:
-                view = LayoutInflater.from(context).inflate(R.layout.item_place_order, parent, false);
-                return new PlaceOrderHolder(view);
         }
-        return null;
+        view = LayoutInflater.from(context).inflate(R.layout.item_place_order, parent, false);
+        return new PlaceOrderHolder(view);
     }
 
     @Override
@@ -142,10 +140,16 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public class PlaceOrderHolder extends RecyclerView.ViewHolder {
+    public class PlaceOrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public PlaceOrderHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 
