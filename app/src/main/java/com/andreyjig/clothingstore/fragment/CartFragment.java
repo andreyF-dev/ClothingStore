@@ -1,55 +1,36 @@
 package com.andreyjig.clothingstore.fragment;
 
-
-import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.andreyjig.clothingstore.utils.NetworkService;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.shell.CartShell;
+import com.andreyjig.clothingstore.utils.SnackBarHelper;
+import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartFragment extends Fragment implements CartAdapter.CartAdapterCallback {
+public class CartFragment extends Fragment{
 
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private Cart cart;
-    private CartFragmentCallback callback;
+    private Snackbar snackbar;
+    private View.OnClickListener snackBarOnClickListener;
 
     public CartFragment(){
-
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof CartFragmentCallback) {
-            callback = (CartFragmentCallback) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        callback = null;
-    }
     public static CartFragment newInstance() {
         return new CartFragment();
     }
@@ -66,6 +47,10 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
 
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        snackBarOnClickListener = v -> getCart();
+
+        getActivity().setTitle(R.string.cart);
         if (cart == null){
             cart = new Cart();
             getCart();
@@ -77,39 +62,50 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
     }
 
     private void getCart() {
-        NetworkService.newInstance()
+        NetworkService.getInstance()
                 .getJSONApi()
                 .getCart()
                 .enqueue(new Callback<CartShell>() {
                     @Override
                     public void onResponse(Call<CartShell> call, Response<CartShell> response) {
-                        cart = response.body().getCart();
-                        if (getContext() != null){
-                            setCartAdapter();
+
+                        if (response.isSuccessful()) {
+                            cart = response.body().getCart();
+                            if (getContext() != null) {
+                                setCartAdapter();
+                            }
+                        } else {
+                            errorLoading();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CartShell> call, Throwable t) {
                         t.printStackTrace();
+                        errorLoading();
                     }
                 });
     }
 
     public void setCartAdapter(){
-        cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
+        cartAdapter = new CartAdapter(getContext(), cart);
         recyclerView.setAdapter(cartAdapter);
     }
 
-    @Override
-    public void getCardDetails(int position) {
-        int id = cart.getItems().get(position).getProductId();
-        int color = cart.getItems().get(position).getProductVariant().getColorId();
-        int size = cart.getItems().get(position).getProductVariant().getSizeId();
-        callback.startDetail(id, color, size);
+    private void errorLoading() {
+
+        if (getContext() != null) {
+            snackbar = SnackBarHelper.showSnackbar(getContext(), recyclerView, snackBarOnClickListener);
+            snackbar.show();
+        }
+
     }
 
-    public interface CartFragmentCallback {
-        void startDetail(int id, int color, int size);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (snackbar != null && snackbar.isShown()){
+            snackbar.dismiss();
+        }
     }
 }

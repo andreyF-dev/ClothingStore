@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.shell.ProductShell;
 import com.andreyjig.clothingstore.utils.ProductHelper;
+import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -36,15 +38,16 @@ import retrofit2.Response;
 
 public class ProductFragment extends Fragment {
 
-    private static String ARG_ID = "arg_id_product";
-    private static String ARG_COLOR = "arg_color";
-    private static String ARG_SIZE = "arg_size";
+    private static String ARG_ID_PRODUCT = "arg_id_product";
+    private static String ARG_ID_VARIANT = "arg_id_variant";
 
     private Snackbar snackbar;
     private View.OnClickListener snackBarOnClickListener;
 
-    private Integer id;
+    private int productId;
+    private int variantId;
     private Product product;
+    private Variant currentVariant;
     private ArrayList<Color> colors;
     private ArrayList<Size> sizes;
     private ArrayList<Image> images;
@@ -60,17 +63,18 @@ public class ProductFragment extends Fragment {
     private TextView textViewDescription;
     private TextView textViewMaterial;
     private FrameLayout frameLayout;
+    private ImageButton imageForward;
+    private ImageButton imageBack;
 
     public ProductFragment() {
 
     }
 
-    public static ProductFragment newInstance(int id, int colorId, int sizeId){
+    public static ProductFragment newInstance(int productId, int variantId){
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_ID, id);
-        args.putInt(ARG_COLOR, colorId);
-        args.putInt(ARG_SIZE, sizeId);
+        args.putInt(ARG_ID_PRODUCT, productId);
+        args.putInt(ARG_ID_VARIANT, variantId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,9 +83,8 @@ public class ProductFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null){
-            id = getArguments().getInt(ARG_ID);
-            currentColorId = getArguments().getInt(ARG_COLOR);
-            currentSizeId = getArguments().getInt(ARG_SIZE);
+            productId = getArguments().getInt(ARG_ID_PRODUCT);
+            variantId = getArguments().getInt(ARG_ID_VARIANT);
         }
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -110,6 +113,8 @@ public class ProductFragment extends Fragment {
         textViewDescription= view.findViewById(R.id.fragment_product_text_description);
         textViewMaterial= view.findViewById(R.id.fragment_product_text_material);
         frameLayout = view.findViewById(R.id.fragment_product_color_layout);
+        imageForward = view.findViewById(R.id.fragment_product_image_forward);
+        imageBack = view.findViewById(R.id.fragment_product_image_back);
 
         spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -146,13 +151,17 @@ public class ProductFragment extends Fragment {
         } else {
             setProduct();
         }
+
+        imageForward.setOnClickListener(v -> setImage(1));
+
+        imageBack.setOnClickListener(v -> setImage(-1));
         return view;
     }
 
     private void getProduct() {
-        NetworkService.newInstance()
+        NetworkService.getInstance()
                 .getJSONApi()
-                .getProduct(id)
+                .getProduct(productId)
                 .enqueue(new Callback<ProductShell>() {
                     @Override
                     public void onResponse(Call<ProductShell> call, Response<ProductShell> response) {
@@ -176,9 +185,10 @@ public class ProductFragment extends Fragment {
 
     private void errorLoading() {
 
-        snackbar = Snackbar.make(imageView, getString(R.string.error_download), Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(R.string.download_now, snackBarOnClickListener);
-        snackbar.show();
+        if (getContext() != null) {
+            snackbar = SnackBarHelper.showSnackbar(getContext(), imageView, snackBarOnClickListener);
+            snackbar.show();
+        }
 
     }
 
@@ -188,6 +198,7 @@ public class ProductFragment extends Fragment {
         textViewManufacturer.setText(product.getManufacturer().getName());
         textViewMaterial.setText(product.getMaterial().getName());
         getActivity().setTitle(product.getName());
+        currentVariant = ProductHelper.getVariant(product, variantId);
         setColor();
 
     }
@@ -197,11 +208,11 @@ public class ProductFragment extends Fragment {
         colors = ProductHelper.getAllColor(product);
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_spinner_item, colors);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerColor.setAdapter(adapter);
         ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
-        if (colorsId.contains(currentColorId)){
-            spinnerColor.setSelection(colorsId.indexOf(currentColorId));
+        if (colorsId.contains(currentVariant.getColorId())){
+            spinnerColor.setSelection(colorsId.indexOf(currentVariant.getColorId()));
         } else {
             spinnerColor.setSelection(1);
         }
@@ -214,31 +225,41 @@ public class ProductFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSize.setAdapter(adapter);
         ArrayList<Integer> numbers = ProductHelper.getSizesId(sizes);
-        if (numbers.contains(currentSizeId)){
-            spinnerSize.setSelection(numbers.indexOf(currentSizeId));
+        if (numbers.contains(currentVariant.getSizeId())){
+            spinnerSize.setSelection(numbers.indexOf(currentVariant.getSizeId()));
         } else {
             spinnerSize.setSelection(1);
         }
     }
 
     private void setVariant (){
-        Variant variant = ProductHelper.getVariant(product, currentColorId, currentSizeId);
-        if (variant != null && !variant.getName().isEmpty()){
-            textViewName.setText(variant.getName());
+        currentVariant = ProductHelper.getVariant(product, currentColorId, currentSizeId);
+        if (currentVariant != null && !currentVariant.getName().isEmpty()){
+            textViewName.setText(currentVariant.getName());
         } else {
             textViewName.setText(product.getName());
         }
-        images = variant.getPhotos();
+        images = currentVariant.getPhotos();
         if (images != null && images.size() > 0) {
             imageId = 0;
-            setImage(imageId);
+            setImage(0);
+            imageBack.setVisibility(View.VISIBLE);
+            imageForward.setVisibility(View.VISIBLE);
+        } else {
+            imageBack.setVisibility(View.INVISIBLE);
+            imageForward.setVisibility(View.INVISIBLE);
         }
     }
 
     private void setImage(int i) {
-        String imageUrl = images.get(i).getBig();
+        imageId = (imageId + i) % images.size();
+        if (imageId == -1){
+            imageId = images.size() - 1;
+        }
+        String imageUrl = images.get(imageId).getBig();
         Picasso.get()
                 .load(imageUrl)
+                .noPlaceholder()
                 .into(imageView);
     }
 

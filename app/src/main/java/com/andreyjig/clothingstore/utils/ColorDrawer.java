@@ -20,6 +20,7 @@ public class ColorDrawer extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         Paint circle = new Paint();
+        circle.setFlags(Paint.ANTI_ALIAS_FLAG);
         circle.setColor(color);
         int radius = Math.min(width, height);
         canvas.drawCircle(radius, radius, radius, circle);

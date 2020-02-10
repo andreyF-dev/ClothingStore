@@ -6,8 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkService {
 
     private static NetworkService instance;
-    public static String url = "https://sequeniatesttask.s3-eu-west-1.amazonaws.com";
-    public static String idUrl = "https://sequeniatesttask.s3-eu-west-1.amazonaws.com/products/%d.json";
+    private static String url = "https://sequeniatesttask.s3-eu-west-1.amazonaws.com";
     private Retrofit retrofit;
 
     private NetworkService(){
@@ -17,14 +16,14 @@ public class NetworkService {
                 .build();
     }
 
-    public static NetworkService newInstance(){
+    public static NetworkService getInstance(){
         if (instance == null){
-            return new NetworkService();
+            instance = new NetworkService();
         }
         return instance;
     }
 
-    public JSONPlaceHolderApi getJSONApi(){
-        return retrofit.create(JSONPlaceHolderApi.class);
+    public ProductJSON getJSONApi(){
+        return retrofit.create(ProductJSON.class);
     }
 }

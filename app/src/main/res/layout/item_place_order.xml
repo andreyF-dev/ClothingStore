@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
     android:layout_margin="4dp"
-    app:cardBackgroundColor="@color/cardPlaceOrder">
+    app:cardBackgroundColor="@color/cardPlaceOrder"
+    android:id="@+id/item_place_order_card">
 
     <TextView
         android:id="@+id/item_place_order_text"

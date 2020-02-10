@@ -1,14 +1,10 @@
 package com.andreyjig.clothingstore.utils;
 
-import android.util.Log;
-
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class ProductHelper {
@@ -22,23 +18,6 @@ public class ProductHelper {
         }
         ArrayList<Color> result = new ArrayList<>(colors.values());
         return result;
-    }
-
-    public static ArrayList<String> getColorString(HashMap<Integer, Color> colors){
-        ArrayList<String> strings = new ArrayList<>();
-        for (Color color: colors.values()){
-            strings.add(color.getName());
-        }
-        return strings;
-    }
-
-    public static String getColorCode(ArrayList<Color> colors, int id){
-        for (Color color: colors){
-            if (color.getId() == id){
-                return color.getHashCode();
-            }
-        }
-        return null;
     }
 
     public static ArrayList<Integer> getColorsId(ArrayList<Color> colors){
@@ -68,20 +47,20 @@ public class ProductHelper {
         return numbers;
     }
 
-    public static ArrayList<String> getSizesString(ArrayList<Size> sizes){
-        ArrayList<String> strings = new ArrayList<>();
-        for (Size size: sizes){
-            strings.add(size.getName());
-        }
-        return strings;
-    }
-
     public static Variant getVariant(Product product, int colorId, int sizeId){
         ArrayList<Variant> variants = product.getVariants();
         for (Variant variant: variants){
-            Log.d("MyRetrofit", "colorId = " + colorId + " sizeId = " + sizeId +
-                    " variant " + variant.getColorId() + " " + variant.getSizeId());
             if (colorId == variant.getColorId() && sizeId == variant.getSizeId()){
+                return variant;
+            }
+        }
+        return null;
+    }
+
+    public static Variant getVariant(Product product, int id){
+        ArrayList<Variant> variants = product.getVariants();
+        for (Variant variant: variants){
+            if (id == variant.getId()){
                 return variant;
             }
         }
