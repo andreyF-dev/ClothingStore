@@ -1,6 +1,8 @@
 package com.andreyjig.clothingstore.fragment;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import com.andreyjig.clothingstore.utils.NetworkService;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
@@ -15,7 +19,6 @@ import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.shell.CartShell;
 import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -25,9 +28,11 @@ import retrofit2.Response;
 public class CartFragment extends Fragment{
 
     private RecyclerView recyclerView;
-    private Cart cart;
+    private ProgressBar progressBar;
     private Snackbar snackbar;
     private View.OnClickListener snackBarOnClickListener;
+
+    private Cart cart;
 
     public CartFragment(){
     }
@@ -46,20 +51,28 @@ public class CartFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        progressBar = view.findViewById(R.id.fragment_cart_progress_bar);
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         snackBarOnClickListener = v -> getCart();
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         Objects.requireNonNull(getActivity()).setTitle(R.string.cart);
         if (cart == null){
             cart = new Cart();
             getCart();
+            progressBar.setVisibility(View.VISIBLE);
         } else {
             setCartAdapter();
         }
 
-        return view;
     }
 
     private void getCart() {
@@ -73,6 +86,7 @@ public class CartFragment extends Fragment{
                         if (response.isSuccessful()) {
                             cart = response.body().getCart();
                             if (getContext() != null) {
+                                progressBar.setVisibility(View.GONE);
                                 setCartAdapter();
                             }
                         } else {

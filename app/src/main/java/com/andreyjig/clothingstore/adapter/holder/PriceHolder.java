@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.andreyjig.clothingstore.R;
+import com.andreyjig.clothingstore.adapter.model.TotalPrice;
 
 public class PriceHolder extends RecyclerView.ViewHolder {
 
@@ -19,8 +20,8 @@ public class PriceHolder extends RecyclerView.ViewHolder {
         this.context = context;
     }
 
-    public void setHolder (int price){
-        String text = String.format(context.getString(R.string.total_price), price);
+    public void setHolder (TotalPrice price){
+        String text = String.format(context.getString(R.string.total_price), price.getSum());
         textView.setText(text);
     }
 }

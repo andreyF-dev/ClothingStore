@@ -12,6 +12,8 @@ import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.holder.CardHolder;
 import com.andreyjig.clothingstore.adapter.holder.PlaceOrderHolder;
 import com.andreyjig.clothingstore.adapter.holder.PriceHolder;
+import com.andreyjig.clothingstore.adapter.model.PlaceOrder;
+import com.andreyjig.clothingstore.adapter.model.TotalPrice;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.ItemCard;
 
@@ -22,8 +24,6 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int TYPE_CARD = 0;
     private final int TYPE_TOTAL_PRICE = 1;
     private final int TYPE_PLACE_ORDER = 2;
-
-    private final String PLACE_ORDER = "place_order";
 
     private Context context;
     private ArrayList<Object> adapterList;
@@ -37,8 +37,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (cart != null && cart.getItems().size() > 0){
             adapterList = new ArrayList<>();
             adapterList.addAll(cart.getItems());
-            adapterList.add(cart.getTotalPrice());
-            adapterList.add(PLACE_ORDER);
+            adapterList.add(new TotalPrice(cart.getTotalPrice()));
+            adapterList.add(new PlaceOrder());
         }
     }
 
@@ -68,7 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((CardHolder)holder).setHolder((ItemCard)adapterList.get(position));
                 break;
             case TYPE_TOTAL_PRICE:
-                ((PriceHolder)holder).setHolder((Integer)adapterList.get(position));
+                ((PriceHolder)holder).setHolder((TotalPrice)adapterList.get(position));
         }
     }
 
@@ -82,13 +82,15 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (adapterList.get(position) instanceof ItemCard){
+        Object object = adapterList.get(position);
+        if (object instanceof ItemCard){
             return TYPE_CARD;
-        } else if (adapterList.get(position) instanceof Integer){
+        } else if (object instanceof TotalPrice){
             return TYPE_TOTAL_PRICE;
-        } else {
+        } else if (object instanceof PlaceOrder){
             return TYPE_PLACE_ORDER;
         }
+        return 0;
     }
 
 

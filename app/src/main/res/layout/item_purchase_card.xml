@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -33,17 +34,20 @@
                 android:layout_weight="60">
 
                 <TextView
+                    tools:text="Зеленая футболка"
                     android:id="@+id/item_card_text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Large"/>
 
                 <TextView
+                    tools:text="Количество - 3"
                     android:id="@+id/item_card_text_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    tools:text="Цена - 1 млн"
                     android:id="@+id/item_card_text_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -63,6 +67,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
+                tools:text="Фабрика Заря"
                 android:id="@+id/item_card_text_manufacturer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

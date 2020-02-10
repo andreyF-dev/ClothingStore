@@ -17,13 +17,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ProgressBar
+                android:id="@+id/fragment_product_progress_bar_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_product_image"
+                app:layout_constraintEnd_toEndOf="@id/fragment_product_image"
+                app:layout_constraintStart_toStartOf="@id/fragment_product_image"
+                app:layout_constraintTop_toTopOf="@id/fragment_product_image"/>
+
             <ImageView
                 android:id="@+id/fragment_product_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_photo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="w,10:15"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +72,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_layout_image" />
+
+        <ProgressBar
+            android:id="@+id/fragment_product_progress_bar_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_product_name"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_name"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_name"
+            app:layout_constraintTop_toTopOf="@id/fragment_product_name"/>
 
         <TextView
             android:id="@+id/fragment_product_text_color"
@@ -144,6 +163,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_text_manufacturer_name" />
 
+        <ProgressBar
+            android:id="@+id/fragment_product_progress_bar_text_manufacturer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_product_text_manufacturer"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_text_manufacturer"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_text_manufacturer"
+            app:layout_constraintTop_toTopOf="@id/fragment_product_text_manufacturer"/>
+
         <TextView
             android:id="@+id/fragment_product_text_description_name"
             style="@style/TextAppearance.AppCompat.Title"
@@ -164,6 +193,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_text_description_name" />
 
+        <ProgressBar
+            android:id="@+id/fragment_product_progress_bar_text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_product_text_description"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_text_description"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_text_description"
+            app:layout_constraintTop_toTopOf="@id/fragment_product_text_description"/>
+
         <TextView
             android:id="@+id/fragment_product_text_material_name"
             style="@style/TextAppearance.AppCompat.Title"
@@ -183,6 +222,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_text_material_name" />
+
+        <ProgressBar
+            android:id="@+id/fragment_product_progress_bar_text_material"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_product_text_material"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_text_material"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_text_material"
+            app:layout_constraintTop_toTopOf="@id/fragment_product_text_material"/>
 
         <Button
             android:id="@+id/fragment_product_button_add_in_cart"

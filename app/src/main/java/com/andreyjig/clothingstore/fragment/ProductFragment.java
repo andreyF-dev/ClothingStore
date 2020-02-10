@@ -2,6 +2,8 @@ package com.andreyjig.clothingstore.fragment;
 
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -66,6 +69,12 @@ public class ProductFragment extends Fragment {
     private ImageButton imageForward;
     private ImageButton imageBack;
 
+    private ProgressBar progressBarImage;
+    private ProgressBar progressBarManufacturer;
+    private ProgressBar progressBarDescription;
+    private ProgressBar progressBarMaterial;
+    private ProgressBar progressBarName;
+
     public ProductFragment() {
 
     }
@@ -116,6 +125,12 @@ public class ProductFragment extends Fragment {
         imageForward = view.findViewById(R.id.fragment_product_image_forward);
         imageBack = view.findViewById(R.id.fragment_product_image_back);
 
+        progressBarImage = view.findViewById(R.id.fragment_product_progress_bar_image);
+        progressBarManufacturer = view.findViewById(R.id.fragment_product_progress_bar_text_manufacturer);
+        progressBarDescription = view.findViewById(R.id.fragment_product_progress_bar_text_description);
+        progressBarMaterial = view.findViewById(R.id.fragment_product_progress_bar_text_material);
+        progressBarName = view.findViewById(R.id.fragment_product_progress_bar_name);
+
         spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -145,17 +160,32 @@ public class ProductFragment extends Fragment {
         });
 
         snackBarOnClickListener = v -> getProduct();
+        imageForward.setOnClickListener(v -> setImage(1));
+        imageBack.setOnClickListener(v -> setImage(-1));
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         if (product == null){
             getProduct();
+            setVisibilityProgressBar(View.VISIBLE);
         } else {
             setProduct();
         }
+    }
 
-        imageForward.setOnClickListener(v -> setImage(1));
+    private void setVisibilityProgressBar(int code){
 
-        imageBack.setOnClickListener(v -> setImage(-1));
-        return view;
+        progressBarImage.setVisibility(code);
+        progressBarManufacturer.setVisibility(code);
+        progressBarDescription.setVisibility(code);
+        progressBarMaterial.setVisibility(code);
+        progressBarName.setVisibility(code);
+
     }
 
     private void getProduct() {
@@ -168,6 +198,7 @@ public class ProductFragment extends Fragment {
                         if (response.isSuccessful()) {
                             product = response.body().getProduct();
                             if (getContext() != null) {
+                                setVisibilityProgressBar(View.INVISIBLE);
                                 setProduct();
                             }
                         } else {
@@ -231,19 +262,21 @@ public class ProductFragment extends Fragment {
     private void setVariant (){
         currentVariant = ProductHelper.getVariant(product, currentColorId, currentSizeId);
         if (currentVariant != null && !currentVariant.getName().isEmpty()){
-            textViewName.setText(currentVariant.getName());
-        } else {
-            textViewName.setText(product.getName());
-        }
-        images = currentVariant.getPhotos();
-        if (images != null && images.size() > 0) {
-            imageId = 0;
-            setImage(0);
-            imageBack.setVisibility(View.VISIBLE);
-            imageForward.setVisibility(View.VISIBLE);
-        } else {
-            imageBack.setVisibility(View.INVISIBLE);
-            imageForward.setVisibility(View.INVISIBLE);
+            if (!currentVariant.getName().isEmpty()){
+                textViewName.setText(currentVariant.getName());
+            } else {
+                textViewName.setText(product.getName());
+            }
+            images = currentVariant.getPhotos();
+            if (images != null && images.size() > 0) {
+                imageId = 0;
+                setImage(0);
+                imageBack.setVisibility(View.VISIBLE);
+                imageForward.setVisibility(View.VISIBLE);
+            } else {
+                imageBack.setVisibility(View.INVISIBLE);
+                imageForward.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
