@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.andreyjig.clothingstore.model.product.Size;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SpinnerSizeAdapter extends ArrayAdapter<Size> {
 
@@ -31,7 +32,7 @@ public class SpinnerSizeAdapter extends ArrayAdapter<Size> {
             v = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
         }
         ((TextView) v.findViewById(android.R.id.text1))
-                .setText(getItem(position).getName());
+                .setText(Objects.requireNonNull(getItem(position)).getName());
         return v;
     }
 

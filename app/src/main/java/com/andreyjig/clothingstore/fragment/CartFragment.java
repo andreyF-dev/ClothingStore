@@ -16,6 +16,8 @@ import com.andreyjig.clothingstore.model.shell.CartShell;
 import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +25,6 @@ import retrofit2.Response;
 public class CartFragment extends Fragment{
 
     private RecyclerView recyclerView;
-    private CartAdapter cartAdapter;
     private Cart cart;
     private Snackbar snackbar;
     private View.OnClickListener snackBarOnClickListener;
@@ -50,7 +51,7 @@ public class CartFragment extends Fragment{
 
         snackBarOnClickListener = v -> getCart();
 
-        getActivity().setTitle(R.string.cart);
+        Objects.requireNonNull(getActivity()).setTitle(R.string.cart);
         if (cart == null){
             cart = new Cart();
             getCart();
@@ -87,8 +88,8 @@ public class CartFragment extends Fragment{
                 });
     }
 
-    public void setCartAdapter(){
-        cartAdapter = new CartAdapter(getContext(), cart);
+    private void setCartAdapter(){
+        CartAdapter cartAdapter = new CartAdapter(getContext(), cart);
         recyclerView.setAdapter(cartAdapter);
     }
 

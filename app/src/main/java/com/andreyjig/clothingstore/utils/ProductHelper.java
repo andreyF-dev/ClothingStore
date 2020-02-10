@@ -16,8 +16,7 @@ public class ProductHelper {
         for (Variant variant: variants){
             colors.put(variant.getColorId(), variant.getColor());
         }
-        ArrayList<Color> result = new ArrayList<>(colors.values());
-        return result;
+        return new ArrayList<>(colors.values());
     }
 
     public static ArrayList<Integer> getColorsId(ArrayList<Color> colors){

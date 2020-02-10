@@ -9,6 +9,8 @@ import com.andreyjig.clothingstore.adapter.holder.CardHolder;
 import com.andreyjig.clothingstore.fragment.CartFragment;
 import com.andreyjig.clothingstore.fragment.ProductFragment;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements CardHolder.CardHolderCallback {
 
     FragmentTransaction ft;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements CardHolder.CardHo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> titleSetup());
+        getSupportFragmentManager().addOnBackStackChangedListener(this::titleSetup);
 
         if (savedInstanceState == null) {
             ft = getSupportFragmentManager().beginTransaction();
@@ -30,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements CardHolder.CardHo
 
     private void titleSetup() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         }
     }
 

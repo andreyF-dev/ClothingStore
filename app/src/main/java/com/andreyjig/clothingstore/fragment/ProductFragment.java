@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,7 +21,6 @@ import com.andreyjig.clothingstore.adapter.SpinnerColorAdapter;
 import com.andreyjig.clothingstore.adapter.SpinnerSizeAdapter;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Image;
-import com.andreyjig.clothingstore.model.product.Properties;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
@@ -35,6 +33,8 @@ import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -200,7 +200,7 @@ public class ProductFragment extends Fragment {
         textViewDescription.setText(product.getDescription());
         textViewManufacturer.setText(product.getManufacturer().getName());
         textViewMaterial.setText(product.getMaterial().getName());
-        getActivity().setTitle(product.getName());
+        Objects.requireNonNull(getActivity()).setTitle(product.getName());
         currentVariant = ProductHelper.getVariant(product, variantId);
         setColor();
 
