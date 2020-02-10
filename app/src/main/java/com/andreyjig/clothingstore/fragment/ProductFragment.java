@@ -2,10 +2,8 @@ package com.andreyjig.clothingstore.fragment;
 
 
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
-import com.andreyjig.clothingstore.adapter.SpinnerSizeAdapter;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Image;
-import com.andreyjig.clothingstore.model.product.Properties;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
