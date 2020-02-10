@@ -17,10 +17,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.andreyjig.clothingstore.adapter.SpinnerColorAdapter;
+import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
 import com.andreyjig.clothingstore.adapter.SpinnerSizeAdapter;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Image;
+import com.andreyjig.clothingstore.model.product.Properties;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
@@ -209,7 +210,7 @@ public class ProductFragment extends Fragment {
     private void setColor() {
 
         colors = ProductHelper.getAllColor(product);
-        SpinnerColorAdapter adapter = new SpinnerColorAdapter(getContext(), colors);
+        SpinnerPropertiesAdapter adapter = new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(colors));
         spinnerColor.setAdapter(adapter);
         ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
         if (colorsId.contains(currentVariant.getColorId())){
@@ -221,7 +222,7 @@ public class ProductFragment extends Fragment {
 
     private void setSizeAdapter(){
         sizes = ProductHelper.getSizes(product, currentColorId);
-        SpinnerSizeAdapter adapter = new SpinnerSizeAdapter(getContext(), sizes);;
+        SpinnerPropertiesAdapter adapter = new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(sizes));;
         spinnerSize.setAdapter(adapter);
         ArrayList<Integer> numbers = ProductHelper.getSizesId(sizes);
         if (numbers.contains(currentVariant.getSizeId())){

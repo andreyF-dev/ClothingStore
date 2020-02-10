@@ -6,20 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.andreyjig.clothingstore.model.product.Size;
+import com.andreyjig.clothingstore.model.product.Color;
+import com.andreyjig.clothingstore.model.product.Properties;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SpinnerSizeAdapter extends ArrayAdapter<Size> {
+public class SpinnerPropertiesAdapter extends ArrayAdapter<Properties> {
 
     private Context context;
 
-    public SpinnerSizeAdapter(@NonNull Context context, @NonNull ArrayList<Size> objects) {
+    public SpinnerPropertiesAdapter(@NonNull Context context, @NonNull ArrayList<Properties> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
         this.context = context;
     }
