@@ -3,12 +3,9 @@ package com.andreyjig.clothingstore.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.ui.NavigationUI;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Image;
@@ -37,7 +33,6 @@ import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +45,6 @@ public class ProductFragment extends Fragment {
 
     private int productId;
     private int variantId;
-    private String title;
     private Product product;
     private Variant currentVariant;
     private ArrayList<Color> colors;
@@ -84,10 +78,6 @@ public class ProductFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProductFragmentArgs fragmentArgs = ProductFragmentArgs.fromBundle(getArguments());
-        productId = fragmentArgs.getProductId();
-        variantId = fragmentArgs.getVariantId();
-        title = fragmentArgs.getName();
         setRetainInstance(true);
     }
 
@@ -111,6 +101,11 @@ public class ProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ProductFragmentArgs fragmentArgs = ProductFragmentArgs.fromBundle(getArguments());
+        productId = fragmentArgs.getProductId();
+        variantId = fragmentArgs.getVariantId();
+        String title = fragmentArgs.getName();
 
         Context context = getContext();
         ((SetToolbarNameListener)context).setNameToolbar(title);
