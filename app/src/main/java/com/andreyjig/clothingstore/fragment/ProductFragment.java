@@ -1,11 +1,14 @@
 package com.andreyjig.clothingstore.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.ui.NavigationUI;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.shell.ProductShell;
 import com.andreyjig.clothingstore.utils.ProductHelper;
+import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -41,14 +45,12 @@ import retrofit2.Response;
 
 public class ProductFragment extends Fragment {
 
-    private static String ARG_ID_PRODUCT = "arg_id_product";
-    private static String ARG_ID_VARIANT = "arg_id_variant";
-
     private Snackbar snackbar;
     private View.OnClickListener snackBarOnClickListener;
 
     private int productId;
     private int variantId;
+    private String title;
     private Product product;
     private Variant currentVariant;
     private ArrayList<Color> colors;
@@ -79,23 +81,13 @@ public class ProductFragment extends Fragment {
 
     }
 
-    public static ProductFragment newInstance(int productId, int variantId){
-        ProductFragment fragment = new ProductFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_ID_PRODUCT, productId);
-        args.putInt(ARG_ID_VARIANT, variantId);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            productId = getArguments().getInt(ARG_ID_PRODUCT);
-            variantId = getArguments().getInt(ARG_ID_VARIANT);
-        }
-        setHasOptionsMenu(true);
+        ProductFragmentArgs fragmentArgs = ProductFragmentArgs.fromBundle(getArguments());
+        productId = fragmentArgs.getProductId();
+        variantId = fragmentArgs.getVariantId();
+        title = fragmentArgs.getName();
         setRetainInstance(true);
     }
 
@@ -112,7 +104,16 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_product, container, false);
+        return inflater.inflate(R.layout.fragment_product, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Context context = getContext();
+        ((SetToolbarNameListener)context).setNameToolbar(title);
 
         imageView = view.findViewById(R.id.fragment_product_image);
         textViewName= view.findViewById(R.id.fragment_product_name);
@@ -162,13 +163,6 @@ public class ProductFragment extends Fragment {
         snackBarOnClickListener = v -> getProduct();
         imageForward.setOnClickListener(v -> setImage(1));
         imageBack.setOnClickListener(v -> setImage(-1));
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         if (product == null){
             getProduct();
@@ -228,7 +222,7 @@ public class ProductFragment extends Fragment {
         textViewDescription.setText(product.getDescription());
         textViewManufacturer.setText(product.getManufacturer().getName());
         textViewMaterial.setText(product.getMaterial().getName());
-        Objects.requireNonNull(getActivity()).setTitle(product.getName());
+
         currentVariant = ProductHelper.getVariant(product, variantId);
         setColor();
 

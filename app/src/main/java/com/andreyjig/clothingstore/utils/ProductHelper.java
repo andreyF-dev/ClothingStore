@@ -1,5 +1,7 @@
 package com.andreyjig.clothingstore.utils;
 
+import android.util.SparseArray;
+
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Size;

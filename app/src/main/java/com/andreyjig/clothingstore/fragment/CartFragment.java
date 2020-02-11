@@ -1,5 +1,6 @@
 package com.andreyjig.clothingstore.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.shell.CartShell;
+import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
@@ -37,9 +39,6 @@ public class CartFragment extends Fragment{
     public CartFragment(){
     }
 
-    public static CartFragment newInstance() {
-        return new CartFragment();
-    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,13 @@ public class CartFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        return inflater.inflate(R.layout.fragment_cart, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         progressBar = view.findViewById(R.id.fragment_cart_progress_bar);
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
@@ -57,14 +62,9 @@ public class CartFragment extends Fragment{
 
         snackBarOnClickListener = v -> getCart();
 
-        return view;
-    }
+        Context context = getContext();
+        ((SetToolbarNameListener)context).setNameToolbar(context.getString(R.string.cart));
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Objects.requireNonNull(getActivity()).setTitle(R.string.cart);
         if (cart == null){
             cart = new Cart();
             getCart();
@@ -72,7 +72,6 @@ public class CartFragment extends Fragment{
         } else {
             setCartAdapter();
         }
-
     }
 
     private void getCart() {

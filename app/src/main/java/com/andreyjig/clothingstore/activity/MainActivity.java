@@ -1,48 +1,34 @@
 package com.andreyjig.clothingstore.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.adapter.holder.CardHolder;
-import com.andreyjig.clothingstore.fragment.CartFragment;
-import com.andreyjig.clothingstore.fragment.ProductFragment;
+import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 
-import java.util.Objects;
+public class MainActivity extends AppCompatActivity implements SetToolbarNameListener {
 
-public class MainActivity extends AppCompatActivity implements CardHolder.CardHolderCallback {
-
-    FragmentTransaction ft;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().addOnBackStackChangedListener(this::titleSetup);
-
-        if (savedInstanceState == null) {
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.main_activity_container, CartFragment.newInstance());
-            ft.commit();
-        }
-        titleSetup();
-    }
-
-    private void titleSetup() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        } else {
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-        }
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
+        NavigationUI.setupActionBarWithNavController(this, navController);
     }
 
     @Override
-    public void startProductFragment(int productId, int variantId) {
-        ft = getSupportFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
-        ft.replace(R.id.main_activity_container, ProductFragment.newInstance(productId, variantId));
-        ft.commit();
+    public boolean onSupportNavigateUp() {
+        return Navigation.findNavController(this, R.id.nav_host_fragment_container).navigateUp();
+    }
+
+    @Override
+    public void setNameToolbar(String name) {
+        getSupportActionBar().setTitle(name);
     }
 }

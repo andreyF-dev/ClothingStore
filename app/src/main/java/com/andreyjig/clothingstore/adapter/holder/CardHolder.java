@@ -7,9 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andreyjig.clothingstore.R;
+import com.andreyjig.clothingstore.fragment.CartFragmentDirections;
 import com.andreyjig.clothingstore.model.ItemCard;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
 import com.squareup.picasso.Picasso;
@@ -24,8 +26,8 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
     private FrameLayout frameLayout;
 
     private Context context;
-    private int variantId;
-    private int productId;
+    private ItemCard card;
+
 
     public CardHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -43,8 +45,7 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     public void setHolder (ItemCard card){
 
-        variantId = card.getProductVariantId();
-        productId = card.getProductId();
+        this.card = card;
 
         textViewName.setText(card.getProductVariant().getName());
         String countText = String.format(context.getString(R.string.count), card.getCount());
@@ -69,11 +70,13 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        ((CardHolderCallback)context).startProductFragment(productId, variantId);
+        CartFragmentDirections.ActionCartFragmentToProductFragment action =
+                CartFragmentDirections.actionCartFragmentToProductFragment();
+        action.setProductId(card.getProductId())
+                .setVariantId(card.getProductVariantId())
+                .setName(card.getProduct().getName());
+        Navigation.findNavController(v).navigate(action);
 
     }
 
-    public interface CardHolderCallback{
-        void startProductFragment(int productId, int variantId);
-    }
 }
