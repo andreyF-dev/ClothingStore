@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.andreyjig.clothingstore.adapter.holder.CardHolder;
+import com.andreyjig.clothingstore.model.ItemCard;
 import com.andreyjig.clothingstore.utils.NetworkService;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
@@ -26,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartFragment extends Fragment{
+public class CartFragment extends Fragment implements CardHolder.CardHolderCallback {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -58,8 +61,6 @@ public class CartFragment extends Fragment{
         progressBar = view.findViewById(R.id.fragment_cart_progress_bar);
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        snackBarOnClickListener = v -> getCart();
 
         Context context = getContext();
         ((SetToolbarNameListener)context).setNameToolbar(context.getString(R.string.cart));
@@ -101,14 +102,14 @@ public class CartFragment extends Fragment{
     }
 
     private void setCartAdapter(){
-        CartAdapter cartAdapter = new CartAdapter(getContext(), cart);
+        CartAdapter cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
         recyclerView.setAdapter(cartAdapter);
     }
 
     private void errorLoading() {
 
         if (getContext() != null) {
-            snackbar = SnackBarHelper.showSnackbar(getContext(), recyclerView, snackBarOnClickListener);
+            snackbar = SnackBarHelper.showSnackbar(getContext(), getView(), v -> getCart());
             snackbar.show();
         }
 
@@ -120,5 +121,17 @@ public class CartFragment extends Fragment{
         if (snackbar != null && snackbar.isShown()){
             snackbar.dismiss();
         }
+    }
+
+    @Override
+    public void startProductionFragment(ItemCard card) {
+        CartFragmentDirections.ActionCartFragmentToProductFragment action =
+                CartFragmentDirections.actionCartFragmentToProductFragment();
+
+        action.setProductId(card.getProductId())
+                .setVariantId(card.getProductVariantId())
+                .setName(card.getProduct().getName());
+
+        Navigation.findNavController(getView()).navigate(action);
     }
 }

@@ -27,9 +27,10 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     private Context context;
     private ItemCard card;
+    private CardHolderCallback callback;
 
 
-    public CardHolder(@NonNull View itemView, Context context) {
+    public CardHolder(@NonNull View itemView, Context context, CardHolderCallback callback) {
         super(itemView);
         imageView = itemView.findViewById(R.id.item_card_image);
         textViewName = itemView.findViewById(R.id.item_card_text_name);
@@ -39,6 +40,7 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
         frameLayout = itemView.findViewById(R.id.item_card_layout_for_color);
 
         this.context = context;
+        this.callback = callback;
 
         itemView.setOnClickListener(this);
     }
@@ -69,16 +71,11 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        callback.startProductionFragment(card);
+    }
 
-        CartFragmentDirections.ActionCartFragmentToProductFragment action =
-                CartFragmentDirections.actionCartFragmentToProductFragment();
-
-        action.setProductId(card.getProductId())
-                .setVariantId(card.getProductVariantId())
-                .setName(card.getProduct().getName());
-
-        Navigation.findNavController(v).navigate(action);
-
+    public interface CardHolderCallback{
+        void startProductionFragment(ItemCard card);
     }
 
 }

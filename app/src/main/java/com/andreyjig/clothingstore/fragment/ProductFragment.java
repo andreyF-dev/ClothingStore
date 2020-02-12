@@ -41,7 +41,6 @@ import retrofit2.Response;
 public class ProductFragment extends Fragment {
 
     private Snackbar snackbar;
-    private View.OnClickListener snackBarOnClickListener;
 
     private int productId;
     private int variantId;
@@ -155,7 +154,6 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        snackBarOnClickListener = v -> getProduct();
         imageForward.setOnClickListener(v -> setImage(1));
         imageBack.setOnClickListener(v -> setImage(-1));
 
@@ -206,7 +204,7 @@ public class ProductFragment extends Fragment {
     private void errorLoading() {
 
         if (getContext() != null) {
-            snackbar = SnackBarHelper.showSnackbar(getContext(), imageView, snackBarOnClickListener);
+            snackbar = SnackBarHelper.showSnackbar(getContext(), getView(), v -> getProduct());
             snackbar.show();
         }
 

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andreyjig.clothingstore.R;
@@ -27,9 +29,11 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private ArrayList<Object> adapterList;
+    private Fragment fragment;
 
-    public CartAdapter(Context context, Cart cart) {
+    public CartAdapter(Context context, Cart cart, Fragment fragment) {
         this.context = context;
+        this.fragment = fragment;
         createAdapterList(cart);
     }
 
@@ -50,7 +54,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType) {
             case TYPE_CARD:
                 view = LayoutInflater.from(context).inflate(R.layout.item_purchase_card, parent, false);
-                return new CardHolder(view, context);
+                return new CardHolder(view, context, (CardHolder.CardHolderCallback)fragment);
             case TYPE_TOTAL_PRICE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_price, parent, false);
                 return new PriceHolder(view, context);
