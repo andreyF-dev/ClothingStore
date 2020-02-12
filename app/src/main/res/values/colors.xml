@@ -8,4 +8,8 @@
     <color name="cardTotalPrice">#ff2b2b</color>
     <color name="textPlaceOrder">#ffffff</color>
     <color name="cardPlaceOrder">#006633</color>
+    
+    <color name="buttonLight">#008577</color>
+    <color name="buttonDark">#00574B</color>
+    <color name="buttonShadow">#808080</color>
 </resources>

@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Properties;
 
 import java.util.ArrayList;
@@ -27,18 +25,21 @@ public class SpinnerPropertiesAdapter extends ArrayAdapter<Properties> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
-            v = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
-        }
-        ((TextView) v.findViewById(android.R.id.text1))
-                .setText(Objects.requireNonNull(getItem(position)).getName());
-        return v;
+        return getItemView(position, convertView, parent);
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getView(position, convertView, parent);
+        return getItemView(position, convertView, parent);
+    }
+
+    private View getItemView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
+        }
+        ((TextView) convertView.findViewById(android.R.id.text1))
+                .setText(Objects.requireNonNull(getItem(position)).getName());
+        return convertView;
     }
 
 }

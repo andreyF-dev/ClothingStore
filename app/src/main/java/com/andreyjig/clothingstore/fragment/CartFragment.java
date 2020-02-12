@@ -21,7 +21,6 @@ import com.andreyjig.clothingstore.model.shell.CartShell;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;

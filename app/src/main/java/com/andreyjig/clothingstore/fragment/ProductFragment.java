@@ -237,7 +237,7 @@ public class ProductFragment extends Fragment {
     }
 
     private void setSizeAdapter(){
-        sizes = ProductHelper.getSizes(product, currentColorId);
+        sizes = ProductHelper.getAllSizes(product, currentColorId);
         SpinnerPropertiesAdapter adapter = new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(sizes));;
         spinnerSize.setAdapter(adapter);
         ArrayList<Integer> numbers = ProductHelper.getSizesId(sizes);

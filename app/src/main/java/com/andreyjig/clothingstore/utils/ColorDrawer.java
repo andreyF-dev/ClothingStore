@@ -8,8 +8,7 @@ import android.view.View;
 
 public class ColorDrawer extends View {
 
-    private int height;
-    private int width;
+    private int radius;
     private int color;
 
     public ColorDrawer(Context context, String color) {
@@ -22,13 +21,11 @@ public class ColorDrawer extends View {
         Paint circle = new Paint();
         circle.setFlags(Paint.ANTI_ALIAS_FLAG);
         circle.setColor(color);
-        int radius = Math.min(width, height);
         canvas.drawCircle(radius, radius, radius, circle);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        width = w/2;
-        height = h/2;
+        radius = Math.min( w/2, h/2);
     }
 }

@@ -72,9 +72,11 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
         CartFragmentDirections.ActionCartFragmentToProductFragment action =
                 CartFragmentDirections.actionCartFragmentToProductFragment();
+
         action.setProductId(card.getProductId())
                 .setVariantId(card.getProductVariantId())
                 .setName(card.getProduct().getName());
+
         Navigation.findNavController(v).navigate(action);
 
     }

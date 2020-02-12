@@ -1,7 +1,5 @@
 package com.andreyjig.clothingstore.utils;
 
-import android.util.SparseArray;
-
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Size;
@@ -28,7 +26,7 @@ public class ProductHelper {
         }
         return integers;
     }
-    public static ArrayList<Size> getSizes (Product product, int colorId){
+    public static ArrayList<Size> getAllSizes(Product product, int colorId){
 
         ArrayList<Size> sizes = new ArrayList<>();
         ArrayList<Variant> variants = product.getVariants();
