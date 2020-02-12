@@ -28,17 +28,16 @@ import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.shell.ProductShell;
 import com.andreyjig.clothingstore.utils.ProductHelper;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
-import com.andreyjig.clothingstore.utils.ErrorHandler;
-import com.google.android.material.snackbar.Snackbar;
+import com.andreyjig.clothingstore.utils.FragmentWithErrorHandler;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductDescriptionFragment extends Fragment {
+public class ProductDescriptionFragment extends FragmentWithErrorHandler {
 
-    private ErrorHandler errorHandler;
+    private FragmentWithErrorHandler errorHandler;
     private int productId;
     private int variantId;
     private Product product;
@@ -171,23 +170,16 @@ public class ProductDescriptionFragment extends Fragment {
                                 setProduct();
                             }
                         } else {
-                            errorLoading();
+                            getErrorDialog(v -> getProduct());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ProductShell> call, Throwable t) {
                         t.printStackTrace();
-                        errorLoading();
+                        getErrorDialog(v -> getProduct());
                     }
                 });
-    }
-
-    private void errorLoading() {
-        if (getContext() != null) {
-            errorHandler = new ErrorHandler(getContext(), v -> getProduct());
-            errorHandler.show();
-        }
     }
 
     private void setProduct() {
@@ -255,11 +247,4 @@ public class ProductDescriptionFragment extends Fragment {
                 .into(imageView);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (errorHandler != null && errorHandler.isShown()){
-            errorHandler.close();
-        }
-    }
 }

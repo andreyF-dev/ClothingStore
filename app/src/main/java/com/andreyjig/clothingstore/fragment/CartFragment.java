@@ -20,17 +20,16 @@ import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.shell.CartShell;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
-import com.andreyjig.clothingstore.utils.ErrorHandler;
-import com.google.android.material.snackbar.Snackbar;
+import com.andreyjig.clothingstore.utils.FragmentWithErrorHandler;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartFragment extends Fragment implements ProductCardHolder.CardHolderCallback {
+public class CartFragment extends FragmentWithErrorHandler implements ProductCardHolder.CardHolderCallback {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private ErrorHandler errorHandler;
     private Cart cart;
 
     public CartFragment(){
@@ -81,14 +80,14 @@ public class CartFragment extends Fragment implements ProductCardHolder.CardHold
                                 setCartAdapter();
                             }
                         } else {
-                            errorLoading();
+                            getErrorDialog(v -> getCart());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CartShell> call, Throwable t) {
                         t.printStackTrace();
-                        errorLoading();
+                        getErrorDialog(v -> getCart());
                     }
                 });
     }
@@ -96,21 +95,6 @@ public class CartFragment extends Fragment implements ProductCardHolder.CardHold
     private void setCartAdapter(){
         CartAdapter cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
         recyclerView.setAdapter(cartAdapter);
-    }
-
-    private void errorLoading() {
-        if (getContext() != null) {
-            errorHandler = new ErrorHandler(getContext(), v -> getCart());
-            errorHandler.show();
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (errorHandler != null && errorHandler.isShown()){
-            errorHandler.close();
-        }
     }
 
     @Override
