@@ -74,15 +74,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home && getActivity() != null) {
-            getActivity().getSupportFragmentManager().popBackStack();
-        }
-        return true;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_product, container, false);

@@ -1,9 +1,7 @@
 package com.andreyjig.clothingstore.utils;
 
 import android.view.View;
-
 import androidx.fragment.app.Fragment;
-
 import com.andreyjig.clothingstore.R;
 import com.google.android.material.snackbar.Snackbar;
 
