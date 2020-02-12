@@ -2,7 +2,6 @@ package com.andreyjig.clothingstore.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -13,8 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
-import com.andreyjig.clothingstore.adapter.holder.CardHolder;
+import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
 import com.andreyjig.clothingstore.model.ItemCard;
 import com.andreyjig.clothingstore.utils.NetworkService;
 import com.andreyjig.clothingstore.R;
@@ -24,18 +22,15 @@ import com.andreyjig.clothingstore.model.shell.CartShell;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 import com.andreyjig.clothingstore.utils.SnackBarHelper;
 import com.google.android.material.snackbar.Snackbar;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartFragment extends Fragment implements CardHolder.CardHolderCallback {
+public class CartFragment extends Fragment implements ProductCardHolder.CardHolderCallback {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private Snackbar snackbar;
-    private View.OnClickListener snackBarOnClickListener;
-
     private Cart cart;
 
     public CartFragment(){
@@ -57,14 +52,11 @@ public class CartFragment extends Fragment implements CardHolder.CardHolderCallb
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         progressBar = view.findViewById(R.id.fragment_cart_progress_bar);
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         Context context = getContext();
         ((SetToolbarNameListener)context).setNameToolbar(context.getString(R.string.cart));
-
         if (cart == null){
             cart = new Cart();
             getCart();
@@ -107,12 +99,10 @@ public class CartFragment extends Fragment implements CardHolder.CardHolderCallb
     }
 
     private void errorLoading() {
-
         if (getContext() != null) {
             snackbar = SnackBarHelper.showSnackbar(getContext(), getView(), v -> getCart());
             snackbar.show();
         }
-
     }
 
     @Override
@@ -127,11 +117,9 @@ public class CartFragment extends Fragment implements CardHolder.CardHolderCallb
     public void startProductionFragment(ItemCard card) {
         CartFragmentDirections.ActionCartFragmentToProductFragment action =
                 CartFragmentDirections.actionCartFragmentToProductFragment();
-
         action.setProductId(card.getProductId())
                 .setVariantId(card.getProductVariantId())
                 .setName(card.getProduct().getName());
-
         Navigation.findNavController(getView()).navigate(action);
     }
 }

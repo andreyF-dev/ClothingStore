@@ -27,7 +27,6 @@ public class ProductHelper {
         return integers;
     }
     public static ArrayList<Size> getAllSizes(Product product, int colorId){
-
         ArrayList<Size> sizes = new ArrayList<>();
         ArrayList<Variant> variants = product.getVariants();
         for (Variant variant: variants){

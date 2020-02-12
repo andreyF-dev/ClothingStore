@@ -4,21 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.adapter.holder.CardHolder;
+import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
 import com.andreyjig.clothingstore.adapter.holder.PlaceOrderHolder;
 import com.andreyjig.clothingstore.adapter.holder.PriceHolder;
 import com.andreyjig.clothingstore.adapter.model.PlaceOrder;
 import com.andreyjig.clothingstore.adapter.model.TotalPrice;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.ItemCard;
-
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -26,7 +22,6 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int TYPE_CARD = 0;
     private final int TYPE_TOTAL_PRICE = 1;
     private final int TYPE_PLACE_ORDER = 2;
-
     private Context context;
     private ArrayList<Object> adapterList;
     private Fragment fragment;
@@ -49,12 +44,11 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view;
         switch (viewType) {
             case TYPE_CARD:
                 view = LayoutInflater.from(context).inflate(R.layout.item_purchase_card, parent, false);
-                return new CardHolder(view, context, (CardHolder.CardHolderCallback)fragment);
+                return new ProductCardHolder(view, context, (ProductCardHolder.CardHolderCallback)fragment);
             case TYPE_TOTAL_PRICE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_price, parent, false);
                 return new PriceHolder(view, context);
@@ -69,10 +63,10 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)){
             case TYPE_CARD:
-                ((CardHolder)holder).setHolder((ItemCard)adapterList.get(position));
+                ((ProductCardHolder)holder).bind((ItemCard)adapterList.get(position));
                 break;
             case TYPE_TOTAL_PRICE:
-                ((PriceHolder)holder).setHolder((TotalPrice)adapterList.get(position));
+                ((PriceHolder)holder).bind((TotalPrice)adapterList.get(position));
         }
     }
 
@@ -96,6 +90,4 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         return 0;
     }
-
-
 }

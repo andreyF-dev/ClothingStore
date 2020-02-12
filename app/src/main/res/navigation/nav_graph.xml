@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.andreyjig.clothingstore.fragment.ProductFragment"
+        android:name="com.andreyjig.clothingstore.fragment.ProductDescriptionFragment"
         tools:layout="@layout/fragment_product" >
         <argument
             android:name="productId"

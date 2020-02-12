@@ -11,7 +11,6 @@ import com.andreyjig.clothingstore.adapter.model.TotalPrice;
 public class PriceHolder extends RecyclerView.ViewHolder {
 
     private TextView textView;
-
     private Context context;
 
     public PriceHolder(@NonNull View itemView, Context context) {
@@ -20,7 +19,7 @@ public class PriceHolder extends RecyclerView.ViewHolder {
         this.context = context;
     }
 
-    public void setHolder (TotalPrice price){
+    public void bind(TotalPrice price){
         String text = String.format(context.getString(R.string.total_price), price.getSum());
         textView.setText(text);
     }
