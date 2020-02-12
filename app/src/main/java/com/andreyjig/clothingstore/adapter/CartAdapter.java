@@ -24,11 +24,11 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int TYPE_PLACE_ORDER = 2;
     private Context context;
     private ArrayList<Object> adapterList;
-    private Fragment fragment;
+    private ProductCardHolder.CardHolderCallback callback;
 
-    public CartAdapter(Context context, Cart cart, Fragment fragment) {
+    public CartAdapter(Context context, Cart cart, ProductCardHolder.CardHolderCallback callback) {
         this.context = context;
-        this.fragment = fragment;
+        this.callback = callback;
         createAdapterList(cart);
     }
 
@@ -48,7 +48,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType) {
             case TYPE_CARD:
                 view = LayoutInflater.from(context).inflate(R.layout.item_purchase_card, parent, false);
-                return new ProductCardHolder(view, context, (ProductCardHolder.CardHolderCallback)fragment);
+                return new ProductCardHolder(view, context, callback);
             case TYPE_TOTAL_PRICE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_price, parent, false);
                 return new PriceHolder(view, context);

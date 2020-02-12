@@ -28,7 +28,7 @@ import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.shell.ProductShell;
 import com.andreyjig.clothingstore.utils.ProductHelper;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
-import com.andreyjig.clothingstore.utils.ErrorHandlingHelper;
+import com.andreyjig.clothingstore.utils.ErrorHandler;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class ProductDescriptionFragment extends Fragment {
 
-    private Snackbar snackbar;
+    private ErrorHandler errorHandler;
     private int productId;
     private int variantId;
     private Product product;
@@ -185,8 +185,8 @@ public class ProductDescriptionFragment extends Fragment {
 
     private void errorLoading() {
         if (getContext() != null) {
-            snackbar = ErrorHandlingHelper.showSnackBar(getContext(), getView(), v -> getProduct());
-            snackbar.show();
+            errorHandler = new ErrorHandler(getContext(), v -> getProduct());
+            errorHandler.show();
         }
     }
 
@@ -258,8 +258,8 @@ public class ProductDescriptionFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        if (snackbar != null && snackbar.isShown()){
-            snackbar.dismiss();
+        if (errorHandler != null && errorHandler.isShown()){
+            errorHandler.close();
         }
     }
 }
