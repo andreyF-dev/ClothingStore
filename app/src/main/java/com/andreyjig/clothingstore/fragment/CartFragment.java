@@ -20,7 +20,7 @@ import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.shell.CartShell;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
-import com.andreyjig.clothingstore.utils.SnackBarHelper;
+import com.andreyjig.clothingstore.utils.ErrorHandlingHelper;
 import com.google.android.material.snackbar.Snackbar;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,7 +100,7 @@ public class CartFragment extends Fragment implements ProductCardHolder.CardHold
 
     private void errorLoading() {
         if (getContext() != null) {
-            snackbar = SnackBarHelper.showSnackbar(getContext(), getView(), v -> getCart());
+            snackbar = ErrorHandlingHelper.showSnackBar(getContext(), getView(), v -> getCart());
             snackbar.show();
         }
     }

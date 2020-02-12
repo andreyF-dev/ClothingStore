@@ -28,7 +28,7 @@ import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.shell.ProductShell;
 import com.andreyjig.clothingstore.utils.ProductHelper;
 import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
-import com.andreyjig.clothingstore.utils.SnackBarHelper;
+import com.andreyjig.clothingstore.utils.ErrorHandlingHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -185,7 +185,7 @@ public class ProductDescriptionFragment extends Fragment {
 
     private void errorLoading() {
         if (getContext() != null) {
-            snackbar = SnackBarHelper.showSnackbar(getContext(), getView(), v -> getProduct());
+            snackbar = ErrorHandlingHelper.showSnackBar(getContext(), getView(), v -> getProduct());
             snackbar.show();
         }
     }
