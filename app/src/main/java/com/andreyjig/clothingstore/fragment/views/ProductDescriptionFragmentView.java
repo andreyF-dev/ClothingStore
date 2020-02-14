@@ -52,7 +52,4 @@ public interface ProductDescriptionFragmentView extends MvpView {
 
     @StateStrategyType(SkipStrategy.class)
     void setDefaultImage();
-
-    @StateStrategyType(SkipStrategy.class)
-    void getDialogError(View.OnClickListener listener);
 }

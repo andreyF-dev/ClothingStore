@@ -38,7 +38,7 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     @ProvidePresenter
     public ProductDescriptionFragmentPresenter providePresenter (){
         return new ProductDescriptionFragmentPresenter(ProductDescriptionFragmentArgs
-                .fromBundle(getArguments()));
+                .fromBundle(getArguments()), this);
     }
 
     private ImageView imageView;
@@ -97,7 +97,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -135,7 +134,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
 
     @Override
     public void setSize(int index) {
-        Log.d("Retrofit", "indexSize = " + index);
         spinnerSize.setSelection(index);
     }
 
@@ -189,10 +187,5 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     @Override
     public void setDefaultImage() {
         imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_photo));
-    }
-
-    @Override
-    public void getDialogError(View.OnClickListener listener) {
-        setErrorDialog(listener);
     }
 }

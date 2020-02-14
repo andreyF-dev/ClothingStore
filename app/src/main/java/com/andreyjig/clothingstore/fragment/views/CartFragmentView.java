@@ -13,6 +13,4 @@ public interface CartFragmentView extends MvpView{
     void setCartAdapter (Cart cart);
     @StateStrategyType(AddToEndSingleStrategy.class)
     void progressBarVisibility (int state);
-    @StateStrategyType(AddToEndSingleStrategy.class)
-    void getDialogError(View.OnClickListener listener);
 }

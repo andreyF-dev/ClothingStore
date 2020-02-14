@@ -1,9 +1,10 @@
 package com.andreyjig.clothingstore.fragment.presenters;
 
+import android.util.Log;
 import android.view.View;
-
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
 import com.andreyjig.clothingstore.fragment.model.ProductDescriptionFragmentPresenterInterface;
+import com.andreyjig.clothingstore.fragment.views.ErrorHandlerView;
 import com.andreyjig.clothingstore.fragment.views.ProductDescriptionFragmentView;
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
@@ -34,8 +35,11 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     private int imageId;
     private boolean firstAttachView;
     private int newAttachViewOperationCounter;
+    private ErrorHandlerView errorHandlerView;
 
-    public ProductDescriptionFragmentPresenter(ProductDescriptionFragmentArgs args) {
+    public ProductDescriptionFragmentPresenter(ProductDescriptionFragmentArgs args,
+                                               ErrorHandlerView errorHandlerView) {
+        this.errorHandlerView = errorHandlerView;
         productId = args.getProductId();
         variantId = args.getVariantId();
         String title = args.getName();
@@ -62,7 +66,7 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
 
     @Override
     public void setErrorDialog() {
-        getViewState().getDialogError(v -> getProduct());
+        errorHandlerView.getErrorDialog(() -> getProduct());
     }
 
     @Override
@@ -82,14 +86,18 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     }
 
     public void setColor(int index) {
+        Log.d("Retrofit", "setColor index = " + index);
         if (firstAttachView){
             firstAttachView = false;
             newAttachViewOperationCounter = 0;
         } else if (newAttachViewOperationCounter > 1){
-            newAttachViewOperationCounter--;
             ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
-            getViewState().setColor(colorsId.indexOf(colorId));
-            return;
+            if (colorsId.indexOf(colorId) != index) {
+                newAttachViewOperationCounter--;
+                Log.d("Retrofit", "setColor indexId = " + colorsId.indexOf(colorId));
+                getViewState().setColor(colorsId.indexOf(colorId));
+                return;
+            }
         }
         colorId = colors.get(index).getId();
         String color = colors.get(index).getHashCode();
@@ -117,11 +125,19 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
 
     private void setVariant() {
         variant = ProductHelper.getVariant(product, colorId, sizeId);
+        setNameProduct();
+        getImage();
+    }
+
+    private void setNameProduct(){
         if (!variant.getName().isEmpty()) {
             getViewState().setName(variant.getName());
         } else {
             getViewState().setName(product.getName());
         }
+    }
+
+    private void getImage(){
         if (newAttachViewOperationCounter > 0){
             newAttachViewOperationCounter--;
         } else {
