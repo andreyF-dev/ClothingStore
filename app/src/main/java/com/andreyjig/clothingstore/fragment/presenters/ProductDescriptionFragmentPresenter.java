@@ -1,6 +1,5 @@
 package com.andreyjig.clothingstore.fragment.presenters;
 
-import android.util.Log;
 import android.view.View;
 
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
@@ -34,7 +33,7 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     private int sizeId;
     private int imageId;
     private boolean firstAttachView;
-    private int newAttachView;
+    private int newAttachViewOperationCounter;
 
     public ProductDescriptionFragmentPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
@@ -48,7 +47,7 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     @Override
     public void attachView(ProductDescriptionFragmentView view) {
         super.attachView(view);
-        newAttachView = 2;
+        newAttachViewOperationCounter = 2;
     }
 
     @Override
@@ -85,9 +84,9 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     public void setColor(int index) {
         if (firstAttachView){
             firstAttachView = false;
-            newAttachView = 0;
-        } else if (newAttachView > 1){
-            newAttachView --;
+            newAttachViewOperationCounter = 0;
+        } else if (newAttachViewOperationCounter > 1){
+            newAttachViewOperationCounter--;
             ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
             getViewState().setColor(colorsId.indexOf(colorId));
             return;
@@ -123,8 +122,8 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
         } else {
             getViewState().setName(product.getName());
         }
-        if (newAttachView > 0){
-            newAttachView --;
+        if (newAttachViewOperationCounter > 0){
+            newAttachViewOperationCounter--;
         } else {
             images = variant.getPhotos();
             if (images != null && images.size() > 0) {
