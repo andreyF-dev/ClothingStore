@@ -1,5 +1,7 @@
 package com.andreyjig.clothingstore.fragment.views;
 
+import android.view.View;
+
 import com.andreyjig.clothingstore.model.Cart;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
@@ -12,5 +14,5 @@ public interface CartFragmentView extends MvpView{
     @StateStrategyType(AddToEndSingleStrategy.class)
     void progressBarVisibility (int state);
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void getDialogError();
+    void getDialogError(View.OnClickListener listener);
 }

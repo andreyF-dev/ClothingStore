@@ -1,11 +1,14 @@
 package com.andreyjig.clothingstore.fragment.views;
 
+import android.view.View;
+
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
@@ -32,7 +35,7 @@ public interface ProductDescriptionFragmentView extends MvpView {
     @StateStrategyType(SkipStrategy.class)
     void setImage(String imageUrl);
 
-    @StateStrategyType(SkipStrategy.class)
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void setColorAdapter(ArrayList<Color> colors);
 
     @StateStrategyType(SkipStrategy.class)
@@ -50,6 +53,6 @@ public interface ProductDescriptionFragmentView extends MvpView {
     @StateStrategyType(SkipStrategy.class)
     void setDefaultImage();
 
-    @StateStrategyType(AddToEndStrategy.class)
-    void getDialogError();
+    @StateStrategyType(SkipStrategy.class)
+    void getDialogError(View.OnClickListener listener);
 }

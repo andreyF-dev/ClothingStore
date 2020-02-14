@@ -1,5 +1,6 @@
 package com.andreyjig.clothingstore.fragment.presenters;
 
+import android.util.Log;
 import android.view.View;
 
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDescriptionFragmentView>
         implements ProductDescriptionFragmentPresenterInterface {
 
+    private final int NO_IMAGE = -2;
     private Product product;
     private Variant variant;
     private ArrayList<Color> colors;
@@ -31,6 +33,8 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     private int colorId;
     private int sizeId;
     private int imageId;
+    private boolean firstAttachView;
+    private int newAttachView;
 
     public ProductDescriptionFragmentPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
@@ -41,6 +45,17 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
         getProduct();
     }
 
+    @Override
+    public void attachView(ProductDescriptionFragmentView view) {
+        super.attachView(view);
+        newAttachView = 2;
+    }
+
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        firstAttachView = true;
+    }
 
     public void getProduct() {
         NetworkService.getInstance().getProduct(this, productId);
@@ -48,7 +63,7 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
 
     @Override
     public void setErrorDialog() {
-        getViewState().getDialogError();
+        getViewState().getDialogError(v -> getProduct());
     }
 
     @Override
@@ -65,17 +80,18 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
     public void getColors() {
         colors = ProductHelper.getAllColor(product);
         getViewState().setColorAdapter(colors);
-        ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
-        int index;
-        if (colorsId.contains(colorId)) {
-            index = colorsId.indexOf(colorId);
-        } else {
-            index = 0;
-        }
-        getViewState().setColor(index);
     }
 
     public void setColor(int index) {
+        if (firstAttachView){
+            firstAttachView = false;
+            newAttachView = 0;
+        } else if (newAttachView > 1){
+            newAttachView --;
+            ArrayList<Integer> colorsId = ProductHelper.getColorsId(colors);
+            getViewState().setColor(colorsId.indexOf(colorId));
+            return;
+        }
         colorId = colors.get(index).getId();
         String color = colors.get(index).getHashCode();
         getViewState().setColorDrawer(color);
@@ -102,31 +118,36 @@ public class ProductDescriptionFragmentPresenter extends MvpPresenter<ProductDes
 
     private void setVariant() {
         variant = ProductHelper.getVariant(product, colorId, sizeId);
-        if (variant != null) {
-            if (!variant.getName().isEmpty()) {
-                getViewState().setName(variant.getName());
-            } else {
-                getViewState().setName(product.getName());
-            }
+        if (!variant.getName().isEmpty()) {
+            getViewState().setName(variant.getName());
+        } else {
+            getViewState().setName(product.getName());
+        }
+        if (newAttachView > 0){
+            newAttachView --;
+        } else {
             images = variant.getPhotos();
             if (images != null && images.size() > 0) {
                 imageId = 0;
-                getViewState().imageButtonVisibility(View.VISIBLE);
-                setImage(0);
             } else {
-                getViewState().imageButtonVisibility(View.INVISIBLE);
-                getViewState().setDefaultImage();
+                imageId = NO_IMAGE;
             }
         }
+        setImage(0);
     }
 
     public void setImage(int i) {
-        imageId = (imageId + i) % images.size();
-        if (imageId == -1) {
-            imageId = images.size() - 1;
+        if (imageId != NO_IMAGE) {
+            getViewState().imageButtonVisibility(View.VISIBLE);
+            imageId = (imageId + i) % images.size();
+            if (imageId == -1) {
+                imageId = images.size() - 1;
+            }
+            String imageUrl = images.get(imageId).getBig();
+            getViewState().setImage(imageUrl);
+        } else {
+            getViewState().imageButtonVisibility(View.INVISIBLE);
+            getViewState().setDefaultImage();
         }
-        String imageUrl = images.get(imageId).getBig();
-        getViewState().setImage(imageUrl);
     }
-
 }

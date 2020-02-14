@@ -76,7 +76,7 @@ public class CartFragment extends FragmentWithErrorHandler implements ProductCar
     }
 
     @Override
-    public void getDialogError() {
-        showDialogError(v -> presenter.getCart());
+    public void getDialogError(View.OnClickListener listener) {
+        setErrorDialog(listener);
     }
 }

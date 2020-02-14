@@ -24,7 +24,7 @@ implements CartFragmentPresenterInterface {
 
     @Override
     public void setErrorDialog() {
-        getViewState().getDialogError();
+        getViewState().getDialogError(v -> getCart());
     }
 
     @Override

@@ -63,7 +63,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -126,16 +125,17 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
         textViewDescription.setText(product.getDescription());
         textViewManufacturer.setText(product.getManufacturer().getName());
         textViewMaterial.setText(product.getMaterial().getName());
-        presenter.getColors();
     }
 
     @Override
     public void setColor(int index) {
+        Log.d("Retrofit", "indexColor = " + index);
         spinnerColor.setSelection(index);
     }
 
     @Override
     public void setSize(int index) {
+        Log.d("Retrofit", "indexSize = " + index);
         spinnerSize.setSelection(index);
     }
 
@@ -192,7 +192,7 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     }
 
     @Override
-    public void getDialogError() {
-        showDialogError(v -> presenter.getProduct());
+    public void getDialogError(View.OnClickListener listener) {
+        setErrorDialog(listener);
     }
 }
