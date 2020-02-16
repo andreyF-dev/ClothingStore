@@ -2,7 +2,6 @@ package com.andreyjig.clothingstore.fragment.presenters;
 
 import android.util.Log;
 import android.view.View;
-
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
 import com.andreyjig.clothingstore.fragment.views.ErrorHandlerView;
 import com.andreyjig.clothingstore.fragment.views.ProductDescriptionView;
@@ -16,8 +15,6 @@ import com.andreyjig.clothingstore.utils.NetworkService;
 import com.andreyjig.clothingstore.utils.ProductHelper;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.arellomobile.mvp.viewstate.MvpViewState;
-
 import java.util.ArrayList;
 
 @InjectViewState
@@ -86,9 +83,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getColors();
     }
 
-    public void getColors() {
+    private void getColors() {
         colors = ProductHelper.getAllColor(product);
-        int index = ProductHelper.getIndexByIndex(new ArrayList<>(colors), colorId);
+        int index = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
         getViewState().setColors(colors);
         getViewState().setColor(index);
     }
@@ -100,9 +97,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getSize();
     }
 
-    public void getSize() {
+    private void getSize() {
         sizes = ProductHelper.getAllSizes(product, colorId);
-        int index = ProductHelper.getIndexByIndex(new ArrayList<>(sizes), sizeId);
+        int index = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
         getViewState().setSizes(sizes);
         getViewState().setSize(index);
     }

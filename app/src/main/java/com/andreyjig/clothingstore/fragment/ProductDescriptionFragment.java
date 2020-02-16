@@ -36,7 +36,7 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     ProductDescriptionPresenter presenter;
 
     @ProvidePresenter
-    public ProductDescriptionPresenter providePresenter (){
+    ProductDescriptionPresenter providePresenter (){
         return new ProductDescriptionPresenter(ProductDescriptionFragmentArgs
                 .fromBundle(getArguments()), this, (TitleHandlerView)getContext());
     }
@@ -165,7 +165,7 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
         progressBarState(View.INVISIBLE);
     }
 
-    public void progressBarState(int state) {
+    private void progressBarState(int state) {
         progressBarImage.setVisibility(state);
         progressBarManufacturer.setVisibility(state);
         progressBarDescription.setVisibility(state);

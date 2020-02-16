@@ -1,9 +1,7 @@
 package com.andreyjig.clothingstore.fragment.presenters;
 
 import android.view.View;
-
 import androidx.navigation.Navigation;
-
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.fragment.CartFragmentDirections;
 import com.andreyjig.clothingstore.fragment.views.CartView;
@@ -29,9 +27,14 @@ public class CartPresenter extends MvpPresenter<CartView>{
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        titleHandlerView.getTitle(R.string.cart);
         getViewState().progressBarVisibility();
         getCart();
+    }
+
+    @Override
+    public void attachView(CartView view) {
+        super.attachView(view);
+        titleHandlerView.getTitle(R.string.cart);
     }
 
     private void getCart () {

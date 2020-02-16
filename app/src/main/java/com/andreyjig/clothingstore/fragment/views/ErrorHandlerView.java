@@ -1,9 +1,6 @@
 package com.andreyjig.clothingstore.fragment.views;
 
-import android.view.View;
-
 import com.andreyjig.clothingstore.fragment.model.ErrorHandlerInterface;
-import com.andreyjig.clothingstore.fragment.presenters.ErrorHandlerPresenter;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;

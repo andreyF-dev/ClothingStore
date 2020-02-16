@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkService {
 
     private static NetworkService instance;
-    private static String url = "https://sequeniatesttask.s3-eu-west-1.amazonaws.com";
+    private static final String url = "https://sequeniatesttask.s3-eu-west-1.amazonaws.com";
     private Retrofit retrofit;
 
     private NetworkService() {

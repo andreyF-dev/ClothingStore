@@ -12,10 +12,4 @@ public class TitleHandlerPresenter extends MvpPresenter<TitleHandlerView> {
     public void getTitle(String title){
         getViewState().setToolbarTitle(title);
     }
-
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-        Log.d("Retrofit", "onFirstAttachTitle");
-    }
 }

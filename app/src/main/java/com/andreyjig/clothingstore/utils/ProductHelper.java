@@ -20,13 +20,6 @@ public class ProductHelper {
         return new ArrayList<>(colors.values());
     }
 
-    public static ArrayList<Integer> getColorsId(ArrayList<Color> colors){
-        ArrayList<Integer> integers = new ArrayList<>();
-        for (Color color: colors){
-            integers.add(color.getId());
-        }
-        return integers;
-    }
     public static ArrayList<Size> getAllSizes(Product product, int colorId){
         ArrayList<Size> sizes = new ArrayList<>();
         ArrayList<Variant> variants = product.getVariants();
@@ -36,14 +29,6 @@ public class ProductHelper {
             }
         }
         return sizes;
-    }
-
-    public static ArrayList<Integer> getSizesId (ArrayList<Size> sizes){
-        ArrayList<Integer> numbers = new ArrayList<>();
-        for (Size size: sizes){
-            numbers.add(size.getId());
-        }
-        return numbers;
     }
 
     public static Variant getVariant(Product product, int colorId, int sizeId){
@@ -65,7 +50,7 @@ public class ProductHelper {
         }
         return null;
     }
-    public static int getIndexByIndex(ArrayList<Properties> properties, int id){
+    public static int getIndexById(ArrayList<Properties> properties, int id){
         for (int index = 0; index < properties.size(); index++){
             if (properties.get(index).getId() == id){
                 return index;
