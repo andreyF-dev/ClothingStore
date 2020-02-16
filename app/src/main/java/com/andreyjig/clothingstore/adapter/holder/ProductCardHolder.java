@@ -60,11 +60,11 @@ public class ProductCardHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        callback.startProductionFragment(card);
+        callback.getProductDetail(card);
     }
 
     public interface CardHolderCallback {
-        void startProductionFragment(ItemCard card);
+        void getProductDetail(ItemCard card);
     }
 
 }

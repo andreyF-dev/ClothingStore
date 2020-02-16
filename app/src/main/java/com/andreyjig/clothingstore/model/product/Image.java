@@ -4,6 +4,8 @@ package com.andreyjig.clothingstore.model.product;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Image{
 
     @SerializedName("id")
@@ -40,4 +42,18 @@ public class Image{
         this.big = big;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Image image = (Image) o;
+        return Objects.equals(id, image.id) &&
+                Objects.equals(small, image.small) &&
+                Objects.equals(big, image.big);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, small, big);
+    }
 }

@@ -14,42 +14,19 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import java.util.ArrayList;
 
+@StateStrategyType(SkipStrategy.class)
+public interface ProductDescriptionView extends MvpView {
 
-public interface ProductDescriptionFragmentView extends MvpView {
-
-    @StateStrategyType(AddToEndStrategy.class)
-    void setTitle (String string);
-
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void setProduct (Product product);
-
-    @StateStrategyType(SkipStrategy.class)
     void setColor(int index);
-
-    @StateStrategyType(SkipStrategy.class)
     void setSize(int index);
-
-    @StateStrategyType(SkipStrategy.class)
     void setName(String string);
-
-    @StateStrategyType(SkipStrategy.class)
     void setImage(String imageUrl);
-
-    @StateStrategyType(AddToEndSingleStrategy.class)
-    void setColorAdapter(ArrayList<Color> colors);
-
-    @StateStrategyType(SkipStrategy.class)
-    void setSizeAdapter(ArrayList<Size> sizes);
-
-    @StateStrategyType(SkipStrategy.class)
-    void progressBarVisibility(int state);
-
-    @StateStrategyType(SkipStrategy.class)
+    void setColors(ArrayList<Color> colors);
+    void setSizes(ArrayList<Size> sizes);
+    void progressBarVisibility();
+    void progressBarInvisibility();
     void setColorDrawer(String color);
-
-    @StateStrategyType(SkipStrategy.class)
     void imageButtonVisibility(int state);
-
-    @StateStrategyType(SkipStrategy.class)
     void setDefaultImage();
 }

@@ -15,6 +15,8 @@ public interface ErrorHandlerView extends MvpView{
     void getErrorDialog(ErrorHandlerInterface listener);
     @StateStrategyType(AddToEndSingleStrategy.class)
     void setErrorDialog(ErrorHandlerInterface listener);
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void getHideErrorDialog();
     @StateStrategyType(SingleStateStrategy.class)
-    void hideErrorDialog();
+    void setHideErrorDialog();
 }

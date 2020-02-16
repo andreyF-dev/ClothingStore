@@ -2,6 +2,7 @@ package com.andreyjig.clothingstore.utils;
 
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
+import com.andreyjig.clothingstore.model.product.Properties;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
 import java.util.ArrayList;
@@ -9,10 +10,10 @@ import java.util.HashMap;
 
 public class ProductHelper {
 
-    public static ArrayList<Color> getAllColor (Product product){
+    public static ArrayList<Color> getAllColor(Product product){
 
         HashMap<Integer, Color> colors = new HashMap<>();
-        ArrayList<Variant> variants = product.getVariants();
+        ArrayList<Variant> variants = product.getVariants();;
         for (Variant variant: variants){
             colors.put(variant.getColorId(), variant.getColor());
         }
@@ -63,5 +64,13 @@ public class ProductHelper {
             }
         }
         return null;
+    }
+    public static int getIndexByIndex(ArrayList<Properties> properties, int id){
+        for (int index = 0; index < properties.size(); index++){
+            if (properties.get(index).getId() == id){
+                return index;
+            }
+        }
+        return 0;
     }
 }

@@ -15,30 +15,30 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
-import com.andreyjig.clothingstore.fragment.presenters.ProductDescriptionFragmentPresenter;
-import com.andreyjig.clothingstore.fragment.views.ProductDescriptionFragmentView;
+import com.andreyjig.clothingstore.fragment.presenters.ProductDescriptionPresenter;
+import com.andreyjig.clothingstore.fragment.views.ProductDescriptionView;
+import com.andreyjig.clothingstore.activity.views.TitleHandlerView;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.model.Product;
-import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ProductDescriptionFragment extends FragmentWithErrorHandler implements
-        ProductDescriptionFragmentView{
+        ProductDescriptionView {
 
 
     @InjectPresenter
-    ProductDescriptionFragmentPresenter presenter;
+    ProductDescriptionPresenter presenter;
 
     @ProvidePresenter
-    public ProductDescriptionFragmentPresenter providePresenter (){
-        return new ProductDescriptionFragmentPresenter(ProductDescriptionFragmentArgs
-                .fromBundle(getArguments()), this);
+    public ProductDescriptionPresenter providePresenter (){
+        return new ProductDescriptionPresenter(ProductDescriptionFragmentArgs
+                .fromBundle(getArguments()), this, (TitleHandlerView)getContext());
     }
 
     private ImageView imageView;
@@ -58,11 +58,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     private ProgressBar progressBarName;
 
     public ProductDescriptionFragment() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -97,6 +92,7 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,11 +108,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
         });
         imageForward.setOnClickListener(v -> presenter.setImage(1));
         imageBack.setOnClickListener(v -> presenter.setImage(-1));
-    }
-
-    @Override
-    public void setTitle(String title) {
-        ((SetToolbarNameListener)getContext()).setNameToolbar(title);
     }
 
     @Override
@@ -151,21 +142,30 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     }
 
     @Override
-    public void setColorAdapter(ArrayList<Color> colors) {
+    public void setColors(ArrayList<Color> colors) {
         SpinnerPropertiesAdapter adapter =
                 new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(colors));
         spinnerColor.setAdapter(adapter);
     }
 
     @Override
-    public void setSizeAdapter(ArrayList<Size> sizes) {
+    public void setSizes(ArrayList<Size> sizes) {
         SpinnerPropertiesAdapter adapter =
                 new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(sizes));
         spinnerSize.setAdapter(adapter);
     }
 
     @Override
-    public void progressBarVisibility(int state) {
+    public void progressBarVisibility() {
+        progressBarState(View.VISIBLE);
+    }
+
+    @Override
+    public void progressBarInvisibility() {
+        progressBarState(View.INVISIBLE);
+    }
+
+    public void progressBarState(int state) {
         progressBarImage.setVisibility(state);
         progressBarManufacturer.setVisibility(state);
         progressBarDescription.setVisibility(state);

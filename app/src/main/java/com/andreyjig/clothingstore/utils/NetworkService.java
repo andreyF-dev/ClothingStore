@@ -1,7 +1,7 @@
 package com.andreyjig.clothingstore.utils;
 
-import com.andreyjig.clothingstore.fragment.model.CartFragmentPresenterInterface;
-import com.andreyjig.clothingstore.fragment.model.ProductDescriptionFragmentPresenterInterface;
+import com.andreyjig.clothingstore.fragment.model.CartHandlerInterface;
+import com.andreyjig.clothingstore.fragment.model.ProductDescriptionInterface;
 import com.andreyjig.clothingstore.model.Cart;
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.shell.CartShell;
@@ -33,32 +33,32 @@ public class NetworkService {
         return instance;
     }
 
-    public ProductJSON getJSONApi() {
+    private ProductJSON getJSONApi() {
         return retrofit.create(ProductJSON.class);
     }
 
-    public void getProduct(ProductDescriptionFragmentPresenterInterface presenter, int productId) {
+    public void getProduct(ProductDescriptionInterface presenter, int productId) {
         getJSONApi().getProduct(productId)
                 .enqueue(new Callback<ProductShell>() {
                     @Override
                     public void onResponse(Call<ProductShell> call, Response<ProductShell> response) {
                         if (response.isSuccessful()) {
                             Product product = response.body().getProduct();
-                            presenter.setProduct(product);
+                            presenter.setDownloadedProduct(product);
                         } else {
-                            presenter.setErrorDialog();
+                            presenter.setDownloadedProduct(null);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ProductShell> call, Throwable t) {
                         t.printStackTrace();
-                        presenter.setErrorDialog();
+                        presenter.setDownloadedProduct(null);
                     }
                 });
     }
 
-    public void getCart(CartFragmentPresenterInterface presenter) {
+    public void getCart(CartHandlerInterface presenter) {
         getJSONApi()
                 .getCart()
                 .enqueue(new Callback<CartShell>() {
@@ -67,16 +67,16 @@ public class NetworkService {
 
                         if (response.isSuccessful()) {
                             Cart cart = response.body().getCart();
-                            presenter.setCart(cart);
+                            presenter.setDownloadedCart(cart);
                         } else {
-                            presenter.setErrorDialog();
+                            presenter.setDownloadedCart(null);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CartShell> call, Throwable t) {
                         t.printStackTrace();
-                        presenter.setErrorDialog();
+                        presenter.setDownloadedCart(null);
                     }
                 });
     }

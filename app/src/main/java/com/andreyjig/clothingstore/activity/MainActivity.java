@@ -1,14 +1,21 @@
 package com.andreyjig.clothingstore.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import android.os.Bundle;
-import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 
-public class MainActivity extends AppCompatActivity implements SetToolbarNameListener {
+import android.os.Bundle;
+
+import com.andreyjig.clothingstore.R;
+import com.andreyjig.clothingstore.activity.presenters.TitleHandlerPresenter;
+import com.andreyjig.clothingstore.activity.views.TitleHandlerView;
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+
+public class MainActivity extends MvpAppCompatActivity implements TitleHandlerView {
+
+    @InjectPresenter
+    TitleHandlerPresenter titleHandlerPresenter;
 
     NavController navController;
 
@@ -26,7 +33,17 @@ public class MainActivity extends AppCompatActivity implements SetToolbarNameLis
     }
 
     @Override
-    public void setNameToolbar(String name) {
-        getSupportActionBar().setTitle(name);
+    public void getTitle(int id) {
+        titleHandlerPresenter.getTitle(getString(id));
+    }
+
+    @Override
+    public void getTitle(String title) {
+        titleHandlerPresenter.getTitle(title);
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        setTitle(title);
     }
 }

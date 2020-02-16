@@ -10,38 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
-import com.andreyjig.clothingstore.fragment.presenters.CartFragmentPresenter;
-import com.andreyjig.clothingstore.fragment.presenters.ProductDescriptionFragmentPresenter;
-import com.andreyjig.clothingstore.fragment.views.CartFragmentView;
+import com.andreyjig.clothingstore.fragment.presenters.CartPresenter;
+import com.andreyjig.clothingstore.fragment.views.CartView;
+import com.andreyjig.clothingstore.activity.views.TitleHandlerView;
 import com.andreyjig.clothingstore.model.ItemCard;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.Cart;
-import com.andreyjig.clothingstore.utils.SetToolbarNameListener;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 public class CartFragment extends FragmentWithErrorHandler implements ProductCardHolder.CardHolderCallback,
-        CartFragmentView{
+        CartView {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
 
     @InjectPresenter
-    CartFragmentPresenter presenter;
+    CartPresenter presenter;
 
     @ProvidePresenter
-    public CartFragmentPresenter providePresenter (){
-        return new CartFragmentPresenter( this);
+    CartPresenter providePresenter(){
+        return new CartPresenter(this, (TitleHandlerView)getContext());
     }
 
     public CartFragment(){
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -57,22 +50,26 @@ public class CartFragment extends FragmentWithErrorHandler implements ProductCar
         progressBar = view.findViewById(R.id.fragment_cart_progress_bar);
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ((SetToolbarNameListener)getContext()).setNameToolbar(getContext().getString(R.string.cart));
     }
 
     @Override
-    public void startProductionFragment(ItemCard card) {
+    public void getProductDetail(ItemCard card) {
         presenter.itemCardSelected(card, getView());
     }
 
     @Override
-    public void setCartAdapter(Cart cart) {
+    public void setCart(Cart cart) {
         CartAdapter cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
         recyclerView.setAdapter(cartAdapter);
     }
 
     @Override
-    public void progressBarVisibility(int state) {
-        progressBar.setVisibility(state);
+    public void progressBarVisibility() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void progressBarInvisible() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }
