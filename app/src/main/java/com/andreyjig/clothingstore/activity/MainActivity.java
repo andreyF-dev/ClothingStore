@@ -21,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        return Navigation.findNavController(this, R.id.nav_host_fragment_container).navigateUp();
+        return navController.navigateUp();
     }
 }
