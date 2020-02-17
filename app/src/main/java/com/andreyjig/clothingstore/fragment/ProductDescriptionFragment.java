@@ -3,7 +3,6 @@ package com.andreyjig.clothingstore.fragment;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
-import com.andreyjig.clothingstore.fragment.presenters.ProductDescriptionPresenter;
-import com.andreyjig.clothingstore.fragment.views.ProductDescriptionView;
-import com.andreyjig.clothingstore.activity.views.TitleHandlerView;
+import com.andreyjig.clothingstore.presenters.ProductDescriptionPresenter;
+import com.andreyjig.clothingstore.views.ProductDescriptionView;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.utils.ColorDrawer;
@@ -28,7 +26,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
-public class ProductDescriptionFragment extends FragmentWithErrorHandler implements
+public class ProductDescriptionFragment extends BaseHandlerFragment implements
         ProductDescriptionView {
 
 
@@ -38,7 +36,7 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     @ProvidePresenter
     ProductDescriptionPresenter providePresenter (){
         return new ProductDescriptionPresenter(ProductDescriptionFragmentArgs
-                .fromBundle(getArguments()), this, (TitleHandlerView)getContext());
+                .fromBundle(getArguments()));
     }
 
     private ImageView imageView;
@@ -119,7 +117,6 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
 
     @Override
     public void updateCurrentColor(int index) {
-        Log.d("Retrofit", "indexColor = " + index);
         spinnerColor.setSelection(index);
     }
 
@@ -196,5 +193,10 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     @Override
     public void setDefaultImage() {
         imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_photo));
+    }
+
+    @Override
+    public void errorDialogOnClick() {
+        presenter.errorDialogOnClick();
     }
 }

@@ -1,10 +1,8 @@
-package com.andreyjig.clothingstore.fragment.presenters;
+package com.andreyjig.clothingstore.presenters;
 
-import android.util.Log;
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
-import com.andreyjig.clothingstore.fragment.views.ErrorHandlerView;
-import com.andreyjig.clothingstore.fragment.views.ProductDescriptionView;
-import com.andreyjig.clothingstore.activity.views.TitleHandlerView;
+import com.andreyjig.clothingstore.model.handler.ProductDescription;
+import com.andreyjig.clothingstore.views.ProductDescriptionView;
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
 import com.andreyjig.clothingstore.model.product.Image;
@@ -31,14 +29,8 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private int colorId;
     private int sizeId;
     private int imageIndex;
-    private ErrorHandlerView errorHandlerView;
-    private TitleHandlerView titleHandlerView;
 
-    public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args,
-                                       ErrorHandlerView errorHandlerView,
-                                       TitleHandlerView titleHandlerView) {
-        this.errorHandlerView = errorHandlerView;
-        this.titleHandlerView = titleHandlerView;
+    public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
         variantId = args.getVariantId();
         title = args.getName();
@@ -47,7 +39,6 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        titleHandlerView.getTitle(title);
         getViewState().progressBarVisibility();
         getProduct();
     }
@@ -55,13 +46,29 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     @Override
     public void attachView(ProductDescriptionView view) {
         super.attachView(view);
+        getViewState().setTitle(title);
         if (product != null) {
             setProductDescription();
         }
     }
 
     private void getProduct() {
-        NetworkService.getInstance().getProduct(this::setProduct, productId);
+        ProductDescription productDescription = new ProductDescription() {
+            @Override
+            public void setDownloadedProduct(Product product) {
+                setProduct(product);
+            }
+
+            @Override
+            public void setErrorDownloaded(String errorText) {
+                setErrorDialog(errorText);
+            }
+        };
+        NetworkService.getInstance().getProduct(productDescription, productId);
+    }
+
+    private void setErrorDialog(String errorText){
+        getViewState().setShowErrorDialog(errorText);
     }
 
     public void setProduct(Product product) {
@@ -73,7 +80,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             sizeId = variant.getSizeId();
             setProductDescription();
         } else {
-            errorHandlerView.getShowErrorDialog(this::getProduct);
+            setErrorDialog("Product object is null");
         }
     }
 
@@ -82,6 +89,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getColors();
     }
 
+    public void errorDialogOnClick(){
+        getProduct();
+    }
     private void getColors() {
         colors = ProductHelper.getAllColor(product);
         int index = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
@@ -142,7 +152,6 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
                 imageIndex = images.size() - 1;
             }
             String imageUrl = images.get(imageIndex).getBig();
-            Log.d("Retrofit", "imageIndex in= " + imageIndex);
             getViewState().updateImage(imageUrl);
         } else {
             getViewState().imageButtonInvisibility();

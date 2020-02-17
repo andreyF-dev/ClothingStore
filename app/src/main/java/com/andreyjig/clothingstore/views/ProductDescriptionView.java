@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.fragment.views;
+package com.andreyjig.clothingstore.views;
 
 import com.andreyjig.clothingstore.model.Product;
 import com.andreyjig.clothingstore.model.product.Color;
@@ -10,7 +10,7 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import java.util.ArrayList;
 
-public interface ProductDescriptionView extends MvpView {
+public interface ProductDescriptionView extends MvpView, ErrorHandlerView, TitleHandlerView {
 
     @StateStrategyType(AddToEndStrategy.class)
     void updateProduct(Product product);

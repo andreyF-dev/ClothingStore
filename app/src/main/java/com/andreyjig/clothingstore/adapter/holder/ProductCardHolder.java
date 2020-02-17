@@ -60,11 +60,11 @@ public class ProductCardHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        callback.getProductDetail(card);
+        callback.productCardHolderClick(card);
     }
 
     public interface CardHolderCallback {
-        void getProductDetail(ItemCard card);
+        void productCardHolderClick(ItemCard card);
     }
 
 }

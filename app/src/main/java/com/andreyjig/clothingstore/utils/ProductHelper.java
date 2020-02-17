@@ -7,13 +7,14 @@ import com.andreyjig.clothingstore.model.product.Size;
 import com.andreyjig.clothingstore.model.product.Variant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductHelper {
 
     public static ArrayList<Color> getAllColor(Product product){
 
         HashMap<Integer, Color> colors = new HashMap<>();
-        ArrayList<Variant> variants = product.getVariants();;
+        ArrayList<Variant> variants = product.getVariants();
         for (Variant variant: variants){
             colors.put(variant.getColorId(), variant.getColor());
         }
@@ -50,7 +51,7 @@ public class ProductHelper {
         }
         return null;
     }
-    public static int getIndexById(ArrayList<Properties> properties, int id){
+    public static int getIndexById(List<Properties> properties, int id){
         for (int index = 0; index < properties.size(); index++){
             if (properties.get(index).getId() == id){
                 return index;

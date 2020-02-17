@@ -1,15 +1,14 @@
-package com.andreyjig.clothingstore.activity.views;
+package com.andreyjig.clothingstore.views;
 
 import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
+@StateStrategyType(SkipStrategy.class)
 public interface TitleHandlerView extends MvpView{
-    @StateStrategyType(AddToEndStrategy.class)
-    void getTitle(int id);
-    @StateStrategyType(AddToEndStrategy.class)
-    void getTitle(String title);
+    void setTitle(int id);
+    void setTitle(String title);
     @StateStrategyType(SingleStateStrategy.class)
     void updateTitle(String title);
 }

@@ -3,6 +3,7 @@ package com.andreyjig.clothingstore.fragment;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,18 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
-import com.andreyjig.clothingstore.fragment.presenters.CartPresenter;
-import com.andreyjig.clothingstore.fragment.views.CartView;
-import com.andreyjig.clothingstore.activity.views.TitleHandlerView;
 import com.andreyjig.clothingstore.model.ItemCard;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
 import com.andreyjig.clothingstore.model.Cart;
+import com.andreyjig.clothingstore.presenters.CartPresenter;
+import com.andreyjig.clothingstore.views.CartView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 
-public class CartFragment extends FragmentWithErrorHandler implements ProductCardHolder.CardHolderCallback,
-        CartView {
+public class CartFragment extends BaseHandlerFragment implements
+        ProductCardHolder.CardHolderCallback, CartView {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -29,10 +28,6 @@ public class CartFragment extends FragmentWithErrorHandler implements ProductCar
     @InjectPresenter
     CartPresenter presenter;
 
-    @ProvidePresenter
-    CartPresenter providePresenter(){
-        return new CartPresenter(this, (TitleHandlerView)getContext());
-    }
 
     public CartFragment(){
     }
@@ -53,11 +48,6 @@ public class CartFragment extends FragmentWithErrorHandler implements ProductCar
     }
 
     @Override
-    public void getProductDetail(ItemCard card) {
-        presenter.itemCardSelected(card, getView());
-    }
-
-    @Override
     public void setCart(Cart cart) {
         CartAdapter cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
         recyclerView.setAdapter(cartAdapter);
@@ -71,5 +61,22 @@ public class CartFragment extends FragmentWithErrorHandler implements ProductCar
     @Override
     public void progressBarInvisible() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void productCardHolderClick(ItemCard card) {
+        if (getView() != null) {
+            CartFragmentDirections.ActionCartFragmentToProductFragment action =
+                    CartFragmentDirections.actionCartFragmentToProductFragment();
+            action.setProductId(card.getProductId())
+                    .setVariantId(card.getProductVariantId())
+                    .setName(card.getProduct().getName());
+            Navigation.findNavController(getView()).navigate(action);
+        }
+    }
+
+    @Override
+    public void errorDialogOnClick() {
+        presenter.errorDialogOnClick();
     }
 }
