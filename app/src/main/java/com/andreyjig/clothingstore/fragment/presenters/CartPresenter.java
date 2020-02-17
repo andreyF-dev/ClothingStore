@@ -46,7 +46,7 @@ public class CartPresenter extends MvpPresenter<CartView>{
             getViewState().progressBarInvisible();
             getViewState().setCart(cart);
         } else {
-            errorHandlerView.getErrorDialog(this::getCart);
+            errorHandlerView.getShowErrorDialog(this::getCart);
         }
     }
 

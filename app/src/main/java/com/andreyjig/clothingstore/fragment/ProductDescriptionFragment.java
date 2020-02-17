@@ -111,30 +111,30 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     }
 
     @Override
-    public void setProduct(Product product) {
+    public void updateProduct(Product product) {
         textViewDescription.setText(product.getDescription());
         textViewManufacturer.setText(product.getManufacturer().getName());
         textViewMaterial.setText(product.getMaterial().getName());
     }
 
     @Override
-    public void setColor(int index) {
+    public void updateCurrentColor(int index) {
         Log.d("Retrofit", "indexColor = " + index);
         spinnerColor.setSelection(index);
     }
 
     @Override
-    public void setSize(int index) {
+    public void updateCurrentSize(int index) {
         spinnerSize.setSelection(index);
     }
 
     @Override
-    public void setName(String string) {
+    public void updateVariantName(String string) {
         textViewName.setText(string);
     }
 
     @Override
-    public void setImage(String imageUrl) {
+    public void updateImage(String imageUrl) {
         Picasso.get()
                 .load(imageUrl)
                 .noPlaceholder()
@@ -142,14 +142,14 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     }
 
     @Override
-    public void setColors(ArrayList<Color> colors) {
+    public void updateColors(ArrayList<Color> colors) {
         SpinnerPropertiesAdapter adapter =
                 new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(colors));
         spinnerColor.setAdapter(adapter);
     }
 
     @Override
-    public void setSizes(ArrayList<Size> sizes) {
+    public void updateSizes(ArrayList<Size> sizes) {
         SpinnerPropertiesAdapter adapter =
                 new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(sizes));
         spinnerSize.setAdapter(adapter);
@@ -174,12 +174,21 @@ public class ProductDescriptionFragment extends FragmentWithErrorHandler impleme
     }
 
     @Override
-    public void setColorDrawer(String color) {
+    public void updateColorDrawer(String color) {
         frameLayout.addView(new ColorDrawer(getContext(), color));
     }
 
     @Override
-    public void imageButtonVisibility(int state) {
+    public void imageButtonVisibility() {
+        imageButtonState(View.VISIBLE);
+    }
+
+    @Override
+    public void imageButtonInvisibility() {
+        imageButtonState(View.INVISIBLE);
+    }
+
+    private void imageButtonState(int state){
         imageBack.setVisibility(state);
         imageForward.setVisibility(state);
     }

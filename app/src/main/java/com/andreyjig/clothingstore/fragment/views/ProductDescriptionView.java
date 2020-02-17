@@ -13,27 +13,29 @@ import java.util.ArrayList;
 public interface ProductDescriptionView extends MvpView {
 
     @StateStrategyType(AddToEndStrategy.class)
-    void setProduct (Product product);
+    void updateProduct(Product product);
     @StateStrategyType(SkipStrategy.class)
-    void setColor(int index);
+    void updateCurrentColor(int index);
     @StateStrategyType(SkipStrategy.class)
-    void setSize(int index);
+    void updateCurrentSize(int index);
     @StateStrategyType(SkipStrategy.class)
-    void setName(String string);
+    void updateVariantName(String string);
     @StateStrategyType(SkipStrategy.class)
-    void setImage(String imageUrl);
+    void updateImage(String imageUrl);
     @StateStrategyType(SkipStrategy.class)
-    void setColors(ArrayList<Color> colors);
+    void updateColors(ArrayList<Color> colors);
     @StateStrategyType(SkipStrategy.class)
-    void setSizes(ArrayList<Size> sizes);
+    void updateSizes(ArrayList<Size> sizes);
     @StateStrategyType(AddToEndStrategy.class)
     void progressBarVisibility();
     @StateStrategyType(SingleStateStrategy.class)
     void progressBarInvisibility();
     @StateStrategyType(SkipStrategy.class)
-    void setColorDrawer(String color);
+    void updateColorDrawer(String color);
     @StateStrategyType(SkipStrategy.class)
-    void imageButtonVisibility(int state);
+    void imageButtonVisibility();
+    @StateStrategyType(SkipStrategy.class)
+    void imageButtonInvisibility();
     @StateStrategyType(SkipStrategy.class)
     void setDefaultImage();
 }

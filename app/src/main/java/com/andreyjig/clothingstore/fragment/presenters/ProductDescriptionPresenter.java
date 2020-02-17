@@ -1,7 +1,6 @@
 package com.andreyjig.clothingstore.fragment.presenters;
 
 import android.util.Log;
-import android.view.View;
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
 import com.andreyjig.clothingstore.fragment.views.ErrorHandlerView;
 import com.andreyjig.clothingstore.fragment.views.ProductDescriptionView;
@@ -74,34 +73,34 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             sizeId = variant.getSizeId();
             setProductDescription();
         } else {
-            errorHandlerView.getErrorDialog(this::getProduct);
+            errorHandlerView.getShowErrorDialog(this::getProduct);
         }
     }
 
     private void setProductDescription(){
-        getViewState().setProduct(product);
+        getViewState().updateProduct(product);
         getColors();
     }
 
     private void getColors() {
         colors = ProductHelper.getAllColor(product);
         int index = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
-        getViewState().setColors(colors);
-        getViewState().setColor(index);
+        getViewState().updateColors(colors);
+        getViewState().updateCurrentColor(index);
     }
 
     public void setColor(int index) {
         colorId = colors.get(index).getId();
         String color = colors.get(index).getHashCode();
-        getViewState().setColorDrawer(color);
+        getViewState().updateColorDrawer(color);
         getSize();
     }
 
     private void getSize() {
         sizes = ProductHelper.getAllSizes(product, colorId);
         int index = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
-        getViewState().setSizes(sizes);
-        getViewState().setSize(index);
+        getViewState().updateSizes(sizes);
+        getViewState().updateCurrentSize(index);
     }
 
     public void setSize(int index) {
@@ -117,9 +116,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setNameProduct() {
         if (!variant.getName().isEmpty()) {
-            getViewState().setName(variant.getName());
+            getViewState().updateVariantName(variant.getName());
         } else {
-            getViewState().setName(product.getName());
+            getViewState().updateVariantName(product.getName());
         }
     }
 
@@ -137,16 +136,16 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     public void setImage(int step) {
         if (imageIndex != NO_IMAGE) {
-            getViewState().imageButtonVisibility(View.VISIBLE);
+            getViewState().imageButtonVisibility();
             imageIndex = (imageIndex + step) % images.size();
             if (imageIndex == -1) {
                 imageIndex = images.size() - 1;
             }
             String imageUrl = images.get(imageIndex).getBig();
             Log.d("Retrofit", "imageIndex in= " + imageIndex);
-            getViewState().setImage(imageUrl);
+            getViewState().updateImage(imageUrl);
         } else {
-            getViewState().imageButtonVisibility(View.INVISIBLE);
+            getViewState().imageButtonInvisibility();
             getViewState().setDefaultImage();
         }
     }

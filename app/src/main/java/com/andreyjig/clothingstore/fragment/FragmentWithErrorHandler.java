@@ -21,12 +21,12 @@ public class FragmentWithErrorHandler extends MvpAppCompatFragment implements Er
     }
 
     @Override
-    public void getErrorDialog(ErrorHandlerInterface listener) {
+    public void getShowErrorDialog(ErrorHandlerInterface listener) {
         errorHandlerPresenter.setErrorDialog(listener);
     }
 
     @Override
-    public void setErrorDialog(ErrorHandlerInterface listener) {
+    public void setShowErrorDialog(ErrorHandlerInterface listener) {
         String text = getString(R.string.error_download);
         snackbar = Snackbar.make(getView(), text, Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(getString(R.string.download_now), v -> {

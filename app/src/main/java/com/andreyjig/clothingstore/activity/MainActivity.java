@@ -43,7 +43,7 @@ public class MainActivity extends MvpAppCompatActivity implements TitleHandlerVi
     }
 
     @Override
-    public void setToolbarTitle(String title) {
+    public void updateTitle(String title) {
         setTitle(title);
     }
 }

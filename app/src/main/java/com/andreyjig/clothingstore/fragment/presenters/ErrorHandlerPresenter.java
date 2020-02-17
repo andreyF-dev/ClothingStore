@@ -13,7 +13,7 @@ public class ErrorHandlerPresenter extends MvpPresenter<ErrorHandlerView> {
     }
 
     public void setErrorDialog(ErrorHandlerInterface listener){
-        getViewState().setErrorDialog(listener);
+        getViewState().setShowErrorDialog(listener);
     }
 
     public void setHideErrorDialog(){

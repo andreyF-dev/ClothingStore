@@ -11,5 +11,5 @@ public interface TitleHandlerView extends MvpView{
     @StateStrategyType(AddToEndStrategy.class)
     void getTitle(String title);
     @StateStrategyType(SingleStateStrategy.class)
-    void setToolbarTitle(String title);
+    void updateTitle(String title);
 }

@@ -9,9 +9,9 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 public interface ErrorHandlerView extends MvpView{
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void getErrorDialog(ErrorHandlerInterface listener);
+    void getShowErrorDialog(ErrorHandlerInterface listener);
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void setErrorDialog(ErrorHandlerInterface listener);
+    void setShowErrorDialog(ErrorHandlerInterface listener);
     @StateStrategyType(AddToEndSingleStrategy.class)
     void getHideErrorDialog();
     @StateStrategyType(SingleStateStrategy.class)
