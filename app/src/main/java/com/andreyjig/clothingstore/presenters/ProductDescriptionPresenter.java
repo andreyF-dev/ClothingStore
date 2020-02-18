@@ -96,7 +96,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         colors = ProductHelper.getAllColor(product);
         int index = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
         getViewState().updateColors(colors);
-        getViewState().updateCurrentColor(index);
+        if (index != 0) {
+            getViewState().updateCurrentColor(index);
+        }
     }
 
     public void setColor(int index) {
@@ -110,7 +112,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         sizes = ProductHelper.getAllSizes(product, colorId);
         int index = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
         getViewState().updateSizes(sizes);
-        getViewState().updateCurrentSize(index);
+        if (index != 0) {
+            getViewState().updateCurrentSize(index);
+        }
     }
 
     public void setSize(int index) {
