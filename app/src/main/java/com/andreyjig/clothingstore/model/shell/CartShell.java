@@ -4,8 +4,6 @@ import com.andreyjig.clothingstore.model.Cart;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class CartShell {
 
     @SerializedName("cart")

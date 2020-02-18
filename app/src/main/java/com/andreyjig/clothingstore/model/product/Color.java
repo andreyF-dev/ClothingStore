@@ -1,4 +1,3 @@
-
 package com.andreyjig.clothingstore.model.product;
 
 import com.google.gson.annotations.Expose;

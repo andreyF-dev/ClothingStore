@@ -1,9 +1,6 @@
-
 package com.andreyjig.clothingstore.model;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import com.andreyjig.clothingstore.model.product.Manufacturer;
 import com.andreyjig.clothingstore.model.product.Material;
 import com.andreyjig.clothingstore.model.product.Variant;

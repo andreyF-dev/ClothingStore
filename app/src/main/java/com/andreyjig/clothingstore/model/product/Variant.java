@@ -1,9 +1,6 @@
-
 package com.andreyjig.clothingstore.model.product;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -27,7 +24,6 @@ public class Variant extends Properties{
     @SerializedName("photos")
     @Expose
     private ArrayList<Image> photos = null;
-
 
     public Integer getId() {
         return id;

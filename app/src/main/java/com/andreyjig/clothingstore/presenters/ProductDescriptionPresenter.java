@@ -39,6 +39,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+        getViewState().setTitle(title);
         getViewState().progressBarVisibility();
         getProduct();
     }
@@ -46,7 +47,6 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     @Override
     public void attachView(ProductDescriptionView view) {
         super.attachView(view);
-        getViewState().setTitle(title);
         if (product != null) {
             setProductDescription();
         }
@@ -92,28 +92,32 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     public void errorDialogOnClick(){
         getProduct();
     }
+
     private void getColors() {
         colors = ProductHelper.getAllColor(product);
-        int index = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
+        int indexCurrentColor = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
         getViewState().updateColors(colors);
-        if (index != 0) {
-            getViewState().updateCurrentColor(index);
+        if (indexCurrentColor != 0) {
+            getViewState().updateCurrentColor(indexCurrentColor);
         }
     }
 
     public void setColor(int index) {
         colorId = colors.get(index).getId();
+        setColorDrawer(index);
+    }
+
+    private void setColorDrawer(int index){
         String color = colors.get(index).getHashCode();
         getViewState().updateColorDrawer(color);
         getSize();
     }
-
     private void getSize() {
         sizes = ProductHelper.getAllSizes(product, colorId);
-        int index = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
+        int indexCurrentSize = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
         getViewState().updateSizes(sizes);
-        if (index != 0) {
-            getViewState().updateCurrentSize(index);
+        if (indexCurrentSize != 0) {
+            getViewState().updateCurrentSize(indexCurrentSize);
         }
     }
 

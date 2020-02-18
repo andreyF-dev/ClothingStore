@@ -15,13 +15,8 @@ public class CartPresenter extends MvpPresenter<CartView>{
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().progressBarVisibility();
-        getCart();
-    }
-
-    @Override
-    public void attachView(CartView view) {
-        super.attachView(view);
         getViewState().setTitle(R.string.cart);
+        getCart();
     }
 
     private void getCart () {
