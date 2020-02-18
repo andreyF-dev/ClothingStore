@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ProductDescriptionPresenter extends MvpPresenter<ProductDescriptionView> {
 
     private final int NO_IMAGE = -2;
+    private final int NO_STEP = 0;
     private String title;
     private Product product;
     private Variant variant;
@@ -71,6 +72,10 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getViewState().setShowErrorDialog(errorText);
     }
 
+    public void errorDialogOnClick(){
+        getProduct();
+    }
+
     public void setProduct(Product product) {
         if (product != null) {
             getViewState().progressBarInvisibility();
@@ -79,6 +84,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             colorId = variant.getColorId();
             sizeId = variant.getSizeId();
             setProductDescription();
+            getColors();
         } else {
             setErrorDialog("Product object is null");
         }
@@ -86,19 +92,18 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setProductDescription(){
         getViewState().updateProduct(product);
-        getColors();
-    }
-
-    public void errorDialogOnClick(){
-        getProduct();
     }
 
     private void getColors() {
         colors = ProductHelper.getAllColor(product);
         int indexCurrentColor = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
         getViewState().updateColors(colors);
-        if (indexCurrentColor != 0) {
-            getViewState().updateCurrentColor(indexCurrentColor);
+        setBeginColor(indexCurrentColor);
+    }
+
+    private void setBeginColor(int index){
+        if (index != 0) {
+            getViewState().updateCurrentColor(index);
         }
     }
 
@@ -112,12 +117,17 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getViewState().updateColorDrawer(color);
         getSize();
     }
+
     private void getSize() {
         sizes = ProductHelper.getAllSizes(product, colorId);
         int indexCurrentSize = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
         getViewState().updateSizes(sizes);
-        if (indexCurrentSize != 0) {
-            getViewState().updateCurrentSize(indexCurrentSize);
+        setBeginSize(indexCurrentSize);
+    }
+
+    private void setBeginSize(int index){
+        if (index != 0) {
+            getViewState().updateCurrentSize(index);
         }
     }
 
@@ -149,7 +159,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
                 imageIndex = NO_IMAGE;
             }
         }
-        setImage(0);
+        setImage(NO_STEP);
     }
 
     public void setImage(int step) {
