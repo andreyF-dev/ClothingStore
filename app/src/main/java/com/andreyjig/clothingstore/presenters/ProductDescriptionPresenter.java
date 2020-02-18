@@ -49,7 +49,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     public void attachView(ProductDescriptionView view) {
         super.attachView(view);
         if (product != null) {
-            setProductDescription();
+            setColors();
         }
     }
 
@@ -84,7 +84,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             colorId = variant.getColorId();
             sizeId = variant.getSizeId();
             setProductDescription();
-            getColors();
+            setColors();
         } else {
             setErrorDialog("Product object is null");
         }
@@ -94,7 +94,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getViewState().updateProduct(product);
     }
 
-    private void getColors() {
+    private void setColors() {
         colors = ProductHelper.getAllColor(product);
         int indexCurrentColor = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
         getViewState().updateColors(colors);
@@ -115,10 +115,10 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private void setColorDrawer(int index){
         String color = colors.get(index).getHashCode();
         getViewState().updateColorDrawer(color);
-        getSize();
+        setSizes();
     }
 
-    private void getSize() {
+    private void setSizes() {
         sizes = ProductHelper.getAllSizes(product, colorId);
         int indexCurrentSize = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
         getViewState().updateSizes(sizes);
