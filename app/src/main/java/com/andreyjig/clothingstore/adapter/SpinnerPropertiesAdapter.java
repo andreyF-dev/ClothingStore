@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.andreyjig.clothingstore.model.product.Properties;
+import com.andreyjig.clothingstore.entity.product.Properties;
 import java.util.ArrayList;
 import java.util.Objects;
 

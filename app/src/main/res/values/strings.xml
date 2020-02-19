@@ -11,8 +11,10 @@
     <string name="description">Описание</string>
     <string name="material">Материал</string>
     <string name="error_download">Ошибка загрузки:</string>
-    <string name="download_now">Загрузить снова</string>
+    <string name="download_now">Попробовать еще раз</string>
     <string name="count">Количество - %d</string>
     <string name="price">Цена - %d</string>
 
+    <string name="error_no_get_message">Нет сети. Проверьте соединение и попробуйте снова.</string>
+    <string name="error_get_message">Упс! Что-то пошло не так.</string>
 </resources>

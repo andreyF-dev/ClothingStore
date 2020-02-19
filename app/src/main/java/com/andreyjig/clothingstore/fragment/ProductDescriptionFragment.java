@@ -14,13 +14,13 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
-import com.andreyjig.clothingstore.presenters.ProductDescriptionPresenter;
-import com.andreyjig.clothingstore.views.ProductDescriptionView;
-import com.andreyjig.clothingstore.model.product.Color;
-import com.andreyjig.clothingstore.model.product.Size;
-import com.andreyjig.clothingstore.utils.ColorDrawer;
+import com.andreyjig.clothingstore.presenter.ProductDescriptionPresenter;
+import com.andreyjig.clothingstore.view.ProductDescriptionView;
+import com.andreyjig.clothingstore.entity.product.Color;
+import com.andreyjig.clothingstore.entity.product.Size;
+import com.andreyjig.clothingstore.util.ColorDrawer;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.model.Product;
+import com.andreyjig.clothingstore.entity.Product;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.squareup.picasso.Picasso;
@@ -104,8 +104,8 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
 
             }
         });
-        imageForward.setOnClickListener(v -> presenter.setImage(1));
-        imageBack.setOnClickListener(v -> presenter.setImage(-1));
+        imageForward.setOnClickListener(v -> presenter.showImage(1));
+        imageBack.setOnClickListener(v -> presenter.showImage(-1));
     }
 
     @Override
@@ -153,12 +153,12 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void progressBarVisibility() {
+    public void showProgressBar() {
         progressBarState(View.VISIBLE);
     }
 
     @Override
-    public void progressBarInvisibility() {
+    public void hideProgressBar() {
         progressBarState(View.INVISIBLE);
     }
 
@@ -176,12 +176,12 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void imageButtonVisibility() {
+    public void showImageButton() {
         imageButtonState(View.VISIBLE);
     }
 
     @Override
-    public void imageButtonInvisibility() {
+    public void hideImageButton() {
         imageButtonState(View.INVISIBLE);
     }
 
@@ -191,7 +191,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void setDefaultImage() {
+    public void showDefaultImage() {
         imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_photo));
     }
 

@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.model.ItemCard;
-import com.andreyjig.clothingstore.utils.ColorDrawer;
+import com.andreyjig.clothingstore.entity.ItemCard;
+import com.andreyjig.clothingstore.util.ColorDrawer;
 import com.squareup.picasso.Picasso;
 
 public class ProductCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

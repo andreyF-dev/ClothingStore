@@ -12,8 +12,8 @@ import com.andreyjig.clothingstore.adapter.holder.PlaceOrderHolder;
 import com.andreyjig.clothingstore.adapter.holder.PriceHolder;
 import com.andreyjig.clothingstore.adapter.model.PlaceOrder;
 import com.andreyjig.clothingstore.adapter.model.TotalPrice;
-import com.andreyjig.clothingstore.model.Cart;
-import com.andreyjig.clothingstore.model.ItemCard;
+import com.andreyjig.clothingstore.entity.Cart;
+import com.andreyjig.clothingstore.entity.ItemCard;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

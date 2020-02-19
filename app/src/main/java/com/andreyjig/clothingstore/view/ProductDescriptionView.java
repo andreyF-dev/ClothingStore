@@ -1,0 +1,41 @@
+package com.andreyjig.clothingstore.view;
+
+import com.andreyjig.clothingstore.entity.Product;
+import com.andreyjig.clothingstore.entity.product.Color;
+import com.andreyjig.clothingstore.entity.product.Size;
+import com.arellomobile.mvp.MvpView;
+import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import java.util.ArrayList;
+
+public interface ProductDescriptionView extends MvpView, BaseHandlerView{
+
+    @StateStrategyType(AddToEndStrategy.class)
+    void updateProduct(Product product);
+    @StateStrategyType(SkipStrategy.class)
+    void updateCurrentColor(int index);
+    @StateStrategyType(SkipStrategy.class)
+    void updateCurrentSize(int index);
+    @StateStrategyType(SkipStrategy.class)
+    void updateVariantName(String string);
+    @StateStrategyType(SkipStrategy.class)
+    void updateImage(String imageUrl);
+    @StateStrategyType(SkipStrategy.class)
+    void updateColors(ArrayList<Color> colors);
+    @StateStrategyType(SkipStrategy.class)
+    void updateSizes(ArrayList<Size> sizes);
+    @StateStrategyType(AddToEndStrategy.class)
+    void showProgressBar();
+    @StateStrategyType(SingleStateStrategy.class)
+    void hideProgressBar();
+    @StateStrategyType(SkipStrategy.class)
+    void updateColorDrawer(String color);
+    @StateStrategyType(SkipStrategy.class)
+    void showImageButton();
+    @StateStrategyType(SkipStrategy.class)
+    void hideImageButton();
+    @StateStrategyType(SkipStrategy.class)
+    void showDefaultImage();
+}

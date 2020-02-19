@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
-import com.andreyjig.clothingstore.model.ItemCard;
+import com.andreyjig.clothingstore.entity.ItemCard;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.adapter.CartAdapter;
-import com.andreyjig.clothingstore.model.Cart;
-import com.andreyjig.clothingstore.presenters.CartPresenter;
-import com.andreyjig.clothingstore.views.CartView;
+import com.andreyjig.clothingstore.entity.Cart;
+import com.andreyjig.clothingstore.presenter.CartPresenter;
+import com.andreyjig.clothingstore.view.CartView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 public class CartFragment extends BaseHandlerFragment implements
@@ -48,18 +48,18 @@ public class CartFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void setCart(Cart cart) {
+    public void updateCart(Cart cart) {
         CartAdapter cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
         recyclerView.setAdapter(cartAdapter);
     }
 
     @Override
-    public void progressBarVisibility() {
+    public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void progressBarInvisible() {
+    public void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
     }
 

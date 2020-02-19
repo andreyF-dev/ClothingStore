@@ -1,24 +1,17 @@
 package com.andreyjig.clothingstore.fragment;
 
-import android.util.Log;
-
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.presenters.ErrorHandlerPresenter;
-import com.andreyjig.clothingstore.presenters.TitleHandlerPresenter;
-import com.andreyjig.clothingstore.views.ErrorHandlerView;
-import com.andreyjig.clothingstore.views.TitleHandlerView;
+import com.andreyjig.clothingstore.presenter.BaseHandlerPresenter;
+import com.andreyjig.clothingstore.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.google.android.material.snackbar.Snackbar;
 
 public abstract class BaseHandlerFragment extends MvpAppCompatFragment
-        implements ErrorHandlerView, TitleHandlerView {
+        implements BaseHandlerView{
 
     @InjectPresenter
-    ErrorHandlerPresenter errorHandlerPresenter;
-
-    @InjectPresenter
-    TitleHandlerPresenter titleHandlerPresenter;
+    BaseHandlerPresenter baseHandlerPresenter;
 
     private Snackbar snackbar;
 
@@ -29,14 +22,14 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
     }
 
     @Override
-    public void setShowErrorDialog(String errorText) {
-        errorHandlerPresenter.setErrorDialog(errorText);
+    public void setShowErrorDialog(int errorMessageId) {
+        baseHandlerPresenter.setErrorDialog(errorMessageId);
     }
 
     @Override
-    public void showErrorDialog(String errorText) {
+    public void showErrorDialog(int errorMessageId) {
         if (getView() != null) {
-            String text = getString(R.string.error_download) + " " + errorText;
+            String text = getString(errorMessageId);
             snackbar = Snackbar.make(getView(), text, Snackbar.LENGTH_INDEFINITE);
             snackbar.setAction(getString(R.string.download_now), v -> {
                 errorDialogOnClick();
@@ -49,7 +42,7 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
 
     @Override
     public void setHideErrorDialog() {
-        errorHandlerPresenter.setHideErrorDialog();
+        baseHandlerPresenter.setHideErrorDialog();
     }
 
     @Override
@@ -61,17 +54,16 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
 
     @Override
     public void setTitle(int id) {
-        titleHandlerPresenter.setTitle(getString(id));
+        baseHandlerPresenter.setTitle(getString(id));
     }
 
     @Override
     public void setTitle(String title) {
-        titleHandlerPresenter.setTitle(title);
+        baseHandlerPresenter.setTitle(title);
     }
 
     @Override
     public void updateTitle(String title) {
-        Log.d("Retrofit", "update Title");
         if (getActivity() != null){
             getActivity().setTitle(title);
         }
