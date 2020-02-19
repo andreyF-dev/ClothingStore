@@ -4,7 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
-public class Image{
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
+
+@RealmClass
+public class Image implements RealmModel {
 
     @SerializedName("id")
     @Expose

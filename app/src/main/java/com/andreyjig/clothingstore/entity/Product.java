@@ -1,13 +1,17 @@
 package com.andreyjig.clothingstore.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 import com.andreyjig.clothingstore.entity.product.Manufacturer;
 import com.andreyjig.clothingstore.entity.product.Material;
 import com.andreyjig.clothingstore.entity.product.Variant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import io.realm.RealmList;
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
 
-public class Product {
+@RealmClass
+public class Product implements RealmModel {
 
     @SerializedName("id")
     @Expose
@@ -35,7 +39,7 @@ public class Product {
     private Material material;
     @SerializedName("variants")
     @Expose
-    private ArrayList<Variant> variants = null;
+    private RealmList<Variant> variants = null;
 
     public Integer getId() {
         return id;
@@ -101,11 +105,11 @@ public class Product {
         this.material = material;
     }
 
-    public ArrayList<Variant> getVariants() {
+    public List<Variant> getVariants() {
         return variants;
     }
 
-    public void setVariants(ArrayList<Variant> variants) {
+    public void setVariants(RealmList<Variant> variants) {
         this.variants = variants;
     }
 

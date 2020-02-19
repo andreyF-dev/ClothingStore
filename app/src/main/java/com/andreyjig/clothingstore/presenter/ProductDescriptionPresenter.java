@@ -96,7 +96,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setColors() {
         colors = ProductHelper.getAllColor(product);
-        int indexCurrentColor = ProductHelper.getIndexById(new ArrayList<>(colors), colorId);
+        int indexCurrentColor = ProductHelper.getIndexColorById(colors, colorId);
         getViewState().updateColors(colors);
         setBeginColor(indexCurrentColor);
     }
@@ -120,7 +120,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setSizes() {
         sizes = ProductHelper.getAllSizes(product, colorId);
-        int indexCurrentSize = ProductHelper.getIndexById(new ArrayList<>(sizes), sizeId);
+        int indexCurrentSize = ProductHelper.getIndexSizeById(sizes, sizeId);
         getViewState().updateSizes(sizes);
         setBeginSize(indexCurrentSize);
     }
@@ -152,7 +152,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setImageId() {
         if (images == null || !images.equals(variant.getPhotos())) {
-            images = variant.getPhotos();
+            images = new ArrayList<>(variant.getPhotos());
             if (images != null && images.size() > 0) {
                 imageIndex = 0;
             } else {

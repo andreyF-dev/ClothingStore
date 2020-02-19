@@ -8,15 +8,18 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.andreyjig.clothingstore.entity.product.Properties;
+
+import com.andreyjig.clothingstore.entity.product.Color;
+import com.andreyjig.clothingstore.entity.product.Size;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SpinnerPropertiesAdapter extends ArrayAdapter<Properties> {
+public class SpinnerColorAdapter extends ArrayAdapter<Color> {
 
     private Context context;
 
-    public SpinnerPropertiesAdapter(@NonNull Context context, @NonNull ArrayList<Properties> objects) {
+    public SpinnerColorAdapter(@NonNull Context context, @NonNull ArrayList<Color> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
         this.context = context;
     }
@@ -33,13 +36,15 @@ public class SpinnerPropertiesAdapter extends ArrayAdapter<Properties> {
     }
 
     private View getItemView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
+        Color color = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(context)
                     .inflate(android.R.layout.simple_list_item_1, parent, false);
         }
         ((TextView) convertView.findViewById(android.R.id.text1))
-                .setText(Objects.requireNonNull(getItem(position)).getName());
+                .setText(color.getName());
         return convertView;
     }
+
 
 }

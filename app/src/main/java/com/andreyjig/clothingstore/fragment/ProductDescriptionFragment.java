@@ -13,7 +13,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.andreyjig.clothingstore.adapter.SpinnerPropertiesAdapter;
+import com.andreyjig.clothingstore.adapter.SpinnerColorAdapter;
+import com.andreyjig.clothingstore.adapter.SpinnerSizeAdapter;
 import com.andreyjig.clothingstore.presenter.ProductDescriptionPresenter;
 import com.andreyjig.clothingstore.view.ProductDescriptionView;
 import com.andreyjig.clothingstore.entity.product.Color;
@@ -140,15 +141,15 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
 
     @Override
     public void updateColors(ArrayList<Color> colors) {
-        SpinnerPropertiesAdapter adapter =
-                new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(colors));
+        SpinnerColorAdapter adapter =
+                new SpinnerColorAdapter(getContext(), colors);
         spinnerColor.setAdapter(adapter);
     }
 
     @Override
     public void updateSizes(ArrayList<Size> sizes) {
-        SpinnerPropertiesAdapter adapter =
-                new SpinnerPropertiesAdapter(getContext(), new ArrayList<>(sizes));
+        SpinnerSizeAdapter adapter =
+                new SpinnerSizeAdapter(getContext(), sizes);
         spinnerSize.setAdapter(adapter);
     }
 

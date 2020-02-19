@@ -1,10 +1,14 @@
 package com.andreyjig.clothingstore.entity.product;
 
-import java.util.ArrayList;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import io.realm.RealmList;
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
 
-public class Variant extends Properties{
+@RealmClass
+public class Variant implements RealmModel {
 
     @SerializedName("price")
     @Expose
@@ -23,7 +27,13 @@ public class Variant extends Properties{
     private Color color;
     @SerializedName("photos")
     @Expose
-    private ArrayList<Image> photos = null;
+    private RealmList<Image> photos;
+    @SerializedName("id")
+    @Expose
+    protected Integer id;
+    @SerializedName("name")
+    @Expose
+    protected String name;
 
     public Integer getId() {
         return id;
@@ -81,11 +91,11 @@ public class Variant extends Properties{
         this.color = color;
     }
 
-    public ArrayList<Image> getPhotos() {
+    public List<Image> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(ArrayList<Image> photos) {
+    public void setPhotos(RealmList<Image> photos) {
         this.photos = photos;
     }
 

@@ -5,7 +5,11 @@ import com.andreyjig.clothingstore.entity.product.Variant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ItemCard {
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
+
+@RealmClass
+public class ItemCard implements RealmModel {
 
     @SerializedName("id")
     @Expose

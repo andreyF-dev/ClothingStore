@@ -2,7 +2,6 @@ package com.andreyjig.clothingstore.util;
 
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.entity.product.Color;
-import com.andreyjig.clothingstore.entity.product.Properties;
 import com.andreyjig.clothingstore.entity.product.Size;
 import com.andreyjig.clothingstore.entity.product.Variant;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class ProductHelper {
     public static ArrayList<Color> getAllColor(Product product){
 
         HashMap<Integer, Color> colors = new HashMap<>();
-        ArrayList<Variant> variants = product.getVariants();
+        ArrayList<Variant> variants = new ArrayList<>(product.getVariants());
         for (Variant variant: variants){
             colors.put(variant.getColorId(), variant.getColor());
         }
@@ -23,7 +22,7 @@ public class ProductHelper {
 
     public static ArrayList<Size> getAllSizes(Product product, int colorId){
         ArrayList<Size> sizes = new ArrayList<>();
-        ArrayList<Variant> variants = product.getVariants();
+        ArrayList<Variant> variants = new ArrayList<>(product.getVariants());
         for (Variant variant: variants){
             if (colorId == variant.getColorId()){
                 sizes.add(variant.getSize());
@@ -33,7 +32,7 @@ public class ProductHelper {
     }
 
     public static Variant getVariant(Product product, int colorId, int sizeId){
-        ArrayList<Variant> variants = product.getVariants();
+        ArrayList<Variant> variants = new ArrayList<>(product.getVariants());
         for (Variant variant: variants){
             if (colorId == variant.getColorId() && sizeId == variant.getSizeId()){
                 return variant;
@@ -43,7 +42,7 @@ public class ProductHelper {
     }
 
     public static Variant getVariant(Product product, int id){
-        ArrayList<Variant> variants = product.getVariants();
+        ArrayList<Variant> variants = new ArrayList<>(product.getVariants());
         for (Variant variant: variants){
             if (id == variant.getId()){
                 return variant;
@@ -51,7 +50,16 @@ public class ProductHelper {
         }
         return null;
     }
-    public static int getIndexById(List<Properties> properties, int id){
+    public static int getIndexColorById(List<Color> properties, int id){
+        for (int index = 0; index < properties.size(); index++){
+            if (properties.get(index).getId() == id){
+                return index;
+            }
+        }
+        return 0;
+    }
+
+    public static int getIndexSizeById(List<Size> properties, int id){
         for (int index = 0; index < properties.size(); index++){
             if (properties.get(index).getId() == id){
                 return index;
