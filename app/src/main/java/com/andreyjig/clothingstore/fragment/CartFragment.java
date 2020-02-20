@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -24,6 +25,7 @@ public class CartFragment extends BaseHandlerFragment implements
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private Boolean disableRecyclerView;
 
     @InjectPresenter
     CartPresenter presenter;
@@ -42,17 +44,46 @@ public class CartFragment extends BaseHandlerFragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        disableRecyclerView = false;
         progressBar = view.findViewById(R.id.fragment_cart_progress_bar);
         recyclerView = view.findViewById(R.id.fragment_cart_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                return disableRecyclerView;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
     }
 
     @Override
-    public void updateCart(Cart cart) {
+    public void showPreviewCart(Cart cart) {
+        recyclerView.setAlpha(0.1f);
+        disableRecyclerView = true;
+        setAdapter(cart);
+    }
+
+    @Override
+    public void showCart(Cart cart) {
+        recyclerView.setAlpha(1f);
+        disableRecyclerView = false;
+        setAdapter(cart);
+    }
+
+    private void setAdapter(Cart cart){
         CartAdapter cartAdapter = new CartAdapter(getContext(), cart, CartFragment.this);
         recyclerView.setAdapter(cartAdapter);
     }
-
     @Override
     public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);

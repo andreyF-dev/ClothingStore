@@ -11,11 +11,24 @@ import com.arellomobile.mvp.MvpPresenter;
 @InjectViewState
 public class CartPresenter extends MvpPresenter<CartView>{
 
+    private CartModel cartModel;
+    private Cart cart;
+
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().setTitle(R.string.cart);
+        cartModel = CartModel.getInstance();
+        setPreview();
         getCart();
+    }
+
+    private void setPreview() {
+        Cart cart = cartModel.getCachedCart();
+        if (cart != null){
+            this.cart = cart;
+            getViewState().showPreviewCart(cart);
+        }
     }
 
     private void getCart () {
@@ -30,20 +43,30 @@ public class CartPresenter extends MvpPresenter<CartView>{
                 setError(errorStringId);
             }
         };
-        CartModel.getInstance().getCart(cartHandler);
+        cartModel.getCart(cartHandler);
     }
 
-    public void setCart( Cart cart){
+    public void setCart(Cart cart){
+        this.cart = cart;
         getViewState().hideProgressBar();
-        getViewState().updateCart(cart);
-
+        getViewState().showCart(cart);
+        cartModel.setCashedCart(cart);
     }
 
     private void setError(int errorStringId){
+        if (cart != null){
+            setCart(cart);
+        }
         getViewState().setShowErrorDialog(errorStringId);
     }
 
     public void errorDialogOnClick(){
         getCart();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        cartModel.closeCartModel();
     }
 }

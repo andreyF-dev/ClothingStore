@@ -1,6 +1,7 @@
 package com.andreyjig.clothingstore.entity;
 
 import java.util.List;
+import java.util.Objects;
 import com.andreyjig.clothingstore.entity.product.Manufacturer;
 import com.andreyjig.clothingstore.entity.product.Material;
 import com.andreyjig.clothingstore.entity.product.Variant;
@@ -8,11 +9,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmList;
 import io.realm.RealmModel;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
 @RealmClass
 public class Product implements RealmModel {
 
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -126,5 +129,26 @@ public class Product implements RealmModel {
                 ", material=" + material +
                 ", variants=" + variants +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(manufacturerId, product.manufacturerId) &&
+                Objects.equals(manufacturer, product.manufacturer) &&
+                Objects.equals(materialId, product.materialId) &&
+                Objects.equals(material, product.material) &&
+                Objects.equals(variants, product.variants);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, description, manufacturerId, manufacturer, materialId, material, variants);
     }
 }

@@ -7,8 +7,10 @@ import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 public interface CartView extends MvpView, BaseHandlerView{
+    @StateStrategyType(AddToEndStrategy.class)
+    void showPreviewCart(Cart cart);
     @StateStrategyType(SingleStateStrategy.class)
-    void updateCart(Cart cart);
+    void showCart(Cart cart);
     @StateStrategyType(AddToEndStrategy.class)
     void showProgressBar();
     @StateStrategyType(SingleStateStrategy.class)

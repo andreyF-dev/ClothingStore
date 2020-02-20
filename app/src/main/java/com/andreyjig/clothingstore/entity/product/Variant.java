@@ -1,6 +1,8 @@
 package com.andreyjig.clothingstore.entity.product;
 
 import java.util.List;
+import java.util.Objects;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmList;
@@ -99,4 +101,23 @@ public class Variant implements RealmModel {
         this.photos = photos;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Variant variant = (Variant) o;
+        return Objects.equals(price, variant.price) &&
+                Objects.equals(sizeId, variant.sizeId) &&
+                Objects.equals(size, variant.size) &&
+                Objects.equals(colorId, variant.colorId) &&
+                Objects.equals(color, variant.color) &&
+                Objects.equals(photos, variant.photos) &&
+                Objects.equals(id, variant.id) &&
+                Objects.equals(name, variant.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(price, sizeId, size, colorId, color, photos, id, name);
+    }
 }

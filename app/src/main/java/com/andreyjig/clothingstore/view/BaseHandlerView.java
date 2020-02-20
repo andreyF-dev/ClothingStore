@@ -2,23 +2,23 @@ package com.andreyjig.clothingstore.view;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
-import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleTagStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 public interface BaseHandlerView extends MvpView{
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
+    @StateStrategyType(value = AddToEndSingleStrategy.class, tag = "Error")
     void setShowErrorDialog(int errorMessageId);
-    @StateStrategyType(AddToEndSingleStrategy.class)
+    @StateStrategyType(value = AddToEndSingleTagStrategy.class, tag = "Error")
     void showErrorDialog(int errorMessageId);
-    @StateStrategyType(AddToEndSingleStrategy.class)
+    @StateStrategyType(value = AddToEndSingleStrategy.class, tag = "Error")
     void setHideErrorDialog();
-    @StateStrategyType(SingleStateStrategy.class)
+    @StateStrategyType(value = AddToEndSingleTagStrategy.class, tag = "Error")
     void hideErrorDialog();
-    @StateStrategyType(AddToEndSingleStrategy.class)
+    @StateStrategyType(value = AddToEndSingleStrategy.class, tag = "Title")
     void setTitle(int id);
-    @StateStrategyType(AddToEndSingleStrategy.class)
+    @StateStrategyType(value = AddToEndSingleStrategy.class, tag = "Title")
     void setTitle(String title);
-    @StateStrategyType(SingleStateStrategy.class)
+    @StateStrategyType(value = AddToEndSingleTagStrategy.class, tag = "Title")
     void updateTitle(String title);
 }

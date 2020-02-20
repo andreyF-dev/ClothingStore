@@ -1,7 +1,6 @@
 package com.andreyjig.clothingstore.application;
 
 import android.app.Application;
-
 import io.realm.Realm;
 
 public class ClothingStore extends Application {

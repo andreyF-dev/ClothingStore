@@ -1,7 +1,6 @@
 package com.andreyjig.clothingstore.presenter;
 
 import androidx.annotation.NonNull;
-
 import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
 import com.andreyjig.clothingstore.entity.handler.ProductDescription;
 import com.andreyjig.clothingstore.model.ProductModel;
@@ -14,14 +13,12 @@ import com.andreyjig.clothingstore.entity.product.Variant;
 import com.andreyjig.clothingstore.util.ProductHelper;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-
 import java.util.ArrayList;
 
 @InjectViewState
 public class ProductDescriptionPresenter extends MvpPresenter<ProductDescriptionView> {
 
     private final int NO_IMAGE = -2;
-    private final int NO_STEP = 0;
     private String title;
     private Product product;
     private Variant variant;
@@ -33,6 +30,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private int colorId;
     private int sizeId;
     private int imageIndex;
+    private ProductModel model;
 
     public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
@@ -44,7 +42,8 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().setTitle(title);
-        getProduct();
+        model = ProductModel.getInstance();
+        setPreview();
     }
 
     @Override
@@ -55,12 +54,18 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         }
     }
 
-    private void getProduct() {
+    private void setPreview(){
         getViewState().showProgressBar();
+        Product product = model.getCachedProduct(productId);
+        updateProduct(product);
+        getProduct();
+    }
+
+    private void getProduct() {
         ProductDescription productDescription = new ProductDescription() {
             @Override
             public void setDownloadedProduct(Product product) {
-                setProduct(product);
+                updateProduct(product);
             }
 
             @Override
@@ -79,15 +84,29 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         getProduct();
     }
 
-    public void setProduct(@NonNull Product product) {
-        getViewState().hideProgressBar();
-        this.product = product;
+    private void updateProduct (Product product){
+        if (product != null){
+            if (this.product == null){
+                setDefaultVariant(product);
+                setProduct(product);
+            } else if (product.hashCode() != this.product.hashCode()){
+                setProduct(product);
+            }
+        }
+    }
+
+    private void setDefaultVariant(Product product){
         variant = ProductHelper.getVariant(product, variantId);
         colorId = variant.getColorId();
         sizeId = variant.getSizeId();
+    }
+
+    public void setProduct(@NonNull Product product) {
+        getViewState().hideProgressBar();
+        this.product = product;
+        model.setCashedProduct(product);
         setProductDescription();
         setColors();
-
     }
 
     private void setProductDescription() {
@@ -159,7 +178,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
                 imageIndex = NO_IMAGE;
             }
         }
-        showImage(NO_STEP);
+        showImage(0);
     }
 
     public void showImage(int step) {
@@ -175,5 +194,11 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             getViewState().hideImageButton();
             getViewState().showDefaultImage();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        model.closeProductModel();
     }
 }

@@ -6,15 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.andreyjig.clothingstore.entity.product.Color;
 import com.andreyjig.clothingstore.entity.product.Size;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SpinnerSizeAdapter extends ArrayAdapter<Size> {
 

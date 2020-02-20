@@ -33,9 +33,8 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
             snackbar = Snackbar.make(getView(), text, Snackbar.LENGTH_INDEFINITE);
             snackbar.setAction(getString(R.string.download_now), v -> {
                 errorDialogOnClick();
+                setHideErrorDialog();
             });
-            int color = getResources().getColor(R.color.colorPrimary);
-            snackbar.setActionTextColor(color);
             snackbar.show();
         }
     }

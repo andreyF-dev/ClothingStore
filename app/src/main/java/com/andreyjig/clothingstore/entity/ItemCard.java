@@ -5,6 +5,8 @@ import com.andreyjig.clothingstore.entity.product.Variant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 import io.realm.RealmModel;
 import io.realm.annotations.RealmClass;
 
@@ -78,4 +80,21 @@ public class ItemCard implements RealmModel {
         this.variant = productVariant;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemCard itemCard = (ItemCard) o;
+        return Objects.equals(id, itemCard.id) &&
+                Objects.equals(count, itemCard.count) &&
+                Objects.equals(productId, itemCard.productId) &&
+                Objects.equals(product, itemCard.product) &&
+                Objects.equals(productVariantId, itemCard.productVariantId) &&
+                Objects.equals(variant, itemCard.variant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, count, productId, product, productVariantId, variant);
+    }
 }

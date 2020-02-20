@@ -3,6 +3,8 @@ package com.andreyjig.clothingstore.entity.product;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 import io.realm.RealmModel;
 import io.realm.annotations.RealmClass;
 
@@ -32,4 +34,17 @@ public class Manufacturer implements RealmModel {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Manufacturer that = (Manufacturer) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

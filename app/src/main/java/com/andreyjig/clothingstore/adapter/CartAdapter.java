@@ -32,7 +32,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void createAdapterList(Cart cart){
-        if (cart != null && cart.getItems().size() > 0){
+        if (cart != null){
             adapterList = new ArrayList<>();
             adapterList.addAll(cart.getItems());
             adapterList.add(new TotalPrice(cart.getTotalPrice()));

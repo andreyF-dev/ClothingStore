@@ -6,12 +6,16 @@ import com.andreyjig.clothingstore.entity.handler.ProductDescription;
 import com.andreyjig.clothingstore.entity.shell.ProductShell;
 import com.andreyjig.clothingstore.util.NetworkService;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductModel {
+
     private static ProductModel instance;
+    private Realm realm;
 
     public static ProductModel getInstance() {
         if (instance == null) {
@@ -21,6 +25,11 @@ public class ProductModel {
     }
 
     private ProductModel() {
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("product.realm")
+                .schemaVersion(1)
+                .build();
+        realm = Realm.getInstance(config);
     }
 
     public void getProduct(ProductDescription productDescription, int productId) {
@@ -47,4 +56,18 @@ public class ProductModel {
                 });
     }
 
+    public Product getCachedProduct(int id){
+        return realm.where(Product.class).equalTo("id", id).findFirst();
+    }
+
+    public void setCashedProduct(Product product){
+        realm.executeTransaction(realm -> {
+            realm.copyToRealmOrUpdate(product);
+        });
+    }
+
+    public void closeProductModel(){
+        realm.close();
+        instance = null;
+    }
 }
