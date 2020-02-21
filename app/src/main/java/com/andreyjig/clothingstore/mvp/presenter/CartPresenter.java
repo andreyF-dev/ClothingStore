@@ -10,7 +10,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 @InjectViewState
-public class CartPresenter extends MvpPresenter<CartView>{
+public class CartPresenter extends BasePresenter<CartView>{
 
     private CartModel cartModel;
     private Cart cart;

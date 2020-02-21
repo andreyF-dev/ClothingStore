@@ -13,11 +13,10 @@ import com.andreyjig.clothingstore.entity.product.Size;
 import com.andreyjig.clothingstore.entity.product.Variant;
 import com.andreyjig.clothingstore.util.ProductHelper;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import java.util.ArrayList;
 
 @InjectViewState
-public class ProductDescriptionPresenter extends MvpPresenter<ProductDescriptionView> {
+public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptionView> {
 
     private String title;
     private Product product;
