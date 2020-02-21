@@ -1,5 +1,6 @@
 package com.andreyjig.clothingstore.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.andreyjig.clothingstore.mvp.presenter.ProductDescriptionPresenter;
 import com.andreyjig.clothingstore.mvp.view.ProductDescriptionView;
 import com.andreyjig.clothingstore.entity.product.Color;
 import com.andreyjig.clothingstore.entity.product.Size;
+import com.andreyjig.clothingstore.ui.adapter.animation.DepthPageTransformer;
 import com.andreyjig.clothingstore.ui.view.ColorDrawer;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.entity.Product;
@@ -105,6 +107,9 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
         });
         imagePager.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.HORIZONTAL));
         imagePager.setOffscreenPageLimit(1);
+        if (Build.VERSION.SDK_INT > 20) {
+            imagePager.setPageTransformer(new DepthPageTransformer());
+        }
     }
 
     @Override
