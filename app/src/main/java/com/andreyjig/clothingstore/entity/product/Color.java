@@ -6,20 +6,22 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
 import io.realm.RealmModel;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
 @RealmClass
 public class Color implements RealmModel {
 
-    @SerializedName("hash_code")
-    @Expose
-    private String hashCode;
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     protected Integer id;
     @SerializedName("name")
     @Expose
     protected String name;
+    @SerializedName("hash_code")
+    @Expose
+    private String hashCode;
 
     public Integer getId() {
         return id;

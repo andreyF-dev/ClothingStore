@@ -1,21 +1,18 @@
-package com.andreyjig.clothingstore.util;
+package com.andreyjig.clothingstore.ui.snackbar;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.TimeInterpolator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
+
 import com.andreyjig.clothingstore.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 public class CustomSnackBarError extends BaseTransientBottomBar<CustomSnackBarError> {
     protected CustomSnackBarError(@NonNull ViewGroup parent, @NonNull View content, @NonNull com.google.android.material.snackbar.ContentViewCallback contentViewCallback) {

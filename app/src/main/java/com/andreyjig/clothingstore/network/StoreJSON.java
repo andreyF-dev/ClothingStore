@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.util;
+package com.andreyjig.clothingstore.network;
 
 import com.andreyjig.clothingstore.entity.shell.CartShell;
 import com.andreyjig.clothingstore.entity.shell.ProductShell;

@@ -7,11 +7,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmList;
 import io.realm.RealmModel;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
 @RealmClass
 public class Variant implements RealmModel {
 
+    @PrimaryKey
+    @SerializedName("id")
+    @Expose
+    protected Integer id;
+    @SerializedName("name")
+    @Expose
+    protected String name;
     @SerializedName("price")
     @Expose
     private Integer price;
@@ -30,12 +38,6 @@ public class Variant implements RealmModel {
     @SerializedName("photos")
     @Expose
     private RealmList<Image> photos;
-    @SerializedName("id")
-    @Expose
-    protected Integer id;
-    @SerializedName("name")
-    @Expose
-    protected String name;
 
     public Integer getId() {
         return id;

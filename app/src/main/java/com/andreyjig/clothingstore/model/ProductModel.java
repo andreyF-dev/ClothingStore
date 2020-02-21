@@ -4,7 +4,7 @@ import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.model.handler.ProductDescription;
 import com.andreyjig.clothingstore.entity.shell.ProductShell;
-import com.andreyjig.clothingstore.util.NetworkService;
+import com.andreyjig.clothingstore.network.NetworkService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
