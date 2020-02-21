@@ -57,6 +57,8 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     private ProgressBar progressBarDescription;
     private ProgressBar progressBarMaterial;
     private ProgressBar progressBarName;
+    private AdapterView.OnItemSelectedListener colorListener;
+    private AdapterView.OnItemSelectedListener sizeListener;
 
     public ProductDescriptionFragment() {
     }
@@ -83,7 +85,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
         progressBarDescription = view.findViewById(R.id.fragment_product_progress_bar_text_description);
         progressBarMaterial = view.findViewById(R.id.fragment_product_progress_bar_text_material);
         progressBarName = view.findViewById(R.id.fragment_product_progress_bar_name);
-        spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        colorListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 presenter.setColor(position);
@@ -93,8 +95,8 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
-        spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        };
+        sizeListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 presenter.setSize(position);
@@ -104,7 +106,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        };
         imagePager.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.HORIZONTAL));
         imagePager.setOffscreenPageLimit(1);
         if (Build.VERSION.SDK_INT > 20) {
@@ -145,14 +147,18 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     public void updateColors(ArrayList<Color> colors) {
         SpinnerColorAdapter adapter =
                 new SpinnerColorAdapter(getContext(), colors);
+        spinnerColor.setOnItemSelectedListener(null);
         spinnerColor.setAdapter(adapter);
+        spinnerColor.setOnItemSelectedListener(colorListener);
     }
 
     @Override
     public void updateSizes(ArrayList<Size> sizes) {
         SpinnerSizeAdapter adapter =
                 new SpinnerSizeAdapter(getContext(), sizes);
+        spinnerSize.setOnItemSelectedListener(null);
         spinnerSize.setAdapter(adapter);
+        spinnerSize.setOnItemSelectedListener(sizeListener);
     }
 
     @Override
