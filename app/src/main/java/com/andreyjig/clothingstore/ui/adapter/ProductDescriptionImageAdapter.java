@@ -41,7 +41,7 @@ public class ProductDescriptionImageAdapter extends RecyclerView.Adapter<Recycle
         switch (viewType) {
             case TYPE_IMAGE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_view_pager_image, parent, false);
-                return new ImageHolder(view, context);
+                return new ImageHolder(view);
             case TYPE_NO_IMAGE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_price, parent, false);
                 return new NoImageHolder(view, context);

@@ -94,7 +94,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             if (this.product == null){
                 setDefaultVariant(product);
                 setProduct(product);
-            } else if (product.hashCode() != this.product.hashCode()){
+            } else if (product.equals(this.product)){
                 setProduct(product);
             }
         }
@@ -177,19 +177,4 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private void setImageId() {
         getViewState().updateImages(new ArrayList<>(variant.getPhotos()));
     }
-/*
-    public void showImage(int step) {
-        if (imageIndex != NO_IMAGE) {
-            getViewState().showImageButton();
-            imageIndex = (imageIndex + step) % images.size();
-            if (imageIndex == -1) {
-                imageIndex = images.size() - 1;
-            }
-            String imageUrl = images.get(imageIndex).getBig();
-            getViewState().updateImages(imageUrl);
-        } else {
-            getViewState().hideImageButton();
-            getViewState().showDefaultImage();
-        }
-    }*/
 }

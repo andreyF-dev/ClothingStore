@@ -21,7 +21,7 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
     public void showErrorDialog(int errorMessageId) {
         if (getView() != null) {
             String text = getString(errorMessageId);
-            snackbar = CustomSnackBarError.make((ViewGroup) getView().getParent().getParent(),
+            snackbar = CustomSnackBarError.make((ViewGroup)getView(),
                     CustomSnackBarError.LENGTH_INDEFINITE);
             snackbar.setText(text);
             snackbar.setAction(getString(R.string.download_now), v -> {

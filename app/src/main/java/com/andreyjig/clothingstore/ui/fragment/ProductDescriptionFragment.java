@@ -3,6 +3,8 @@ package com.andreyjig.clothingstore.ui.fragment;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -103,6 +105,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
 
             }
         });
+        imagePager.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.HORIZONTAL));
     }
 
     @Override
@@ -129,7 +132,8 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
 
     @Override
     public void updateImages(ArrayList<Image> images) {
-        ProductDescriptionImageAdapter adapter = new ProductDescriptionImageAdapter(getContext(), images);
+        ProductDescriptionImageAdapter adapter =
+                new ProductDescriptionImageAdapter(getContext(), images);
         imagePager.setAdapter(adapter);
     }
 
