@@ -1,9 +1,8 @@
 package com.andreyjig.clothingstore.mvp.presenter;
 
 import androidx.annotation.NonNull;
-import com.andreyjig.clothingstore.database.RealmHelper;
-import com.andreyjig.clothingstore.mvp.model.handler.ProductDescription;
 import com.andreyjig.clothingstore.mvp.model.ProductModel;
+import com.andreyjig.clothingstore.mvp.model.handler.DataHandler;
 import com.andreyjig.clothingstore.ui.fragment.ProductDescriptionFragmentArgs;
 import com.andreyjig.clothingstore.mvp.view.ProductDescriptionView;
 import com.andreyjig.clothingstore.entity.Product;
@@ -28,8 +27,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
     private int variantId;
     private int colorId;
     private int sizeId;
-    private ProductModel productModel;
-    private RealmHelper realmHelperr;
+    private ProductModel model;
 
     public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
@@ -41,8 +39,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().updateTitle(title);
-        productModel = new ProductModel();
-        realmHelperr = RealmHelper.getInstance();
+        model = new ProductModel(productId);
     }
 
     @Override
@@ -57,24 +54,23 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
 
     private void setPreview(){
         getViewState().showProgressBar();
-        Product product = realmHelperr.getCachedProduct(productId);
+        Product product = model.getCachedData();
         updateProduct(product);
         getProduct();
     }
 
     private void getProduct() {
-        ProductDescription productDescription = new ProductDescription() {
+        DataHandler<Product> handler = new DataHandler<Product>() {
             @Override
-            public void setDownloadedProduct(Product product) {
-                updateProduct(product);
+            public void setDownloadedData(Product data) {
+                updateProduct(data);
             }
-
             @Override
             public void setErrorDownloaded(int errorStringId) {
                 setErrorDialog(errorStringId);
             }
         };
-        productModel.getProduct(productDescription, productId);
+        model.downloadData(handler);
     }
 
     private void setErrorDialog(int errorStringId) {
@@ -109,7 +105,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
     public void setProduct(@NonNull Product product) {
         getViewState().hideProgressBar();
         this.product = product;
-        realmHelperr.setCashedProduct(product);
+        model.setDataToCache(product);
         setProductDescription();
         setColors();
     }

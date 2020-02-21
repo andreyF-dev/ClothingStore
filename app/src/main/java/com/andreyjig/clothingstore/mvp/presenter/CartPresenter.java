@@ -1,33 +1,29 @@
 package com.andreyjig.clothingstore.mvp.presenter;
 
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.database.RealmHelper;
-import com.andreyjig.clothingstore.mvp.model.handler.CartHandler;
 import com.andreyjig.clothingstore.mvp.model.CartModel;
+import com.andreyjig.clothingstore.mvp.model.handler.DataHandler;
 import com.andreyjig.clothingstore.mvp.view.CartView;
 import com.andreyjig.clothingstore.entity.Cart;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 
 @InjectViewState
 public class CartPresenter extends BasePresenter<CartView>{
 
-    private CartModel cartModel;
+    private CartModel model;
     private Cart cart;
-    private RealmHelper realmHelper;
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().updateTitle(R.string.cart);
-        cartModel = new CartModel();
-        realmHelper = RealmHelper.getInstance();
+        model = new CartModel();
         setPreview();
         getCart();
     }
 
     private void setPreview() {
-        Cart cart = realmHelper.getCachedCart();
+        Cart cart = model.getCachedData();
         if (cart != null){
             this.cart = cart;
             getViewState().showPreviewCart(cart);
@@ -36,24 +32,24 @@ public class CartPresenter extends BasePresenter<CartView>{
 
     private void getCart () {
         getViewState().showProgressBar();
-        CartHandler cartHandler = new CartHandler() {
+        DataHandler<Cart> handler = new DataHandler<Cart>() {
             @Override
-            public void setDownloadedCart(Cart cart) {
-                setCart(cart);
+            public void setDownloadedData(Cart data) {
+                setCart(data);
             }
             @Override
             public void setErrorDownloaded(int errorStringId) {
                 setError(errorStringId);
             }
         };
-        cartModel.getCart(cartHandler);
+        model.downloadData(handler);
     }
 
     public void setCart(Cart cart){
         this.cart = cart;
         getViewState().hideProgressBar();
         getViewState().showCart(cart);
-        realmHelper.setCashedCart(cart);
+        model.setDataToCache(cart);
     }
 
     private void setError(int errorStringId){
