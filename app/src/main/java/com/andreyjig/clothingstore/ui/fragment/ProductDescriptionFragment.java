@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.andreyjig.clothingstore.entity.product.Image;
 import com.andreyjig.clothingstore.ui.adapter.ProductDescriptionImageAdapter;
 import com.andreyjig.clothingstore.ui.adapter.SpinnerColorAdapter;

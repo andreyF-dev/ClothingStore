@@ -1,7 +1,7 @@
 package com.andreyjig.clothingstore.presenter;
 
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.database.RealmCartHelper;
+import com.andreyjig.clothingstore.database.RealmHelper;
 import com.andreyjig.clothingstore.model.handler.CartHandler;
 import com.andreyjig.clothingstore.model.CartModel;
 import com.andreyjig.clothingstore.ui.view.CartView;
@@ -14,20 +14,20 @@ public class CartPresenter extends MvpPresenter<CartView>{
 
     private CartModel cartModel;
     private Cart cart;
-    private RealmCartHelper realmCartHelper;
+    private RealmHelper realmHelper;
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().updateTitle(R.string.cart);
         cartModel = new CartModel();
-        realmCartHelper = RealmCartHelper.getInstance();
+        realmHelper = RealmHelper.getInstance();
         setPreview();
         getCart();
     }
 
     private void setPreview() {
-        Cart cart = realmCartHelper.getCachedCart();
+        Cart cart = realmHelper.getCachedCart();
         if (cart != null){
             this.cart = cart;
             getViewState().showPreviewCart(cart);
@@ -53,7 +53,7 @@ public class CartPresenter extends MvpPresenter<CartView>{
         this.cart = cart;
         getViewState().hideProgressBar();
         getViewState().showCart(cart);
-        realmCartHelper.setCashedCart(cart);
+        realmHelper.setCashedCart(cart);
     }
 
     private void setError(int errorStringId){

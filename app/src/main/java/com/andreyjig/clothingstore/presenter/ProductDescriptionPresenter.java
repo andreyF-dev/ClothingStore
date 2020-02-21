@@ -1,8 +1,7 @@
 package com.andreyjig.clothingstore.presenter;
 
 import androidx.annotation.NonNull;
-
-import com.andreyjig.clothingstore.database.RealmProductHelper;
+import com.andreyjig.clothingstore.database.RealmHelper;
 import com.andreyjig.clothingstore.model.handler.ProductDescription;
 import com.andreyjig.clothingstore.model.ProductModel;
 import com.andreyjig.clothingstore.ui.fragment.ProductDescriptionFragmentArgs;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 @InjectViewState
 public class ProductDescriptionPresenter extends MvpPresenter<ProductDescriptionView> {
 
-    private final int NO_IMAGE = -2;
     private String title;
     private Product product;
     private Variant variant;
@@ -31,9 +29,8 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private int variantId;
     private int colorId;
     private int sizeId;
-    private int imageIndex;
     private ProductModel productModel;
-    private RealmProductHelper realmProductHelperr;
+    private RealmHelper realmHelperr;
 
     public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
@@ -46,7 +43,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         super.onFirstViewAttach();
         getViewState().updateTitle(title);
         productModel = new ProductModel();
-        realmProductHelperr = RealmProductHelper.getInstance();
+        realmHelperr = RealmHelper.getInstance();
     }
 
     @Override
@@ -61,7 +58,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setPreview(){
         getViewState().showProgressBar();
-        Product product = realmProductHelperr.getCachedProduct(productId);
+        Product product = realmHelperr.getCachedProduct(productId);
         updateProduct(product);
         getProduct();
     }
@@ -92,8 +89,12 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private void updateProduct (Product product){
         if (product != null){
             if (this.product == null){
-                setDefaultVariant(product);
-                setProduct(product);
+                try {
+                    setDefaultVariant(product);
+                    setProduct(product);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             } else if (product.equals(this.product)){
                 setProduct(product);
             }
@@ -109,7 +110,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     public void setProduct(@NonNull Product product) {
         getViewState().hideProgressBar();
         this.product = product;
-        realmProductHelperr.setCashedProduct(product);
+        realmHelperr.setCashedProduct(product);
         setProductDescription();
         setColors();
     }
@@ -163,7 +164,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private void setVariant() {
         variant = ProductHelper.getVariant(product, colorId, sizeId);
         setNameProduct();
-        setImageId();
+        setImages();
     }
 
     private void setNameProduct() {
@@ -174,7 +175,11 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         }
     }
 
-    private void setImageId() {
-        getViewState().updateImages(new ArrayList<>(variant.getPhotos()));
+    private void setImages() {
+        ArrayList<Image> newImages = new ArrayList<>(variant.getPhotos());
+        if (!images.equals(newImages)) {
+            images = newImages;
+            getViewState().updateImages(images);
+        }
     }
 }
