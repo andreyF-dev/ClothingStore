@@ -1,7 +1,6 @@
 package com.andreyjig.clothingstore.ui.fragment;
 
 import android.view.ViewGroup;
-import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.util.CustomSnackBarError;
 import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
@@ -24,7 +23,7 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
             snackbar = CustomSnackBarError.make((ViewGroup)getView(),
                     CustomSnackBarError.LENGTH_INDEFINITE);
             snackbar.setText(text);
-            snackbar.setAction(getString(R.string.download_now), v -> {
+            snackbar.setAction(v -> {
                 errorDialogOnClick();
             });
             snackbar.show();

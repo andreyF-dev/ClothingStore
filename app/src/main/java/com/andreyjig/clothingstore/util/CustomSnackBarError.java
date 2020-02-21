@@ -42,7 +42,7 @@ public class CustomSnackBarError extends BaseTransientBottomBar<CustomSnackBarEr
         return this;
     }
 
-    public CustomSnackBarError setAction(CharSequence text, final View.OnClickListener listener) {
+    public CustomSnackBarError setAction(final View.OnClickListener listener) {
         ImageView actionView = getView().findViewById(R.id.snackbar_action_button);
         actionView.setOnClickListener(view -> {
             listener.onClick(view);
@@ -63,27 +63,18 @@ public class CustomSnackBarError extends BaseTransientBottomBar<CustomSnackBarEr
         public void animateContentIn(int delay, int duration) {
 
             ObjectAnimator animationX = ObjectAnimator.ofFloat(content, View.SCALE_X, 0F, 1F);
-            ObjectAnimator animationY = ObjectAnimator.ofFloat(content, View.SCALE_Y, 0F, 1F);
             AnimatorSet set = new AnimatorSet();
-            set.play(animationX)
-                    .with(animationY);
+            set.play(animationX);
             set.setDuration(duration);
             set.setInterpolator(new DecelerateInterpolator());
             set.start();
-
-           /* ViewCompat.setScaleY(content, 0f);
-            ViewCompat.animate(content)
-                    .scaleY(1f).setDuration(duration)
-                    .setStartDelay(delay);*/
         }
 
         @Override
         public void animateContentOut(int delay, int duration) {
             ObjectAnimator animationX = ObjectAnimator.ofFloat(content, "scaleX", 0F);
-            ObjectAnimator animationY = ObjectAnimator.ofFloat(content, "scaleY", 0F);
             AnimatorSet set = new AnimatorSet();
-            set.play(animationX)
-                    .with(animationY);
+            set.play(animationX);
             set.setDuration(duration);
             set.setInterpolator(new DecelerateInterpolator());
             set.start();

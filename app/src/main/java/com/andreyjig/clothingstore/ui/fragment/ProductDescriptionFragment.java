@@ -106,6 +106,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
             }
         });
         imagePager.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.HORIZONTAL));
+        imagePager.setOffscreenPageLimit(1);
     }
 
     @Override
