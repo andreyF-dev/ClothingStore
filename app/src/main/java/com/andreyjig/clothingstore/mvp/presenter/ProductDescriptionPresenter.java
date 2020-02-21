@@ -95,7 +95,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-            } else if (product.equals(this.product)){
+            } else if (!product.equals(this.product)){
                 setProduct(product);
             }
         }
