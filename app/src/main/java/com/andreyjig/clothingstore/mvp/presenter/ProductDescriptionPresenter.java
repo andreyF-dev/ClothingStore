@@ -56,10 +56,11 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
         getViewState().showProgressBar();
         Product product = model.getCachedData();
         updateProduct(product);
-        getProduct();
+        getData();
     }
 
-    private void getProduct() {
+    @Override
+    public void getData() {
         DataHandler<Product> handler = new DataHandler<Product>() {
             @Override
             public void setDownloadedData(Product data) {
@@ -157,10 +158,5 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
             images = newImages;
             getViewState().updateImages(images);
         }
-    }
-
-    @Override
-    public void setErrorActionClick() {
-        getProduct();
     }
 }

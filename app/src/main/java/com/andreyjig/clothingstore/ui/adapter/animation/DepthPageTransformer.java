@@ -1,7 +1,6 @@
 package com.andreyjig.clothingstore.ui.adapter.animation;
 
 import android.view.View;
-
 import androidx.annotation.RequiresApi;
 import androidx.viewpager2.widget.ViewPager2;
 

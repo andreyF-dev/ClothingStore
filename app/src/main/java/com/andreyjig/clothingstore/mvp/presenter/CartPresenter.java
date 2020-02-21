@@ -19,7 +19,7 @@ public class CartPresenter extends BasePresenter<CartView>{
         setTitle(R.string.cart);
         model = new CartModel();
         setPreview();
-        getCart();
+        getData();
     }
 
     private void setPreview() {
@@ -30,7 +30,8 @@ public class CartPresenter extends BasePresenter<CartView>{
         }
     }
 
-    private void getCart () {
+    @Override
+    public void getData() {
         getViewState().showProgressBar();
         DataHandler<Cart> handler = new DataHandler<Cart>() {
             @Override
@@ -58,10 +59,5 @@ public class CartPresenter extends BasePresenter<CartView>{
         if (cart != null){
             setCart(cart);
         }
-    }
-
-    @Override
-    public void setErrorActionClick() {
-        getCart();
     }
 }

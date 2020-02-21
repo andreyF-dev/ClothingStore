@@ -17,5 +17,9 @@ public abstract class BasePresenter<T extends BaseHandlerView> extends MvpPresen
         getViewState().updateTitle(title);
     }
 
-    public abstract void setErrorActionClick();
+    public void setErrorActionClick(){
+        getData();
+    };
+
+    public abstract void getData();
 }

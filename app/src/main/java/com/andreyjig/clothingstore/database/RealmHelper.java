@@ -30,9 +30,7 @@ public class RealmHelper {
     }
 
     public void setCashedProduct(Product product){
-        realm.executeTransaction(realm -> {
-            realm.copyToRealmOrUpdate(product);
-        });
+        realm.executeTransaction(realm -> realm.copyToRealmOrUpdate(product));
     }
 
     public Cart getCachedCart(){
@@ -40,13 +38,6 @@ public class RealmHelper {
     }
 
     public void setCashedCart(Cart cart){
-        realm.executeTransaction(realm -> {
-            realm.copyToRealmOrUpdate(cart);
-        });
-    }
-
-    public void close(){
-        realm.close();
-        instance = null;
+        realm.executeTransaction(realm -> realm.copyToRealmOrUpdate(cart));
     }
 }

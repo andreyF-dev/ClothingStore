@@ -1,12 +1,9 @@
 package com.andreyjig.clothingstore.ui.fragment;
 
 import android.view.ViewGroup;
-
-import com.andreyjig.clothingstore.mvp.presenter.BasePresenter;
 import com.andreyjig.clothingstore.ui.snackbar.CustomSnackBarError;
 import com.andreyjig.clothingstore.mvp.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
 public abstract class BaseHandlerFragment extends MvpAppCompatFragment
         implements BaseHandlerView{
