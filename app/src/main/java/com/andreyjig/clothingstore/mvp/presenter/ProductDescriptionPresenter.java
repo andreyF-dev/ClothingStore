@@ -177,7 +177,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
 
     private void setImages() {
         ArrayList<Image> newImages = new ArrayList<>(variant.getPhotos());
-        if (images != null && !images.equals(newImages)) {
+        if (images == null || !images.equals(newImages)) {
             images = newImages;
             getViewState().updateImages(images);
         }
