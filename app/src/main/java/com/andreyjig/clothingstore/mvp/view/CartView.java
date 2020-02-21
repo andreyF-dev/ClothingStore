@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.ui.view;
+package com.andreyjig.clothingstore.mvp.view;
 
 import com.andreyjig.clothingstore.entity.Cart;
 import com.arellomobile.mvp.MvpView;

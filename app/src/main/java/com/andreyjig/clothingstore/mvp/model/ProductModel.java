@@ -1,8 +1,8 @@
-package com.andreyjig.clothingstore.model;
+package com.andreyjig.clothingstore.mvp.model;
 
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.entity.Product;
-import com.andreyjig.clothingstore.model.handler.ProductDescription;
+import com.andreyjig.clothingstore.mvp.model.handler.ProductDescription;
 import com.andreyjig.clothingstore.entity.shell.ProductShell;
 import com.andreyjig.clothingstore.network.NetworkService;
 

@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.ui.view;
+package com.andreyjig.clothingstore.mvp.view;
 
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.entity.product.Color;

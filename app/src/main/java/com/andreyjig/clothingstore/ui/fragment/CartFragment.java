@@ -16,8 +16,8 @@ import com.andreyjig.clothingstore.entity.ItemCard;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.ui.adapter.CartAdapter;
 import com.andreyjig.clothingstore.entity.Cart;
-import com.andreyjig.clothingstore.presenter.CartPresenter;
-import com.andreyjig.clothingstore.ui.view.CartView;
+import com.andreyjig.clothingstore.mvp.presenter.CartPresenter;
+import com.andreyjig.clothingstore.mvp.view.CartView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 public class CartFragment extends BaseHandlerFragment implements

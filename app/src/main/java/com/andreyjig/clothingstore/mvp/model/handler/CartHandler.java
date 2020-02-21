@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.model.handler;
+package com.andreyjig.clothingstore.mvp.model.handler;
 
 import com.andreyjig.clothingstore.entity.Cart;
 

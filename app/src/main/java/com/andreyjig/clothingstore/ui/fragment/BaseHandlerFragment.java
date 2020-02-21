@@ -2,7 +2,7 @@ package com.andreyjig.clothingstore.ui.fragment;
 
 import android.view.ViewGroup;
 import com.andreyjig.clothingstore.ui.snackbar.CustomSnackBarError;
-import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
+import com.andreyjig.clothingstore.mvp.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 
 public abstract class BaseHandlerFragment extends MvpAppCompatFragment

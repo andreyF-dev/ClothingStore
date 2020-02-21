@@ -1,11 +1,11 @@
-package com.andreyjig.clothingstore.presenter;
+package com.andreyjig.clothingstore.mvp.presenter;
 
 import androidx.annotation.NonNull;
 import com.andreyjig.clothingstore.database.RealmHelper;
-import com.andreyjig.clothingstore.model.handler.ProductDescription;
-import com.andreyjig.clothingstore.model.ProductModel;
+import com.andreyjig.clothingstore.mvp.model.handler.ProductDescription;
+import com.andreyjig.clothingstore.mvp.model.ProductModel;
 import com.andreyjig.clothingstore.ui.fragment.ProductDescriptionFragmentArgs;
-import com.andreyjig.clothingstore.ui.view.ProductDescriptionView;
+import com.andreyjig.clothingstore.mvp.view.ProductDescriptionView;
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.entity.product.Color;
 import com.andreyjig.clothingstore.entity.product.Image;

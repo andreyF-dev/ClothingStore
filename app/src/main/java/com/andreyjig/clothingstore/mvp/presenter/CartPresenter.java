@@ -1,10 +1,10 @@
-package com.andreyjig.clothingstore.presenter;
+package com.andreyjig.clothingstore.mvp.presenter;
 
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.database.RealmHelper;
-import com.andreyjig.clothingstore.model.handler.CartHandler;
-import com.andreyjig.clothingstore.model.CartModel;
-import com.andreyjig.clothingstore.ui.view.CartView;
+import com.andreyjig.clothingstore.mvp.model.handler.CartHandler;
+import com.andreyjig.clothingstore.mvp.model.CartModel;
+import com.andreyjig.clothingstore.mvp.view.CartView;
 import com.andreyjig.clothingstore.entity.Cart;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;

@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.ui.view;
+package com.andreyjig.clothingstore.mvp.view;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
