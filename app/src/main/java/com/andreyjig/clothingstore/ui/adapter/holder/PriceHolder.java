@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.adapter.holder;
+package com.andreyjig.clothingstore.ui.adapter.holder;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.adapter.model.TotalPrice;
+import com.andreyjig.clothingstore.ui.adapter.model.TotalPrice;
 
 public class PriceHolder extends RecyclerView.ViewHolder {
 

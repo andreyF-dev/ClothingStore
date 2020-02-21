@@ -1,9 +1,10 @@
 package com.andreyjig.clothingstore.presenter;
 
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.entity.handler.CartHandler;
+import com.andreyjig.clothingstore.database.RealmCartHelper;
+import com.andreyjig.clothingstore.model.handler.CartHandler;
 import com.andreyjig.clothingstore.model.CartModel;
-import com.andreyjig.clothingstore.view.CartView;
+import com.andreyjig.clothingstore.ui.view.CartView;
 import com.andreyjig.clothingstore.entity.Cart;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -13,18 +14,20 @@ public class CartPresenter extends MvpPresenter<CartView>{
 
     private CartModel cartModel;
     private Cart cart;
+    private RealmCartHelper realmCartHelper;
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().setTitle(R.string.cart);
-        cartModel = CartModel.getInstance();
+        cartModel = new CartModel();
+        realmCartHelper = RealmCartHelper.getInstance();
         setPreview();
         getCart();
     }
 
     private void setPreview() {
-        Cart cart = cartModel.getCachedCart();
+        Cart cart = realmCartHelper.getCachedCart();
         if (cart != null){
             this.cart = cart;
             getViewState().showPreviewCart(cart);
@@ -50,7 +53,7 @@ public class CartPresenter extends MvpPresenter<CartView>{
         this.cart = cart;
         getViewState().hideProgressBar();
         getViewState().showCart(cart);
-        cartModel.setCashedCart(cart);
+        realmCartHelper.setCashedCart(cart);
     }
 
     private void setError(int errorStringId){
@@ -64,9 +67,4 @@ public class CartPresenter extends MvpPresenter<CartView>{
         getCart();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        cartModel.closeCartModel();
-    }
 }

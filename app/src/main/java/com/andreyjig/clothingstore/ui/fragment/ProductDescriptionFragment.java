@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.fragment;
+package com.andreyjig.clothingstore.ui.fragment;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -13,13 +13,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.andreyjig.clothingstore.adapter.SpinnerColorAdapter;
-import com.andreyjig.clothingstore.adapter.SpinnerSizeAdapter;
+import com.andreyjig.clothingstore.ui.adapter.SpinnerColorAdapter;
+import com.andreyjig.clothingstore.ui.adapter.SpinnerSizeAdapter;
 import com.andreyjig.clothingstore.presenter.ProductDescriptionPresenter;
-import com.andreyjig.clothingstore.view.ProductDescriptionView;
+import com.andreyjig.clothingstore.ui.view.ProductDescriptionView;
 import com.andreyjig.clothingstore.entity.product.Color;
 import com.andreyjig.clothingstore.entity.product.Size;
-import com.andreyjig.clothingstore.util.ColorDrawer;
+import com.andreyjig.clothingstore.ui.view.ColorDrawer;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.entity.Product;
 import com.arellomobile.mvp.presenter.InjectPresenter;

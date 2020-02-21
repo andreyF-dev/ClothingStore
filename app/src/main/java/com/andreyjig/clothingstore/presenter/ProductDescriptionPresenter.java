@@ -1,10 +1,13 @@
 package com.andreyjig.clothingstore.presenter;
 
 import androidx.annotation.NonNull;
-import com.andreyjig.clothingstore.fragment.ProductDescriptionFragmentArgs;
-import com.andreyjig.clothingstore.entity.handler.ProductDescription;
+
+import com.andreyjig.clothingstore.database.RealmCartHelper;
+import com.andreyjig.clothingstore.database.RealmProductHelper;
+import com.andreyjig.clothingstore.model.handler.ProductDescription;
 import com.andreyjig.clothingstore.model.ProductModel;
-import com.andreyjig.clothingstore.view.ProductDescriptionView;
+import com.andreyjig.clothingstore.ui.fragment.ProductDescriptionFragmentArgs;
+import com.andreyjig.clothingstore.ui.view.ProductDescriptionView;
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.entity.product.Color;
 import com.andreyjig.clothingstore.entity.product.Image;
@@ -30,7 +33,8 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     private int colorId;
     private int sizeId;
     private int imageIndex;
-    private ProductModel model;
+    private ProductModel productModel;
+    private RealmProductHelper realmProductHelperr;
 
     public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args) {
         productId = args.getProductId();
@@ -42,8 +46,8 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().setTitle(title);
-        model = ProductModel.getInstance();
-        setPreview();
+        productModel = new ProductModel();
+        realmProductHelperr = RealmProductHelper.getInstance();
     }
 
     @Override
@@ -51,12 +55,14 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
         super.attachView(view);
         if (product != null) {
             setColors();
+        } else {
+            setPreview();
         }
     }
 
     private void setPreview(){
         getViewState().showProgressBar();
-        Product product = model.getCachedProduct(productId);
+        Product product = realmProductHelperr.getCachedProduct(productId);
         updateProduct(product);
         getProduct();
     }
@@ -73,7 +79,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
                 setErrorDialog(errorStringId);
             }
         };
-        ProductModel.getInstance().getProduct(productDescription, productId);
+        productModel.getProduct(productDescription, productId);
     }
 
     private void setErrorDialog(int errorStringId) {
@@ -104,7 +110,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     public void setProduct(@NonNull Product product) {
         getViewState().hideProgressBar();
         this.product = product;
-        model.setCashedProduct(product);
+        realmProductHelperr.setCashedProduct(product);
         setProductDescription();
         setColors();
     }
@@ -194,11 +200,5 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
             getViewState().hideImageButton();
             getViewState().showDefaultImage();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        model.closeProductModel();
     }
 }

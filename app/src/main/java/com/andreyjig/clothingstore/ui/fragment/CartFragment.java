@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.fragment;
+package com.andreyjig.clothingstore.ui.fragment;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -11,13 +11,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
+import com.andreyjig.clothingstore.ui.adapter.holder.ProductCardHolder;
 import com.andreyjig.clothingstore.entity.ItemCard;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.adapter.CartAdapter;
+import com.andreyjig.clothingstore.ui.adapter.CartAdapter;
 import com.andreyjig.clothingstore.entity.Cart;
 import com.andreyjig.clothingstore.presenter.CartPresenter;
-import com.andreyjig.clothingstore.view.CartView;
+import com.andreyjig.clothingstore.ui.view.CartView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 public class CartFragment extends BaseHandlerFragment implements

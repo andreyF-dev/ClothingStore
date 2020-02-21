@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.adapter.holder;
+package com.andreyjig.clothingstore.ui.adapter.holder;
 
 import android.content.Context;
 import android.view.View;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.entity.ItemCard;
-import com.andreyjig.clothingstore.util.ColorDrawer;
+import com.andreyjig.clothingstore.ui.view.ColorDrawer;
 import com.squareup.picasso.Picasso;
 
 public class ProductCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

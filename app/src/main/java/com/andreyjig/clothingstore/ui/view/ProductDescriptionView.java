@@ -1,8 +1,9 @@
-package com.andreyjig.clothingstore.view;
+package com.andreyjig.clothingstore.ui.view;
 
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.entity.product.Color;
 import com.andreyjig.clothingstore.entity.product.Size;
+import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
@@ -10,7 +11,7 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import java.util.ArrayList;
 
-public interface ProductDescriptionView extends MvpView, BaseHandlerView{
+public interface ProductDescriptionView extends MvpView, BaseHandlerView {
 
     @StateStrategyType(AddToEndStrategy.class)
     void updateProduct(Product product);

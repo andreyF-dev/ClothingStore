@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.adapter;
+package com.andreyjig.clothingstore.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.adapter.holder.ProductCardHolder;
-import com.andreyjig.clothingstore.adapter.holder.PlaceOrderHolder;
-import com.andreyjig.clothingstore.adapter.holder.PriceHolder;
-import com.andreyjig.clothingstore.adapter.model.PlaceOrder;
-import com.andreyjig.clothingstore.adapter.model.TotalPrice;
+import com.andreyjig.clothingstore.ui.adapter.holder.ProductCardHolder;
+import com.andreyjig.clothingstore.ui.adapter.holder.PlaceOrderHolder;
+import com.andreyjig.clothingstore.ui.adapter.holder.PriceHolder;
+import com.andreyjig.clothingstore.ui.adapter.model.PlaceOrder;
+import com.andreyjig.clothingstore.ui.adapter.model.TotalPrice;
 import com.andreyjig.clothingstore.entity.Cart;
 import com.andreyjig.clothingstore.entity.ItemCard;
 import java.util.ArrayList;

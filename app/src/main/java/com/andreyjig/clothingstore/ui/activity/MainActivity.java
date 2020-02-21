@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.activity;
+package com.andreyjig.clothingstore.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;

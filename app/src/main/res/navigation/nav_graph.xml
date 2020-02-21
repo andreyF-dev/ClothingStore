@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.andreyjig.clothingstore.fragment.CartFragment"
+        android:name="com.andreyjig.clothingstore.ui.fragment.CartFragment"
         tools:layout="@layout/fragment_cart" >
         <action
             android:id="@+id/action_cartFragment_to_productFragment"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.andreyjig.clothingstore.fragment.ProductDescriptionFragment"
+        android:name="com.andreyjig.clothingstore.ui.fragment.ProductDescriptionFragment"
         tools:layout="@layout/fragment_product" >
         <argument
             android:name="productId"

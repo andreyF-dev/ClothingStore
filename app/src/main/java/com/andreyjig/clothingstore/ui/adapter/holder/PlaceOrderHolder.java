@@ -1,9 +1,8 @@
-package com.andreyjig.clothingstore.adapter.holder;
+package com.andreyjig.clothingstore.ui.adapter.holder;
 
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 public class PlaceOrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

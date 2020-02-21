@@ -1,11 +1,12 @@
-package com.andreyjig.clothingstore.fragment;
+package com.andreyjig.clothingstore.ui.fragment;
 
+import android.view.ViewGroup;
 import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.presenter.BaseHandlerPresenter;
-import com.andreyjig.clothingstore.view.BaseHandlerView;
+import com.andreyjig.clothingstore.util.CustomSnackBarError;
+import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.google.android.material.snackbar.Snackbar;
 
 public abstract class BaseHandlerFragment extends MvpAppCompatFragment
         implements BaseHandlerView{
@@ -13,7 +14,7 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
     @InjectPresenter
     BaseHandlerPresenter baseHandlerPresenter;
 
-    private Snackbar snackbar;
+    private CustomSnackBarError snackbar;
 
     @Override
     public void onDetach() {
@@ -30,7 +31,9 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
     public void showErrorDialog(int errorMessageId) {
         if (getView() != null) {
             String text = getString(errorMessageId);
-            snackbar = Snackbar.make(getView(), text, Snackbar.LENGTH_INDEFINITE);
+            snackbar = CustomSnackBarError.make((ViewGroup) getView().getParent().getParent(),
+                    CustomSnackBarError.LENGTH_INDEFINITE);
+            snackbar.setText(text);
             snackbar.setAction(getString(R.string.download_now), v -> {
                 errorDialogOnClick();
                 setHideErrorDialog();

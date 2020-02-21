@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.entity.handler;
+package com.andreyjig.clothingstore.model.handler;
 
 import com.andreyjig.clothingstore.entity.Product;
 

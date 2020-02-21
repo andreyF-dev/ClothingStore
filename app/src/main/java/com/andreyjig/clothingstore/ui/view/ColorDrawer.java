@@ -1,4 +1,4 @@
-package com.andreyjig.clothingstore.util;
+package com.andreyjig.clothingstore.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

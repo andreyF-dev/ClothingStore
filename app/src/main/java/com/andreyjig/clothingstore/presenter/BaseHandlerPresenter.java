@@ -1,6 +1,6 @@
 package com.andreyjig.clothingstore.presenter;
 
-import com.andreyjig.clothingstore.view.BaseHandlerView;
+import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
