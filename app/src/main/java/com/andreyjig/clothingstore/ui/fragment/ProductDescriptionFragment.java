@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.andreyjig.clothingstore.entity.product.Image;
+import com.andreyjig.clothingstore.mvp.presenter.BasePresenter;
 import com.andreyjig.clothingstore.ui.adapter.ProductDescriptionImageAdapter;
 import com.andreyjig.clothingstore.ui.adapter.SpinnerColorAdapter;
 import com.andreyjig.clothingstore.ui.adapter.SpinnerSizeAdapter;
@@ -185,7 +186,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void errorDialogOnClick() {
-        presenter.errorDialogOnClick();
+    protected void onErrorDialogClick() {
+        presenter.setErrorActionClick();
     }
 }

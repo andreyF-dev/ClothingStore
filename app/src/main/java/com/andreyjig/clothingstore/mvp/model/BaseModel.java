@@ -5,10 +5,10 @@ import com.andreyjig.clothingstore.mvp.model.handler.DataHandler;
 
 public abstract class BaseModel<T> {
 
-    public static RealmHelper realmHelper = RealmHelper.getInstance();
+    static RealmHelper realmHelper = RealmHelper.getInstance();
 
-    abstract public void downloadData(DataHandler<T> handler);
-    abstract public T getCachedData();
-    abstract public void setDataToCache(T data);
+    public abstract void downloadData(DataHandler<T> handler);
+    public abstract T getCachedData();
+    public abstract void setDataToCache(T data);
 
 }

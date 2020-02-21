@@ -38,7 +38,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().updateTitle(title);
+        setTitle(title);
         model = new ProductModel(productId);
     }
 
@@ -71,14 +71,6 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
             }
         };
         model.downloadData(handler);
-    }
-
-    private void setErrorDialog(int errorStringId) {
-        getViewState().showErrorDialog(errorStringId);
-    }
-
-    public void errorDialogOnClick() {
-        getProduct();
     }
 
     private void updateProduct (Product product){
@@ -165,5 +157,10 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
             images = newImages;
             getViewState().updateImages(images);
         }
+    }
+
+    @Override
+    public void setErrorActionClick() {
+        getProduct();
     }
 }

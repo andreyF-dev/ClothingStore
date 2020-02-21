@@ -16,7 +16,7 @@ public class CartPresenter extends BasePresenter<CartView>{
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().updateTitle(R.string.cart);
+        setTitle(R.string.cart);
         model = new CartModel();
         setPreview();
         getCart();
@@ -39,7 +39,7 @@ public class CartPresenter extends BasePresenter<CartView>{
             }
             @Override
             public void setErrorDownloaded(int errorStringId) {
-                setError(errorStringId);
+                setErrorDialog(errorStringId);
             }
         };
         model.downloadData(handler);
@@ -52,15 +52,16 @@ public class CartPresenter extends BasePresenter<CartView>{
         model.setDataToCache(cart);
     }
 
-    private void setError(int errorStringId){
+    @Override
+    public void setErrorDialog(int errorStringId){
+        super.setErrorDialog(errorStringId);
         if (cart != null){
             setCart(cart);
         }
-        getViewState().showErrorDialog(errorStringId);
     }
 
-    public void errorDialogOnClick(){
+    @Override
+    public void setErrorActionClick() {
         getCart();
     }
-
 }

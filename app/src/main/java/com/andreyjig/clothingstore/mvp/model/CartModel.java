@@ -12,7 +12,6 @@ import retrofit2.Response;
 
 public class CartModel extends BaseModel<Cart>{
 
-
     @Override
     public void downloadData(DataHandler<Cart> handler) {
         NetworkService.getInstance()

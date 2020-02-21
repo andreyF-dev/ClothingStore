@@ -107,7 +107,7 @@ public class CartFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void errorDialogOnClick() {
-        presenter.errorDialogOnClick();
+    protected void onErrorDialogClick() {
+        presenter.setErrorActionClick();
     }
 }
