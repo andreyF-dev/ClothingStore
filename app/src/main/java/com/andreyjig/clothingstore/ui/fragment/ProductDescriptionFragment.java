@@ -3,16 +3,19 @@ package com.andreyjig.clothingstore.ui.fragment;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.viewpager2.widget.ViewPager2;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.andreyjig.clothingstore.entity.product.Image;
+import com.andreyjig.clothingstore.ui.adapter.ProductDescriptionImageAdapter;
 import com.andreyjig.clothingstore.ui.adapter.SpinnerColorAdapter;
 import com.andreyjig.clothingstore.ui.adapter.SpinnerSizeAdapter;
 import com.andreyjig.clothingstore.presenter.ProductDescriptionPresenter;
@@ -24,7 +27,6 @@ import com.andreyjig.clothingstore.R;
 import com.andreyjig.clothingstore.entity.Product;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ProductDescriptionFragment extends BaseHandlerFragment implements
@@ -40,7 +42,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
                 .fromBundle(getArguments()));
     }
 
-    private ImageView imageView;
+    private ViewPager2 imagePager;
     private TextView textViewName;
     private Spinner spinnerColor;
     private Spinner spinnerSize;
@@ -48,8 +50,6 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     private TextView textViewDescription;
     private TextView textViewMaterial;
     private FrameLayout frameLayout;
-    private ImageButton imageForward;
-    private ImageButton imageBack;
     private ProgressBar progressBarImage;
     private ProgressBar progressBarManufacturer;
     private ProgressBar progressBarDescription;
@@ -68,7 +68,7 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        imageView = view.findViewById(R.id.fragment_product_image);
+        imagePager = view.findViewById(R.id.fragment_product_view_pager_image);
         textViewName = view.findViewById(R.id.fragment_product_name);
         spinnerColor = view.findViewById(R.id.fragment_product_color_spinner);
         spinnerSize = view.findViewById(R.id.fragment_product_size_spinner);
@@ -76,8 +76,6 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
         textViewDescription = view.findViewById(R.id.fragment_product_text_description);
         textViewMaterial = view.findViewById(R.id.fragment_product_text_material);
         frameLayout = view.findViewById(R.id.fragment_product_color_layout);
-        imageForward = view.findViewById(R.id.fragment_product_image_forward);
-        imageBack = view.findViewById(R.id.fragment_product_image_back);
         progressBarImage = view.findViewById(R.id.fragment_product_progress_bar_image);
         progressBarManufacturer = view.findViewById(R.id.fragment_product_progress_bar_text_manufacturer);
         progressBarDescription = view.findViewById(R.id.fragment_product_progress_bar_text_description);
@@ -105,8 +103,6 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
 
             }
         });
-        imageForward.setOnClickListener(v -> presenter.showImage(1));
-        imageBack.setOnClickListener(v -> presenter.showImage(-1));
     }
 
     @Override
@@ -132,11 +128,9 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void updateImage(String imageUrl) {
-        Picasso.get()
-                .load(imageUrl)
-                .noPlaceholder()
-                .into(imageView);
+    public void updateImages(ArrayList<Image> images) {
+        ProductDescriptionImageAdapter adapter = new ProductDescriptionImageAdapter(getContext(), images);
+        imagePager.setAdapter(adapter);
     }
 
     @Override
@@ -174,26 +168,6 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     @Override
     public void updateColorDrawer(String color) {
         frameLayout.addView(new ColorDrawer(getContext(), color));
-    }
-
-    @Override
-    public void showImageButton() {
-        imageButtonState(View.VISIBLE);
-    }
-
-    @Override
-    public void hideImageButton() {
-        imageButtonState(View.INVISIBLE);
-    }
-
-    private void imageButtonState(int state){
-        imageBack.setVisibility(state);
-        imageForward.setVisibility(state);
-    }
-
-    @Override
-    public void showDefaultImage() {
-        imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_photo));
     }
 
     @Override

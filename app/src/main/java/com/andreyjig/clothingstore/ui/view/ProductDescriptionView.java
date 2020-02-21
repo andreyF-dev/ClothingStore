@@ -2,8 +2,8 @@ package com.andreyjig.clothingstore.ui.view;
 
 import com.andreyjig.clothingstore.entity.Product;
 import com.andreyjig.clothingstore.entity.product.Color;
+import com.andreyjig.clothingstore.entity.product.Image;
 import com.andreyjig.clothingstore.entity.product.Size;
-import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
@@ -22,7 +22,7 @@ public interface ProductDescriptionView extends MvpView, BaseHandlerView {
     @StateStrategyType(SkipStrategy.class)
     void updateVariantName(String string);
     @StateStrategyType(SkipStrategy.class)
-    void updateImage(String imageUrl);
+    void updateImages(ArrayList<Image> images);
     @StateStrategyType(SkipStrategy.class)
     void updateColors(ArrayList<Color> colors);
     @StateStrategyType(SkipStrategy.class)
@@ -33,10 +33,5 @@ public interface ProductDescriptionView extends MvpView, BaseHandlerView {
     void hideProgressBar();
     @StateStrategyType(SkipStrategy.class)
     void updateColorDrawer(String color);
-    @StateStrategyType(SkipStrategy.class)
-    void showImageButton();
-    @StateStrategyType(SkipStrategy.class)
-    void hideImageButton();
-    @StateStrategyType(SkipStrategy.class)
-    void showDefaultImage();
+
 }

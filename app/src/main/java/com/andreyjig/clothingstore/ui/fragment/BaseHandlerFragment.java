@@ -2,17 +2,12 @@ package com.andreyjig.clothingstore.ui.fragment;
 
 import android.view.ViewGroup;
 import com.andreyjig.clothingstore.R;
-import com.andreyjig.clothingstore.presenter.BaseHandlerPresenter;
 import com.andreyjig.clothingstore.util.CustomSnackBarError;
 import com.andreyjig.clothingstore.ui.view.BaseHandlerView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
 public abstract class BaseHandlerFragment extends MvpAppCompatFragment
         implements BaseHandlerView{
-
-    @InjectPresenter
-    BaseHandlerPresenter baseHandlerPresenter;
 
     private CustomSnackBarError snackbar;
 
@@ -20,11 +15,6 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
     public void onDetach() {
         super.onDetach();
         hideErrorDialog();
-    }
-
-    @Override
-    public void setShowErrorDialog(int errorMessageId) {
-        baseHandlerPresenter.setErrorDialog(errorMessageId);
     }
 
     @Override
@@ -36,15 +26,9 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
             snackbar.setText(text);
             snackbar.setAction(getString(R.string.download_now), v -> {
                 errorDialogOnClick();
-                setHideErrorDialog();
             });
             snackbar.show();
         }
-    }
-
-    @Override
-    public void setHideErrorDialog() {
-        baseHandlerPresenter.setHideErrorDialog();
     }
 
     @Override
@@ -55,13 +39,8 @@ public abstract class BaseHandlerFragment extends MvpAppCompatFragment
     }
 
     @Override
-    public void setTitle(int id) {
-        baseHandlerPresenter.setTitle(getString(id));
-    }
-
-    @Override
-    public void setTitle(String title) {
-        baseHandlerPresenter.setTitle(title);
+    public void updateTitle(int id) {
+        updateTitle(getString(id));
     }
 
     @Override

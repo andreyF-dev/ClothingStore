@@ -19,7 +19,7 @@ public class CartPresenter extends MvpPresenter<CartView>{
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().setTitle(R.string.cart);
+        getViewState().updateTitle(R.string.cart);
         cartModel = new CartModel();
         realmCartHelper = RealmCartHelper.getInstance();
         setPreview();
@@ -60,7 +60,7 @@ public class CartPresenter extends MvpPresenter<CartView>{
         if (cart != null){
             setCart(cart);
         }
-        getViewState().setShowErrorDialog(errorStringId);
+        getViewState().showErrorDialog(errorStringId);
     }
 
     public void errorDialogOnClick(){

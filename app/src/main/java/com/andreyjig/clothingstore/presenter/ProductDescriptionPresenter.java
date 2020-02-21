@@ -2,7 +2,6 @@ package com.andreyjig.clothingstore.presenter;
 
 import androidx.annotation.NonNull;
 
-import com.andreyjig.clothingstore.database.RealmCartHelper;
 import com.andreyjig.clothingstore.database.RealmProductHelper;
 import com.andreyjig.clothingstore.model.handler.ProductDescription;
 import com.andreyjig.clothingstore.model.ProductModel;
@@ -45,7 +44,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().setTitle(title);
+        getViewState().updateTitle(title);
         productModel = new ProductModel();
         realmProductHelperr = RealmProductHelper.getInstance();
     }
@@ -83,7 +82,7 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     }
 
     private void setErrorDialog(int errorStringId) {
-        getViewState().setShowErrorDialog(errorStringId);
+        getViewState().showErrorDialog(errorStringId);
     }
 
     public void errorDialogOnClick() {
@@ -176,17 +175,9 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
     }
 
     private void setImageId() {
-        if (images == null || !images.equals(variant.getPhotos())) {
-            images = new ArrayList<>(variant.getPhotos());
-            if (images != null && images.size() > 0) {
-                imageIndex = 0;
-            } else {
-                imageIndex = NO_IMAGE;
-            }
-        }
-        showImage(0);
+        getViewState().updateImages(new ArrayList<>(variant.getPhotos()));
     }
-
+/*
     public void showImage(int step) {
         if (imageIndex != NO_IMAGE) {
             getViewState().showImageButton();
@@ -195,10 +186,10 @@ public class ProductDescriptionPresenter extends MvpPresenter<ProductDescription
                 imageIndex = images.size() - 1;
             }
             String imageUrl = images.get(imageIndex).getBig();
-            getViewState().updateImage(imageUrl);
+            getViewState().updateImages(imageUrl);
         } else {
             getViewState().hideImageButton();
             getViewState().showDefaultImage();
         }
-    }
+    }*/
 }
