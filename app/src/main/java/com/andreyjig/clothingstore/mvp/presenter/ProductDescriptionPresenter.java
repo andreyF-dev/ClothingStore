@@ -1,6 +1,7 @@
 package com.andreyjig.clothingstore.mvp.presenter;
 
 import androidx.annotation.NonNull;
+
 import com.andreyjig.clothingstore.mvp.model.ProductModel;
 import com.andreyjig.clothingstore.mvp.model.handler.DataHandler;
 import com.andreyjig.clothingstore.ui.fragment.ProductDescriptionFragmentArgs;
@@ -12,6 +13,7 @@ import com.andreyjig.clothingstore.entity.product.Size;
 import com.andreyjig.clothingstore.entity.product.Variant;
 import com.andreyjig.clothingstore.util.ProductHelper;
 import com.arellomobile.mvp.InjectViewState;
+
 import java.util.ArrayList;
 
 @InjectViewState
@@ -27,6 +29,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
     private int variantId;
     private int colorId;
     private int sizeId;
+    private int imageIndex;
     private ProductModel model;
 
     public ProductDescriptionPresenter(ProductDescriptionFragmentArgs args) {
@@ -52,7 +55,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
         }
     }
 
-    private void setPreview(){
+    private void setPreview() {
         getViewState().showProgressBar();
         Product product = model.getCachedData();
         updateProduct(product);
@@ -66,6 +69,7 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
             public void setDownloadedData(Product data) {
                 updateProduct(data);
             }
+
             @Override
             public void setErrorDownloaded(int errorStringId) {
                 setErrorDialog(errorStringId);
@@ -74,22 +78,24 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
         model.downloadData(handler);
     }
 
-    private void updateProduct (Product product){
-        if (product != null){
-            if (this.product == null){
-                try {
-                    setDefaultVariant(product);
-                    setProduct(product);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            } else if (!product.equals(this.product)){
+    private void updateProduct(Product product) {
+        if (product == null) {
+            return;
+        }
+
+        if (this.product == null) {
+            try {
+                setDefaultVariant(product);
                 setProduct(product);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        } else if (!product.equals(this.product)) {
+            setProduct(product);
         }
     }
 
-    private void setDefaultVariant(Product product){
+    private void setDefaultVariant(Product product) {
         variant = ProductHelper.getVariant(product, variantId);
         colorId = variant.getColorId();
         sizeId = variant.getSizeId();
@@ -98,7 +104,6 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
     public void setProduct(@NonNull Product product) {
         getViewState().hideProgressBar();
         this.product = product;
-        model.setDataToCache(product);
         setProductDescription();
         setColors();
     }
@@ -109,9 +114,8 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
 
     private void setColors() {
         colors = ProductHelper.getAllColor(product);
-        getViewState().updateColors(colors);
         int indexCurrentColor = ProductHelper.getIndexColorById(colors, colorId);
-        setColor(indexCurrentColor);
+        getViewState().updateColors(colors, indexCurrentColor);
     }
 
 
@@ -128,9 +132,8 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
 
     private void setSizes() {
         sizes = ProductHelper.getAllSizes(product, colorId);
-        getViewState().updateSizes(sizes);
         int indexCurrentSize = ProductHelper.getIndexSizeById(sizes, sizeId);
-        setSize(indexCurrentSize);
+        getViewState().updateSizes(sizes, indexCurrentSize);
     }
 
     public void setSize(int index) {
@@ -157,6 +160,9 @@ public class ProductDescriptionPresenter extends BasePresenter<ProductDescriptio
         if (images == null || !images.equals(newImages)) {
             images = newImages;
             getViewState().updateImages(images);
+        } else {
+            getViewState().updateImages(images);
         }
     }
+
 }

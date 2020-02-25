@@ -29,6 +29,7 @@ public class ProductModel extends BaseModel<Product>{
                         try {
                             Product product = response.body().getProduct();
                             handler.setDownloadedData(product);
+                            setDataToCache(product);
                         } catch (Exception e){
                             e.printStackTrace();
                             handler.setErrorDownloaded(R.string.error_get_message);

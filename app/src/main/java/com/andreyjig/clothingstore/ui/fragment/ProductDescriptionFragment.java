@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,11 +91,12 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 presenter.setColor(position);
+                Log.d("Retrofit", "color onClick " + position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Log.d("Retrofit", "nothing Selected");
             }
         };
         sizeListener = new AdapterView.OnItemSelectedListener() {
@@ -144,20 +147,22 @@ public class ProductDescriptionFragment extends BaseHandlerFragment implements
     }
 
     @Override
-    public void updateColors(ArrayList<Color> colors) {
+    public void updateColors(ArrayList<Color> colors, int index) {
         SpinnerColorAdapter adapter =
                 new SpinnerColorAdapter(getContext(), colors);
         spinnerColor.setOnItemSelectedListener(null);
         spinnerColor.setAdapter(adapter);
+        spinnerColor.setSelection(index);
         spinnerColor.setOnItemSelectedListener(colorListener);
     }
 
     @Override
-    public void updateSizes(ArrayList<Size> sizes) {
+    public void updateSizes(ArrayList<Size> sizes, int index) {
         SpinnerSizeAdapter adapter =
                 new SpinnerSizeAdapter(getContext(), sizes);
         spinnerSize.setOnItemSelectedListener(null);
         spinnerSize.setAdapter(adapter);
+        spinnerSize.setSelection(index);
         spinnerSize.setOnItemSelectedListener(sizeListener);
     }
 

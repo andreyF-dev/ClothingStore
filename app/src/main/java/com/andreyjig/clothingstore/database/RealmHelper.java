@@ -20,7 +20,8 @@ public class RealmHelper {
     private RealmHelper(){
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("cart.realm")
-                .schemaVersion(1)
+                .schemaVersion(2)
+                .migration(new ClothingDatabaseMigration())
                 .build();
         realm = Realm.getInstance(config);
     }

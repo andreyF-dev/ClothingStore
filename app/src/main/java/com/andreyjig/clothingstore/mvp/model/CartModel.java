@@ -22,6 +22,7 @@ public class CartModel extends BaseModel<Cart>{
                     public void onResponse(Call<CartShell> call, Response<CartShell> response) {
                         try {
                             Cart cart = response.body().getCart();
+                            setDataToCache(cart);
                             handler.setDownloadedData(cart);
                         } catch (Exception e){
                             e.printStackTrace();

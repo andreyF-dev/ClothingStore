@@ -50,7 +50,6 @@ public class CartPresenter extends BasePresenter<CartView>{
         this.cart = cart;
         getViewState().hideProgressBar();
         getViewState().showCart(cart);
-        model.setDataToCache(cart);
     }
 
     @Override
