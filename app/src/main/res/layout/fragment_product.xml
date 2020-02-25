@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,13 +26,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@id/fragment_product_image"
-                app:layout_constraintEnd_toEndOf="@id/fragment_product_image"
-                app:layout_constraintStart_toStartOf="@id/fragment_product_image"
-                app:layout_constraintTop_toTopOf="@id/fragment_product_image"/>
+                app:layout_constraintBottom_toBottomOf="@id/fragment_product_view_pager_image"
+                app:layout_constraintEnd_toEndOf="@id/fragment_product_view_pager_image"
+                app:layout_constraintStart_toStartOf="@id/fragment_product_view_pager_image"
+                app:layout_constraintTop_toTopOf="@id/fragment_product_view_pager_image"/>
 
-            <ImageView
-                android:id="@+id/fragment_product_image"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/fragment_product_view_pager_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
@@ -38,32 +42,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/fragment_product_image_forward"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-                android:layout_margin="8dp"
-                android:padding="8dp"
-                android:visibility="invisible"
-                android:background="@drawable/image_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageButton
-                android:id="@+id/fragment_product_image_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-                android:layout_margin="8dp"
-                android:padding="8dp"
-                android:visibility="invisible"
-                android:background="@drawable/image_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -249,3 +227,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</FrameLayout>
